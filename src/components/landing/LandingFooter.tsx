@@ -43,7 +43,7 @@ export default function LegacyverFooter() {
                 className="text-2xl sm:text-3xl font-bold text-black mb-4 font-bricolage"
 
               >
-                Legacyver Studio
+                Legacyver
               </h2>
               <p
                 className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6 font-bricolage"
@@ -55,7 +55,7 @@ export default function LegacyverFooter() {
               <div className="space-y-3" >
                 <div className="flex items-center gap-3 text-gray-400 text-xs sm:text-sm font-bricolage">
                   <Mail className="w-4 h-4 text-black" />
-                  hello@Legacyver.studio
+                  hello@legacyver.co.id
                 </div>
                 <div className="flex items-center gap-3 text-gray-400 text-xs sm:text-sm font-bricolage">
                   <Phone className="w-4 h-4 text-black" />
@@ -135,7 +135,7 @@ export default function LegacyverFooter() {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400 font-bricolage">
-                <span>© 2025 Legacyver Studio. All rights reserved.</span>
+                <span>© 2026 Legacyver. All rights reserved.</span>
                 <div className="flex gap-3 sm:gap-4">
                   <a href="#" className="hover:text-black transition-colors">
                     Privacy Policy
