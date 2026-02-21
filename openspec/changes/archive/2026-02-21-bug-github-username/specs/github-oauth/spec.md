@@ -1,0 +1,44 @@
+## MODIFIED Requirements
+
+### Requirement: Client-Side Session Management
+The system SHALL provide client-side access to session data via useSession hook and SessionProvider. The profile page SHALL use the authenticated user's GitHub username from the session as the primary source for profile data, falling back to a `?user=` query parameter for viewing other users' profiles. The JWT callback SHALL ensure `session.user.username` is always a non-null string for authenticated users across all token refresh cycles, not only on first sign-in.
+
+#### Scenario: Components can access session data
+- **WHEN** a component calls useSession()
+- **THEN** it returns the current user's session data including user information
+
+#### Scenario: SessionProvider wraps the app
+- **WHEN** the application starts
+- **THEN** all components have access to SessionProvider context
+
+#### Scenario: Component detects loading state
+- **WHEN** a component uses useSession() during initialization
+- **THEN** the hook returns a loading state
+
+#### Scenario: Component detects authentication status
+- **WHEN** a component uses useSession()
+- **THEN** the hook returns whether the user is authenticated
+
+#### Scenario: Protected route checks session
+- **WHEN** a user visits a protected route
+- **THEN** the Next.js middleware checks the session server-side and redirects unauthenticated users to `/login` before the page is rendered
+
+#### Scenario: Profile page displays authenticated user's GitHub profile
+- **WHEN** an authenticated user navigates to /profile
+- **THEN** the page fetches and displays the GitHub profile of the currently signed-in user, not a hardcoded default
+
+#### Scenario: Profile page redirects unauthenticated users
+- **WHEN** an unauthenticated user navigates to /profile
+- **THEN** they are redirected to /login with callbackUrl=/profile preserved, enforced by Next.js middleware before any page HTML is served
+
+#### Scenario: Profile page shows loading state while session resolves
+- **WHEN** a user navigates to /profile and the session is still initializing
+- **THEN** a skeleton loading state is shown until the session and profile data are ready
+
+#### Scenario: Username is available in session on every page load
+- **WHEN** an authenticated user loads any page after their initial sign-in
+- **THEN** `session.user.username` is a non-null string identifying their GitHub account
+
+#### Scenario: Username persists across JWT token refreshes
+- **WHEN** an authenticated user's JWT token is refreshed by NextAuth
+- **THEN** `session.user.username` retains its value and is not lost due to the absence of the `user` argument in the JWT callback

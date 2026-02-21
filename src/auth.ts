@@ -15,24 +15,21 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     // JWT callback: Called when JWT is created or updated
     // Used to add custom data to the JWT token
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
         token.image = user.image;
-        // Store GitHub profile info for later use
-        token.username = (user as any).login;
+      }
+      // profile is the raw GitHub OAuth profile — only present on first sign-in.
+      // This is the correct source for the GitHub login handle.
+      if (profile) {
+        token.username = (profile as any).login;
       }
       // Add account data (OAuth provider info) if available
       if (account) {
         token.accessToken = account.access_token;
         token.tokenType = account.token_type;
-      }
-      // Persist username across token refreshes (user is only present on first sign-in)
-      // token.username is already carried forward automatically by NextAuth,
-      // but we also fall back to token.name if username was never set
-      if (!token.username && token.name) {
-        token.username = token.name;
       }
       return token;
     },

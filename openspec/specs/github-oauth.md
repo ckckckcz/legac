@@ -144,7 +144,7 @@ The system SHALL properly handle GitHub OAuth callbacks and redirect users corre
 - **THEN** the redirect is rejected and the user is sent to a default safe page
 
 ### Client-Side Session Management
-The system SHALL provide client-side access to session data via useSession hook and SessionProvider. The profile page SHALL use the authenticated user's GitHub username from the session as the primary source for profile data, falling back to a `?user=` query parameter for viewing other users' profiles.
+The system SHALL provide client-side access to session data via useSession hook and SessionProvider. The profile page SHALL use the authenticated user's GitHub username from the session as the primary source for profile data, falling back to a `?user=` query parameter for viewing other users' profiles. The JWT callback SHALL ensure `session.user.username` is always a non-null string for authenticated users across all token refresh cycles, not only on first sign-in.
 
 #### Scenario: Components can access session data
 - **WHEN** a component calls useSession()
@@ -177,6 +177,14 @@ The system SHALL provide client-side access to session data via useSession hook 
 #### Scenario: Profile page shows loading state while session resolves
 - **WHEN** a user navigates to /profile and the session is still initializing
 - **THEN** a skeleton loading state is shown until the session and profile data are ready
+
+#### Scenario: Username is available in session on every page load
+- **WHEN** an authenticated user loads any page after their initial sign-in
+- **THEN** `session.user.username` is a non-null string identifying their GitHub account
+
+#### Scenario: Username persists across JWT token refreshes
+- **WHEN** an authenticated user's JWT token is refreshed by NextAuth
+- **THEN** `session.user.username` retains its value and is not lost due to the absence of the `user` argument in the JWT callback
 
 ### JWT Token Storage in localStorage
 The system SHALL store JWT tokens in localStorage to persist session tokens across page reloads.
