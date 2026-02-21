@@ -3,7 +3,10 @@
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import InstallCommand from "@/components/ui/install-command";
-import { Navbar } from "@/components/Navbar";
+import { LandingAbout } from "@/components/landing/LandingAbout";
+import { LandingWhyUs } from "@/components/landing/LandingWhyUs";
+import { LandingFeatures } from "@/components/landing/LandingFeatures";
+import LandingFooter from "@/components/landing/LandingFooter";
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -18,7 +21,7 @@ export default function Home() {
       {/* ============ HERO SECTION ============ */}
       <section className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 overflow-hidden">
         {/* Left Floating Card */}
-        <div className="absolute left-[5%] top-1/2 -translate-y-1/2 -rotate-[4deg] animate-fade-in-left z-10">
+        <div className="absolute left-[5%] top-1/2 -translate-y-1/2 -rotate-[10deg] animate-fade-in-left z-10">
           <div className="relative w-80 h-full">
             <img
               src="./illus-1.png"
@@ -29,7 +32,7 @@ export default function Home() {
         </div>
 
         {/* Right Floating Card */}
-        <div className="absolute right-[5%] top-1/3 -translate-y-1/2 rotate-[4deg] animate-fade-in-right z-10">
+        <div className="absolute right-[5%] top-1/3 -translate-y-1/2 rotate-[11deg] animate-fade-in-right z-10">
           <div className="relative w-80 h-full">
             <img
               src="./illus-2.png"
@@ -45,8 +48,8 @@ export default function Home() {
           <strong className="text-gray-900">Codebase Legacy</strong>
         </div>
 
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-tight mb-6 animate-fade-in-up-delay-1">
-          <span className="bg-gradient-to-r from-[#34558b] to-[#b5c7b0] bg-clip-text text-transparent">
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-gray-900 leading-[1.05] mb-8 animate-fade-in-up">
+          <span className="bg-gradient-to-r from-brand-blue to-brand-green bg-clip-text text-transparent">
             AI-Powered
           </span>{" "}
           Code
@@ -54,13 +57,25 @@ export default function Home() {
           Revitalization
         </h1>
 
-        <p className="max-w-xl text-gray-500 text-lg mb-8 animate-fade-in-up-delay-2">
+        <p className="max-w-xl text-gray-500 text-lg md:text-xl mb-10 animate-fade-in-up font-medium leading-relaxed" style={{ animationDelay: '200ms' }}>
           Legac memetakan struktur database, endpoint, dan logika aplikasi legacy Anda secara otomatis. Berhenti meraba dalam kegelapan dan mulai refactor dengan percaya diri.
         </p>
 
         {/* Install Command */}
         <InstallCommand />
       </section>
+
+      {/* ============ ABOUT SECTION ============ */}
+      <LandingAbout />
+
+      {/* ============ WHY US SECTION ============ */}
+      <LandingWhyUs />
+
+      {/* ============ FEATURES SECTION ============ */}
+      <LandingFeatures />
+
+      {/* ============ FOOTER SECTION ============ */}
+      <LandingFooter />
     </>
   );
 }

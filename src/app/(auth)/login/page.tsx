@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -17,18 +18,18 @@ const Logo = () => (
 
 // Allowed redirect URLs to prevent open redirect vulnerabilities
 const ALLOWED_REDIRECT_URLS = [
-  "/user/dashboard",
-  "/profile",
-  "/home",
-  "/",
+    "/user/dashboard",
+    "/profile",
+    "/home",
+    "/",
 ];
 
 function isAllowedRedirectUrl(url: string): boolean {
-  // Only allow relative URLs that start with /
-  if (!url.startsWith("/")) return false;
-  
-  // Check against whitelist
-  return ALLOWED_REDIRECT_URLS.some(allowed => url.startsWith(allowed));
+    // Only allow relative URLs that start with /
+    if (!url.startsWith("/")) return false;
+
+    // Check against whitelist
+    return ALLOWED_REDIRECT_URLS.some(allowed => url.startsWith(allowed));
 }
 
 export default function LoginPage() {
@@ -61,10 +62,10 @@ export default function LoginPage() {
         try {
             setIsLoading(true);
             setError(null);
-            
+
             // Validate callback URL for security
             const validCallbackUrl = isAllowedRedirectUrl(callbackUrl) ? callbackUrl : "/user/dashboard";
-            
+
             await signIn("github", {
                 redirect: true,
                 callbackUrl: validCallbackUrl
@@ -161,7 +162,7 @@ export default function LoginPage() {
                                 </>
                             ) : (
                                 <>
-                                    <svg fill="#000000" width="800px" height="800px" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5"><path d="m12.301 0h.093c2.242 0 4.34.613 6.137 1.68l-.055-.031c1.871 1.094 3.386 2.609 4.449 4.422l.031.058c1.04 1.769 1.654 3.896 1.654 6.166 0 5.406-3.483 10-8.327 11.658l-.087.026c-.063.02-.135.031-.209.031-.162 0-.312-.054-.433-.144l.002.001c-.128-.115-.208-.281-.208-.466 0-.005 0-.01 0-.014v.001q0-.048.008-1.226t.008-2.154c.007-.075.011-.161.011-.249 0-.792-.323-1.508-.844-2.025.618-.061 1.176-.163 1.718-.305l-.076.017c.573-.16 1.073-.373 1.537-.642l-.031.017c.508-.28.938-.636 1.292-1.058l.006-.007c.372-.476.663-1.036.84-1.645l.009-.035c.209-.683.329-1.468.329-2.281 0-.045 0-.091-.001-.136v.007c0-.022.001-.047.001-.072 0-1.248-.482-2.383-1.269-3.23l.003.003c.168-.44.265-.948.265-1.479 0-.649-.145-1.263-.404-1.814l.011.026c-.115-.022-.246-.035-.381-.035-.334 0-.649.078-.929.216l.012-.005c-.568.21-1.054.448-1.512.726l.038-.022-.609.384c-.922-.264-1.981-.416-3.075-.416s-2.153.152-3.157.436l.081-.02q-.256-.176-.681-.433c-.373-.214-.814-.421-1.272-.595l-.066-.022c-.293-.154-.64-.244-1.009-.244-.124 0-.246.01-.364.03l.013-.002c-.248.524-.393 1.139-.393 1.788 0 .531.097 1.04.275 1.509l-.01-.029c-.785.844-1.266 1.979-1.266 3.227 0 .025 0 .051.001.076v-.004c-.001.039-.001.084-.001.13 0 .809.12 1.591.344 2.327l-.015-.057c.189.643.476 1.202.85 1.693l-.009-.013c.354.435.782.793 1.267 1.062l.022.011c.432.252.933.465 1.46.614l.046.011c.466.125 1.024.227 1.595.284l.046.004c-.431.428-.718 1-.784 1.638l-.001.012c-.207.101-.448.183-.699.236l-.021.004c-.256.051-.549.08-.85.08-.022 0-.044 0-.066 0h.003c-.394-.008-.756-.136-1.055-.348l.006.004c-.371-.259-.671-.595-.881-.986l-.007-.015c-.198-.336-.459-.614-.768-.827l-.009-.006c-.225-.169-.49-.301-.776-.38l-.016-.004-.32-.048c-.023-.002-.05-.003-.077-.003-.14 0-.273.028-.394.077l.007-.003q-.128.072-.08.184c.039.086.087.16.145.225l-.001-.001c.061.072.13.135.205.19l.003.002.112.08c.283.148.516.354.693.6..." /></svg>
+                                    <Image src="/github.png" alt="GitHub" width={20} height={20} className="w-5 h-5 object-contain" />
                                     Log In with GitHub
                                 </>
                             )}

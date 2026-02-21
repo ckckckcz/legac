@@ -48,7 +48,7 @@ export default function Page({ params }: PageProps) {
 
       {/* Main Content Area */}
       <main className="flex-1 overflow-auto">
-        <div className="container max-w-4xl mx-auto px-4 py-8 md:pt-8">
+        <div className="container max-w-[93rem] mx-auto px-4 py-8 md:pt-8">
           <Suspense fallback={<ProfileSkeleton />}>
             <ProfilePage username={username} />
           </Suspense>
