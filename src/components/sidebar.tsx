@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User, Github, Heart, } from 'lucide-react'
+import { Menu, X, Files, LogOut, User, Github, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -23,11 +23,9 @@ interface NavItemProps {
     variant?: 'default' | 'destructive'
     badge?: number
     disabled?: boolean
+    active?: boolean
 }
 
-/**
- * SidebarNavItem - Reusable navigation item using shadcn Button
- */
 function SidebarNavItem({
     icon,
     label,
@@ -36,23 +34,28 @@ function SidebarNavItem({
     variant = 'default',
     badge,
     disabled,
+    active
 }: NavItemProps) {
     const isDestructive = variant === 'destructive'
 
     const content = (
         <Button
             variant="ghost"
-            className={`w-full justify-start px-3 gap-3 transition-colors ${isDestructive
-                ? 'text-destructive hover:text-destructive hover:bg-destructive/10'
-                : 'text-foreground hover:bg-accent'
+            className={`w-full justify-start px-2.5 h-9 gap-2.5 transition-all duration-200 ${isDestructive
+                ? 'text-destructive hover:text-destructive hover:bg-destructive/5'
+                : active
+                    ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
             onClick={onClick}
             disabled={disabled}
         >
-            {icon}
-            <span className="text-sm font-medium flex-1 text-left">{label}</span>
+            <div className={`p-1 rounded-md transition-colors ${active ? 'bg-primary/10' : ''}`}>
+                {icon}
+            </div>
+            <span className="text-sm font-semibold flex-1 text-left tracking-tight">{label}</span>
             {badge !== undefined && (
-                <Badge variant="secondary" className="ml-auto">
+                <Badge variant="secondary" className="ml-auto h-5 px-1.5 text-[10px] font-bold">
                     {badge}
                 </Badge>
             )}
@@ -60,7 +63,7 @@ function SidebarNavItem({
     )
 
     if (href) {
-        return <Link href={href}>{content}</Link>
+        return <Link href={href} className="block">{content}</Link>
     }
 
     return content
@@ -75,7 +78,6 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
     const [githubLink, setGithubLink] = useState('')
 
     const handleNavClick = () => {
-        // Close sidebar on mobile when navigation item is clicked
         if (window.innerWidth < 768) {
             setIsOpen(false)
         }
@@ -89,7 +91,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
             await signOut({ redirect: true, callbackUrl: '/' })
         } catch (err) {
             console.error('Sign-out error:', err)
-            setLogoutError('Failed to sign out. Please try again.')
+            setLogoutError('Failed to sign out.')
             setIsLoggingOut(false)
         }
     }
@@ -101,106 +103,105 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed left-4 top-4 z-40 md:hidden"
+                className="fixed left-3 top-3 z-40 md:hidden h-9 w-9 border border-border/50 bg-background/80 backdrop-blur"
                 aria-label="Toggle sidebar"
             >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
 
-            {/* Sidebar Background Overlay - Mobile Only */}
+            {/* Backdrop - Mobile Only */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-30 md:hidden"
+                    className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 md:hidden animate-in fade-in duration-300"
                     onClick={() => setIsOpen(false)}
-                    aria-hidden="true"
                 />
             )}
 
-            {/* Sidebar Container */}
             <aside
-                className={`fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-background transform transition-transform duration-300 md:relative md:translate-x-0 md:transform-none ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed left-0 top-0 z-40 h-screen w-[240px] border-r border-border/50 bg-background/50 backdrop-blur-xl transition-all duration-300 ease-in-out md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
-                {/* Sidebar Content */}
-                <div className="h-full flex flex-col p-6">
+                <div className="h-full flex flex-col p-4">
                     {/* Header */}
-                    <div className="mb-8 mt-12 md:mt-0">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                                <Files className="w-5 h-5 text-primary-foreground" />
+                    <div className="mb-6 mt-10 md:mt-2">
+                        <Link href="/" className="flex items-center gap-2.5 px-1 group">
+                            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
+                                <Files className="w-4 h-4 text-primary-foreground" />
                             </div>
-                            <h1 className="text-xl font-bold text-foreground">Legac</h1>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Manage your documents</p>
+                            <span className="text-lg font-black tracking-tighter text-foreground group-hover:text-primary transition-colors">Legac</span>
+                        </Link>
                     </div>
 
-                    {/* Main Navigation */}
-                    <nav className="flex-1">
-                        <div className="space-y-1 mb-8">
+                    <nav className="flex-1 space-y-6">
+                        {/* Main Nav */}
+                        <div className="space-y-1">
+                            <p className="px-3 text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/50 mb-2">Workspace</p>
                             <SidebarNavItem
-                                icon={<Files className="w-5 h-5 text-muted-foreground" />}
-                                label="All Documents"
+                                icon={<Files size={18} />}
+                                label="Documents"
+                                href={userId ? `/user/${userId}` : undefined}
                                 onClick={handleNavClick}
                             />
                             <SidebarNavItem
-                                icon={<Github className="w-5 h-5 text-muted-foreground" />}
-                                label="Repository"
+                                icon={<Github size={18} />}
+                                label="Repositories"
                                 href={userId ? `/user/${userId}/repository` : undefined}
                                 onClick={handleNavClick}
                             />
                         </div>
 
-                        {/* GitHub Import Section */}
-                        <div className="mb-6 px-1">
-                            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2 ml-1">Connect GitHub</p>
-                            <div className="flex flex-col gap-2 p-3 rounded-xl bg-muted/40 border border-border/50">
+                        {/* GitHub Connection */}
+                        <div className="space-y-2.5 px-0.5">
+                            <p className="px-2.5 text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/50">Connect</p>
+                            <div className="space-y-2 p-2.5 rounded-xl bg-muted/30 border border-border/50 transition-colors hover:bg-muted/40 group">
                                 <Input
-                                    placeholder="github.com/user/repo"
-                                    className="h-8 text-xs bg-background border-border/50 focus-visible:ring-primary/20"
+                                    placeholder="user/repo"
+                                    className="h-8 text-[11px] bg-background border-border/40 focus-visible:ring-primary/20"
                                     value={githubLink}
                                     onChange={(e) => setGithubLink(e.target.value)}
                                 />
                                 <Button
                                     size="sm"
                                     variant="outline"
-                                    className="w-full text-xs h-8 font-bold hover:bg-primary hover:text-primary-foreground transition-all"
+                                    className="w-full text-[11px] h-7.5 font-bold hover:bg-primary hover:text-primary-foreground transition-all gap-2"
                                     onClick={() => {
                                         if (githubLink) {
-                                            alert(`Importing from: ${githubLink}`)
+                                            alert(`Connecting: ${githubLink}`)
                                             setGithubLink('')
                                         }
                                     }}
                                 >
-                                    <Github className="w-3.5 h-3.5 mr-2" />
-                                    Connect Link
+                                    <Github size={12} />
+                                    <span>Sync Repo</span>
                                 </Button>
                             </div>
                         </div>
                     </nav>
 
-                    {/* User Section */}
-                    <div className="space-y-1 border-t border-border pt-6">
+                    {/* Footer */}
+                    <div className="mt-auto space-y-1.5 pt-4 border-t border-border/50">
+                        <p className="px-3 text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/50 mb-2">Account</p>
                         <SidebarNavItem
-                            icon={<User className="w-5 h-5 text-muted-foreground" />}
+                            icon={<User size={18} />}
                             label="Profile"
                             href={username ? `/user/profile/${username}` : undefined}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem
-                            icon={<Heart className="w-5 h-5 text-muted-foreground" />}
+                            icon={<Heart size={18} />}
                             label="Donation"
                             href={userId ? `/user/${userId}/donation` : undefined}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem
-                            icon={<LogOut className="w-5 h-5" />}
-                            label={isLoggingOut ? 'Signing out...' : 'Logout'}
+                            icon={<LogOut size={18} />}
+                            label={isLoggingOut ? 'Leaving...' : 'Logout'}
                             variant="destructive"
                             onClick={handleLogout}
                             disabled={isLoggingOut}
                         />
                         {logoutError && (
-                            <p className="text-destructive text-xs px-3 pt-1">{logoutError}</p>
+                            <p className="text-destructive text-[10px] px-3 font-medium">{logoutError}</p>
                         )}
                     </div>
                 </div>
