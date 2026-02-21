@@ -6,41 +6,17 @@ import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import { Copy, Check, Terminal } from 'lucide-react';
 
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 interface DocMarkdownRendererProps {
     content?: string;
 }
 
 const Pre = ({ children }: { children?: React.ReactNode }) => {
-    const [copied, setCopied] = useState(false);
-
-    const extractText = (node: any): string => {
-        if (typeof node === 'string') return node;
-        if (Array.isArray(node)) return node.map(extractText).join('');
-        if (node?.props?.children) return extractText(node.props.children);
-        return '';
-    };
-
-    const text = extractText(children);
-
-    const onCopy = () => {
-        navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
     return (
-        <div className="relative group my-6 rounded-lg overflow-hidden border border-zinc-200 bg-zinc-50/50">
-            <div className="absolute top-3 right-4 z-10">
-                <button
-                    onClick={onCopy}
-                    className="p-1.5 rounded-md bg-white border border-zinc-200 text-zinc-400 hover:text-zinc-900 transition-all opacity-0 group-hover:opacity-100 shadow-sm"
-                >
-                    {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
-                </button>
-            </div>
-            <pre className="p-4 overflow-x-auto text-[13px] font-mono leading-relaxed text-zinc-700">
-                {children}
-            </pre>
+        <div className="relative group my-8 rounded-xl overflow-hidden border border-zinc-200 shadow-sm bg-white">
+            {children}
         </div>
     );
 };
@@ -53,7 +29,7 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
       prose-headings:text-zinc-950 prose-headings:font-bold prose-headings:tracking-tight
       prose-h1:text-4xl prose-h1:mb-8
       prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
-      prose-p:text-zinc-600 prose-p:text-[15px] prose-p:leading-[1.7] prose-p:mb-5
+      prose-p:text-zinc-600 prose-p:text-[15px] prose-p:leading-[1.8] prose-p:mb-5
       prose-a:text-brand-blue prose-a:underline-offset-4 hover:prose-a:text-brand-blue-hover transition-colors
       prose-strong:text-zinc-950 prose-strong:font-bold
       prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6 prose-ul:space-y-2
@@ -65,6 +41,54 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                 rehypePlugins={[rehypeSlug]}
                 components={{
                     pre: Pre,
+                    code({ node, inline, className, children, ...props }: any) {
+                        const match = /language-(\w+)/.exec(className || '');
+                        const lang = match ? match[1] : '';
+                        const [copied, setCopied] = useState(false);
+
+                        const onCopy = () => {
+                            navigator.clipboard.writeText(String(children).replace(/\n$/, ''));
+                            setCopied(true);
+                            setTimeout(() => setCopied(false), 2000);
+                        };
+
+                        return !inline ? (
+                            <div className="relative group/code">
+                                <div className="absolute top-3 right-4 z-10 flex items-center gap-2">
+                                    {lang && (
+                                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest bg-zinc-100/50 px-2 py-1 rounded">
+                                            {lang}
+                                        </span>
+                                    )}
+                                    <button
+                                        onClick={onCopy}
+                                        className="p-1.5 rounded-md bg-white border border-zinc-200 text-zinc-400 hover:text-zinc-900 transition-all opacity-0 group-hover/code:opacity-100 shadow-sm"
+                                    >
+                                        {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+                                    </button>
+                                </div>
+                                <SyntaxHighlighter
+                                    style={oneLight}
+                                    language={lang}
+                                    PreTag="div"
+                                    customStyle={{
+                                        margin: 0,
+                                        padding: '1.5rem',
+                                        fontSize: '13px',
+                                        lineHeight: '1.6',
+                                        backgroundColor: 'transparent',
+                                    }}
+                                    {...props}
+                                >
+                                    {String(children).replace(/\n$/, '')}
+                                </SyntaxHighlighter>
+                            </div>
+                        ) : (
+                            <code className={className} {...props}>
+                                {children}
+                            </code>
+                        );
+                    },
                     h1: ({ node, ...props }) => <h1 className="text-4xl font-bold tracking-tight text-zinc-950 mb-4" {...props} />,
                     h2: ({ node, ...props }) => <h2 className="text-2xl font-bold tracking-tight text-zinc-950 mt-12 mb-4 scroll-m-20 border-b border-zinc-100 pb-2" {...props} />,
                     p: ({ node, ...props }) => <p className="leading-7 [&:not(:first-child)]:mt-6 text-zinc-600 font-normal" {...props} />,
