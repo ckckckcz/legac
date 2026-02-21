@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 
 interface SidebarProps {
@@ -11,84 +12,157 @@ interface SidebarProps {
     onUploadClick: () => void
 }
 
+interface NavItemProps {
+    icon: React.ReactNode
+    label: string
+    href?: string
+    onClick?: () => void
+    variant?: 'default' | 'destructive'
+    badge?: number
+}
+
+/**
+ * SidebarNavItem - Reusable navigation item using shadcn Button
+ */
+function SidebarNavItem({
+    icon,
+    label,
+    href,
+    onClick,
+    variant = 'default',
+    badge,
+}: NavItemProps) {
+    const isDestructive = variant === 'destructive'
+    
+    const content = (
+        <Button
+            variant="ghost"
+            className={`w-full justify-start px-3 gap-3 transition-colors ${
+                isDestructive
+                    ? 'text-destructive hover:text-destructive hover:bg-destructive/10'
+                    : 'text-foreground hover:bg-accent'
+            }`}
+            onClick={onClick}
+        >
+            {icon}
+            <span className="text-sm font-medium flex-1 text-left">{label}</span>
+            {badge !== undefined && (
+                <Badge variant="secondary" className="ml-auto">
+                    {badge}
+                </Badge>
+            )}
+        </Button>
+    )
+
+    if (href) {
+        return <Link href={href}>{content}</Link>
+    }
+
+    return content
+}
+
 export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
+    const handleNavClick = () => {
+        // Close sidebar on mobile when navigation item is clicked
+        if (window.innerWidth < 768) {
+            setIsOpen(false)
+        }
+    }
+
     return (
         <>
-            {/* Toggle Button */}
+            {/* Toggle Button - Mobile Only */}
             <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(!isOpen)}
                 className="fixed left-4 top-4 z-40 md:hidden"
+                aria-label="Toggle sidebar"
             >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
 
-            {/* Sidebar Background Overlay */}
+            {/* Sidebar Background Overlay - Mobile Only */}
             {isOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-30 md:hidden"
                     onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
                 />
             )}
 
-            {/* Sidebar */}
+            {/* Sidebar Container */}
             <aside
-                className={`fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-background p-6 transform transition-transform duration-300 md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                    }`}
+                className={`fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-background transform transition-transform duration-300 md:relative md:translate-x-0 md:transform-none ${
+                    isOpen ? 'translate-x-0' : '-translate-x-full'
+                }`}
             >
-                {/* Header */}
-                <div className="mb-8 mt-12 md:mt-0">
-                    <div className="flex items-center gap-2 mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                            <Files className="w-5 h-5 text-primary-foreground" />
+                {/* Sidebar Content */}
+                <div className="h-full flex flex-col p-6">
+                    {/* Header */}
+                    <div className="mb-8 mt-12 md:mt-0">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                                <Files className="w-5 h-5 text-primary-foreground" />
+                            </div>
+                            <h1 className="text-xl font-bold text-foreground">Legac</h1>
                         </div>
-                        <h1 className="text-xl font-bold">Legac</h1>
+                        <p className="text-sm text-muted-foreground">Manage your documents</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">Manage your documents</p>
-                </div>
 
-                {/* Navigation */}
-                <nav className="space-y-1 mb-8">
-                    <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
-                        <Files className="w-5 h-5 text-muted-foreground" />
-                        <span className="text-sm font-medium">All Documents</span>
-                    </div>
-                    <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
-                        <FolderOpen className="w-5 h-5 text-muted-foreground" />
-                        <span className="text-sm font-medium">Categories</span>
-                    </div>
-                    <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
-                        <BarChart3 className="w-5 h-5 text-muted-foreground" />
-                        <span className="text-sm font-medium">Statistics</span>
-                    </div>
-                </nav>
-
-                {/* Upload Button */}
-                <Button
-                    onClick={onUploadClick}
-                    className="w-full mb-8 bg-primary hover:bg-primary/90"
-                    size="lg"
-                >
-                    <Upload className="w-4 h-4 mr-2" />
-                    Upload Document
-                </Button>
-
-                {/* Settings Section */}
-                <div className="space-y-1 border-t border-border pt-6">
-                    <Link href="/profile">
-                        <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
-                            <User className="w-5 h-5 text-muted-foreground" />
-                            <span className="text-sm font-medium">Profile</span>
+                    {/* Main Navigation */}
+                    <nav className="flex-1">
+                        <div className="space-y-1 mb-8">
+                            <SidebarNavItem
+                                icon={<Files className="w-5 h-5 text-muted-foreground" />}
+                                label="All Documents"
+                                onClick={handleNavClick}
+                            />
+                            <SidebarNavItem
+                                icon={<FolderOpen className="w-5 h-5 text-muted-foreground" />}
+                                label="Categories"
+                                onClick={handleNavClick}
+                            />
+                            <SidebarNavItem
+                                icon={<BarChart3 className="w-5 h-5 text-muted-foreground" />}
+                                label="Statistics"
+                                onClick={handleNavClick}
+                            />
                         </div>
-                    </Link>
-                    <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
-                        <Settings className="w-5 h-5 text-muted-foreground" />
-                        <span className="text-sm font-medium">Settings</span>
-                    </div>
-                    <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-950">
-                        <LogOut className="w-5 h-5" />
-                        <span className="text-sm font-medium">Logout</span>
+
+                        {/* Upload Button */}
+                        <Button
+                            onClick={() => {
+                                onUploadClick()
+                                handleNavClick()
+                            }}
+                            className="w-full mb-8"
+                            size="lg"
+                        >
+                            <Upload className="w-4 h-4 mr-2" />
+                            Upload Document
+                        </Button>
+                    </nav>
+
+                    {/* User Section */}
+                    <div className="space-y-1 border-t border-border pt-6">
+                        <SidebarNavItem
+                            icon={<User className="w-5 h-5 text-muted-foreground" />}
+                            label="Profile"
+                            href="/profile"
+                            onClick={handleNavClick}
+                        />
+                        <SidebarNavItem
+                            icon={<Settings className="w-5 h-5 text-muted-foreground" />}
+                            label="Settings"
+                            onClick={handleNavClick}
+                        />
+                        <SidebarNavItem
+                            icon={<LogOut className="w-5 h-5" />}
+                            label="Logout"
+                            variant="destructive"
+                            onClick={handleNavClick}
+                        />
                     </div>
                 </div>
             </aside>
