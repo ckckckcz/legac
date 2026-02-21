@@ -18,7 +18,7 @@ export default function Home() {
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2 text-lg font-semibold text-gray-900 no-underline">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="28" height="28" rx="6" fill="#34558b" />
+            <rect width="28" height="28" rx="6" fill="#wwwwwwwwww" />
             <path
               d="M7 20V8h4.5c1.2 0 2.2.35 2.9 1.05.7.7 1.05 1.6 1.05 2.7 0 1.1-.35 2-.05 2.7-.7.7-1.7 1.05-2.9 1.05H9.5V20H7zm2.5-6.5h1.8c.6 0 1.05-.15 1.35-.45.3-.3.45-.7.45-1.25s-.15-.95-.45-1.25c-.3-.3-.75-.45-1.35-.45H9.5v3.4z"
               fill="white"
