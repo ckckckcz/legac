@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen } from 'lucide-react'
+import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface SidebarProps {
     isOpen: boolean
@@ -75,6 +76,12 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
 
                 {/* Settings Section */}
                 <div className="space-y-1 border-t border-border pt-6">
+                    <Link href="/profile">
+                        <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
+                            <User className="w-5 h-5 text-muted-foreground" />
+                            <span className="text-sm font-medium">Profile</span>
+                        </div>
+                    </Link>
                     <div className="px-3 py-2 rounded-lg hover:bg-accent cursor-pointer transition-colors flex items-center gap-3">
                         <Settings className="w-5 h-5 text-muted-foreground" />
                         <span className="text-sm font-medium">Settings</span>

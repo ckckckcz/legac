@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Sidebar } from '@/components/sidebar'
 import { DocumentGrid } from '@/components/document-grid'
+import { DocumentCard } from '@/components/document-card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
