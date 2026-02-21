@@ -11,26 +11,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-
-export interface DocsSection {
-  title: string
-  count?: number
-  items: string[]
-}
+import type { DocsSection } from '@/components/docs/DocsLayout'
 
 interface DocsSidebarProps {
   sections: DocsSection[]
-  activeItem?: string
+  activeAnchor?: string
 }
 
 function NavTree({
   sections,
-  activeItem,
-  onItemClick,
+  activeAnchor,
 }: {
   sections: DocsSection[]
-  activeItem?: string
-  onItemClick?: (item: string) => void
+  activeAnchor?: string
 }) {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
 
@@ -66,16 +59,15 @@ function NavTree({
             {isOpen && (
               <div className="ml-4 mt-0.5 flex flex-col gap-0.5">
                 {section.items.map((item) => (
-                  <Button
-                    key={item}
-                    variant="ghost"
-                    className={`w-full justify-start text-sm font-normal h-8 px-2 ${
-                      activeItem === item ? 'bg-accent' : ''
+                  <a
+                    key={item.anchor}
+                    href={`#${item.anchor}`}
+                    className={`flex items-center w-full text-sm font-normal h-8 px-2 rounded-md transition-colors hover:bg-accent ${
+                      activeAnchor === item.anchor ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
                     }`}
-                    onClick={() => onItemClick?.(item)}
                   >
-                    {item}
-                  </Button>
+                    {item.label}
+                  </a>
                 ))}
               </div>
             )}
@@ -86,11 +78,11 @@ function NavTree({
   )
 }
 
-export function DocsSidebar({ sections, activeItem }: DocsSidebarProps) {
+export function DocsSidebar({ sections, activeAnchor }: DocsSidebarProps) {
   return (
     <>
       {/* Mobile Sheet trigger */}
-      <div className="md:hidden fixed left-14 top-4 z-40">
+      <div className="md:hidden fixed left-4 top-16 z-40">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="Open docs navigation">
@@ -101,19 +93,19 @@ export function DocsSidebar({ sections, activeItem }: DocsSidebarProps) {
             <SheetHeader className="px-4 pt-4 pb-2">
               <SheetTitle>Documentation</SheetTitle>
             </SheetHeader>
-            <NavTree sections={sections} activeItem={activeItem} />
+            <NavTree sections={sections} activeAnchor={activeAnchor} />
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 shrink-0 border-r border-border h-screen overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-56 shrink-0 border-r border-border overflow-y-auto">
         <div className="px-4 py-4 border-b border-border">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Documentation
           </p>
         </div>
-        <NavTree sections={sections} activeItem={activeItem} />
+        <NavTree sections={sections} activeAnchor={activeAnchor} />
       </aside>
     </>
   )

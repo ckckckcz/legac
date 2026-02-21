@@ -18,34 +18,34 @@ export function TableOfContents({ entries }: TableOfContentsProps) {
   const [isExpanded, setIsExpanded] = useState(true)
 
   return (
-    <Card className="mb-6">
-      <CardHeader className="py-3 px-4">
+    <Card className="mb-4">
+      <CardHeader className="py-2 px-3">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold">Table of Contents</span>
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Table of Contents</span>
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6"
+            className="h-5 w-5"
             onClick={() => setIsExpanded((prev) => !prev)}
             aria-label={isExpanded ? 'Collapse table of contents' : 'Expand table of contents'}
           >
             {isExpanded ? (
-              <ChevronUp className="h-4 w-4" />
+              <ChevronUp className="h-3.5 w-3.5" />
             ) : (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-3.5 w-3.5" />
             )}
           </Button>
         </div>
       </CardHeader>
 
       {isExpanded && (
-        <CardContent className="pt-0 pb-3 px-4">
-          <ul className="flex flex-col gap-1">
+        <CardContent className="pt-0 pb-2 px-3">
+          <ul className="flex flex-col gap-0.5">
             {entries.map((entry) => (
               <li key={entry.anchor}>
                 <a
                   href={entry.anchor}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   {entry.label}
                 </a>

@@ -1,13 +1,4 @@
-### Requirement: Documentation page route
-The system SHALL provide a protected route at `/docs` that is accessible only to authenticated users, enforced by Next.js middleware before any page content is served.
-
-#### Scenario: Unauthenticated user is redirected from /docs
-- **WHEN** an unauthenticated user navigates to `/docs`
-- **THEN** the middleware redirects them to `/login?callbackUrl=/docs` without rendering any page HTML
-
-#### Scenario: Authenticated user can access /docs
-- **WHEN** an authenticated user navigates to `/docs`
-- **THEN** the documentation page renders with the full layout
+## MODIFIED Requirements
 
 ### Requirement: Three-region page layout
 The system SHALL render the `/docs` page as a two-region docs-only layout: a docs-specific navigation sidebar on the left and a main scrollable content area on the right. The app navigation sidebar SHALL NOT be rendered on the docs page.
@@ -88,10 +79,3 @@ The system SHALL render a compact, collapsible Table of Contents card at the top
 #### Scenario: TOC has a reduced visual footprint
 - **WHEN** the TOC card is rendered
 - **THEN** it uses tighter padding and smaller font sizes compared to the previous design so it does not dominate the page layout
-
-### Requirement: Placeholder document content
-The system SHALL render static placeholder content in the main content area to demonstrate the layout, including a page title, subtitle, TOC, and body paragraphs with section headings.
-
-#### Scenario: Placeholder content fills the main area
-- **WHEN** the docs page renders
-- **THEN** the main content area displays a title, subtitle, Table of Contents, and at least two body sections with headings and paragraphs
