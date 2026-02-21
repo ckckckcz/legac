@@ -28,4 +28,16 @@
 
 ## 6. Integrate into User Page
 
-- [x] 6.1 Modify `src/app/user/[id]/page.tsx` to wrap existing Document Management content in a `TabsContent` and add a second `TabsContent` for the `RepoList` component using shadcn/ui `Tabs`
+- [x] 6.1 ~~Modify `src/app/user/[id]/page.tsx` to wrap existing Document Management content in a `TabsContent` and add a second `TabsContent` for the `RepoList` component using shadcn/ui `Tabs`~~ (superseded by 6.2–6.4)
+
+## 7. Dedicated Repository Page Route
+
+- [x] 7.1 Revert `src/app/user/[id]/page.tsx` to standalone Document Management (remove Tabs + RepoList)
+- [x] 7.2 Create `src/app/user/[id]/repository/page.tsx` — dedicated page with Sidebar + RepoList, auth guard
+- [x] 7.3 Wire sidebar "Repository" nav item to `/user/[id]/repository` using session user id
+
+## 8. Private Repos Access + Language Logo Enhancement
+
+- [x] 8.1 Add `repo` scope to GitHub OAuth provider in `src/auth.ts` so private repositories are included
+- [x] 8.2 Create `src/lib/utils/language-icon.ts` — maps GitHub language names to devicons CDN URLs
+- [x] 8.3 Update `src/components/repos/RepoCard.tsx` — replace text language badge with devicons logo + name

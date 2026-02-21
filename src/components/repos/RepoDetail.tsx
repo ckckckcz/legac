@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { GitHubRepo, GitHubContributor, GitHubCommit } from '@/lib/services/repo-service'
+import { getLanguageIconUrl, getLanguageDisplayName } from '@/lib/utils/language-icon'
 import {
   Sheet,
   SheetContent,
@@ -91,9 +92,19 @@ export function RepoDetail({ repo, open, onOpenChange }: RepoDetailProps) {
               {/* Metadata row */}
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 {repo.language && (
-                  <Badge variant="secondary" className="text-xs">
-                    {repo.language}
-                  </Badge>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border bg-background px-2 py-0.5 text-xs text-muted-foreground">
+                    {getLanguageIconUrl(repo.language) && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={getLanguageIconUrl(repo.language)!}
+                        alt={repo.language}
+                        width={14}
+                        height={14}
+                        className="shrink-0"
+                      />
+                    )}
+                    <span>{getLanguageDisplayName(repo.language)}</span>
+                  </span>
                 )}
                 <Badge variant={repo.private ? 'secondary' : 'outline'} className="text-xs">
                   {repo.private ? 'Private' : 'Public'}
