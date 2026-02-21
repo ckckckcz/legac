@@ -1,8 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-import { Search } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { DocsSidebar } from '@/components/docs/DocsSidebar'
 
 export interface DocsSection {
@@ -20,16 +17,18 @@ interface DocsShellProps {
 
 export function DocsShell({ sections, activeAnchor, onSearchOpen, children }: DocsShellProps) {
   return (
-    <div className="flex flex-col h-screen bg-background">
-      {/* Body: sidebar + content */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Docs nav sidebar */}
-        <DocsSidebar sections={sections} activeAnchor={activeAnchor} onSearchOpen={onSearchOpen} />
+    <div className="flex flex-col min-h-screen bg-white text-zinc-900 font-sans">
+      {/* Body: sidebar + content + toc */}
+      <div className="flex flex-1 pt-[72px] max-w-7xl mx-auto w-full">
+        {/* Docs nav sidebar (Left) - Kept as requested */}
+        <div className="hidden lg:block">
+          <DocsSidebar sections={sections} activeAnchor={activeAnchor} onSearchOpen={onSearchOpen} />
+        </div>
 
-        {/* Main content — independently scrollable */}
-        <main className="flex-1 overflow-auto">
+        {/* Main Content Area - Now scrolls with the page */}
+        <div className="flex-1 scroll-smooth">
           {children}
-        </main>
+        </div>
       </div>
     </div>
   )
