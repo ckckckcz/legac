@@ -5,24 +5,15 @@
 
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { Sidebar } from '@/components/sidebar';
 import { ProfilePage } from '@/components/profile/ProfilePage';
 import { ProfileSkeleton } from '@/components/profile/ProfileSkeleton';
 
 export default function Page() {
-  const router = useRouter();
   const { status } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // Redirect unauthenticated users to login, preserving the intended destination
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login?callbackUrl=/profile');
-    }
-  }, [status, router]);
 
   const handleUploadClick = () => {
     console.log('Upload clicked');

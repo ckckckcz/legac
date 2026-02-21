@@ -28,6 +28,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         token.accessToken = account.access_token;
         token.tokenType = account.token_type;
       }
+      // Persist username across token refreshes (user is only present on first sign-in)
+      // token.username is already carried forward automatically by NextAuth,
+      // but we also fall back to token.name if username was never set
+      if (!token.username && token.name) {
+        token.username = token.name;
+      }
       return token;
     },
     // Session callback: Called when session is retrieved

@@ -164,7 +164,7 @@ The system SHALL provide client-side access to session data via useSession hook 
 
 #### Scenario: Protected route checks session
 - **WHEN** a user visits a protected route
-- **THEN** the component checks if the user is authenticated
+- **THEN** the Next.js middleware checks the session server-side and redirects unauthenticated users to `/login` before the page is rendered
 
 #### Scenario: Profile page displays authenticated user's GitHub profile
 - **WHEN** an authenticated user navigates to /profile
@@ -172,7 +172,7 @@ The system SHALL provide client-side access to session data via useSession hook 
 
 #### Scenario: Profile page redirects unauthenticated users
 - **WHEN** an unauthenticated user navigates to /profile
-- **THEN** they are redirected to /login with callbackUrl=/profile preserved
+- **THEN** they are redirected to /login with callbackUrl=/profile preserved, enforced by Next.js middleware before any page HTML is served
 
 #### Scenario: Profile page shows loading state while session resolves
 - **WHEN** a user navigates to /profile and the session is still initializing
