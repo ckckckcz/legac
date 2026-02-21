@@ -11,7 +11,7 @@ export class ActivityLogger {
   /**
    * Log a user activity event
    */
-  static async logEvent(userId: number, eventType: string, eventData?: Record<string, any>) {
+  static async logEvent(userId: string | number, eventType: string, eventData?: Record<string, any>) {
     try {
       // TODO: Implement database insert
       // const result = await db.query(
@@ -29,7 +29,7 @@ export class ActivityLogger {
   /**
    * Log profile update event
    */
-  static async logProfileUpdate(userId: number, changes: Record<string, any>) {
+  static async logProfileUpdate(userId: string | number, changes: Record<string, any>) {
     await this.logEvent(userId, 'profile_update', {
       timestamp: new Date(),
       changes,
@@ -39,7 +39,7 @@ export class ActivityLogger {
   /**
    * Log avatar change event
    */
-  static async logAvatarChange(userId: number, newAvatarUrl: string) {
+  static async logAvatarChange(userId: string | number, newAvatarUrl: string) {
     await this.logEvent(userId, 'avatar_change', {
       timestamp: new Date(),
       avatar_url: newAvatarUrl,
@@ -49,7 +49,7 @@ export class ActivityLogger {
   /**
    * Log settings change event
    */
-  static async logSettingsChange(userId: number, changes: Record<string, any>) {
+  static async logSettingsChange(userId: string | number, changes: Record<string, any>) {
     await this.logEvent(userId, 'settings_change', {
       timestamp: new Date(),
       changes,
@@ -59,7 +59,7 @@ export class ActivityLogger {
   /**
    * Log login event
    */
-  static async logLogin(userId: number, ipAddress?: string, userAgent?: string) {
+  static async logLogin(userId: string | number, ipAddress?: string, userAgent?: string) {
     await this.logEvent(userId, 'login', {
       timestamp: new Date(),
       ip_address: ipAddress,
@@ -70,7 +70,7 @@ export class ActivityLogger {
   /**
    * Log document upload event
    */
-  static async logDocumentUpload(userId: number, documentName: string, documentSize: number) {
+  static async logDocumentUpload(userId: string | number, documentName: string, documentSize: number) {
     await this.logEvent(userId, 'document_upload', {
       timestamp: new Date(),
       document_name: documentName,
@@ -81,7 +81,7 @@ export class ActivityLogger {
   /**
    * Log document download event
    */
-  static async logDocumentDownload(userId: number, documentName: string) {
+  static async logDocumentDownload(userId: string | number, documentName: string) {
     await this.logEvent(userId, 'document_download', {
       timestamp: new Date(),
       document_name: documentName,

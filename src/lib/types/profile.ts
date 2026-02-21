@@ -2,7 +2,7 @@
 
 export interface UserProfile {
   id: number;
-  github_id: number;
+  github_id: string | number;
   name: string | null;
   email: string | null;
   bio: string | null;
@@ -20,7 +20,7 @@ export interface UserProfileInput {
 
 export interface ActivityLog {
   id: number;
-  user_id: number;
+  user_id: string | number;
   event_type: string;
   event_data: Record<string, any> | null;
   created_at: Date;
@@ -33,7 +33,7 @@ export interface ActivityLogInput {
 
 export interface UserSettings {
   id?: number;
-  user_id: number;
+  user_id: string | number;
   theme: 'light' | 'dark' | 'auto';
   notifications_enabled: boolean;
   email_notifications: boolean;

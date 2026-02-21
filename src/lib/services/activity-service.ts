@@ -6,7 +6,7 @@ export class ActivityService {
   /**
    * Log a user activity
    */
-  static async logActivity(userId: number, input: ActivityLogInput): Promise<ActivityLog> {
+  static async logActivity(userId: string | number, input: ActivityLogInput): Promise<ActivityLog> {
     try {
       // TODO: Implement database insert
       // const result = await db.query(
@@ -33,7 +33,7 @@ export class ActivityService {
    * Get user activity logs with filtering and pagination
    */
   static async getActivityLogs(
-    userId: number,
+    userId: string | number,
     filters: ActivityFilterOptions = {}
   ): Promise<PaginatedResponse<ActivityLog>> {
     try {
@@ -84,7 +84,7 @@ export class ActivityService {
    * Get activity logs by event type
    */
   static async getActivityByType(
-    userId: number,
+    userId: string | number,
     eventType: string,
     limit: number = 20
   ): Promise<ActivityLog[]> {
@@ -107,7 +107,7 @@ export class ActivityService {
   /**
    * Get recent activity logs
    */
-  static async getRecentActivity(userId: number, days: number = 30): Promise<ActivityLog[]> {
+  static async getRecentActivity(userId: string | number, days: number = 30): Promise<ActivityLog[]> {
     try {
       // TODO: Implement database query
       // const result = await db.query(
@@ -127,7 +127,7 @@ export class ActivityService {
   /**
    * Delete old activity logs (archival)
    */
-  static async deleteOldActivities(userId: number, daysOld: number = 365): Promise<number> {
+  static async deleteOldActivities(userId: string | number, daysOld: number = 365): Promise<number> {
     try {
       // TODO: Implement database delete
       // const result = await db.query(
@@ -147,7 +147,7 @@ export class ActivityService {
   /**
    * Clear all activities for a user
    */
-  static async clearAllActivities(userId: number): Promise<number> {
+  static async clearAllActivities(userId: string | number): Promise<number> {
     try {
       // TODO: Implement database delete
       // const result = await db.query(
@@ -167,7 +167,7 @@ export class ActivityService {
   /**
    * Get activity statistics
    */
-  static async getActivityStats(userId: number): Promise<Record<string, number>> {
+  static async getActivityStats(userId: string | number): Promise<Record<string, number>> {
     try {
       // TODO: Implement database query
       // const result = await db.query(

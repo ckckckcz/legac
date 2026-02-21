@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: legac
+  namespace: weci-holic
+spec:
+  rules:
+    - host: weci-holic.hackathon.sev-2.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: legac
+                port:
+                  number: 80

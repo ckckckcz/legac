@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession, useSessionStatus } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 /**
  * Hook to get the current session and status in client components
