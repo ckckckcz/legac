@@ -19,15 +19,13 @@ export const mockDocuments: Document[] = [
         status: 'published',
         thumbnail: '📄',
         content: `
-# Project Proposal 2024: Legac Platform Revamp
-
 ## Executive Summary
 This proposal outlines the strategic plan for revamping the Legac platform to improve user engagement and documentation workflows.
 
 ## Objectives
-- **Modernize UI**: Implementing a sleek, premium design.
-- **Improved Performance**: Optimizing load times and AI generation speed.
-- **Enhanced Documentation**: New viewer with Markdown support and ToC.
+1. **Modernize UI**: Implementing a sleek, premium design.
+2. **Improved Performance**: Optimizing load times and AI generation speed.
+3. **Enhanced Documentation**: New viewer with Markdown support and ToC.
 
 ## Roadmap
 1. Phase 1: Authentication & Profile Revamp (Done)
@@ -40,8 +38,6 @@ This proposal outlines the strategic plan for revamping the Legac platform to im
 | Development | 60% |
 | Design | 25% |
 | Operations | 15% |
-
-> "Legacy code modernised."
 `
     },
     {

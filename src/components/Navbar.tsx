@@ -6,7 +6,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   // Hide navbar on docs, profile, and user pages
-  const hiddenPaths = ['/docs', '/profile', '/user', '/login']
+  const hiddenPaths = ['/profile', '/user', '/login']
   if (hiddenPaths.some(path => pathname?.startsWith(path))) {
     return null
   }

@@ -2,224 +2,167 @@
 
 import { useState, useEffect } from 'react';
 import { DocsShell } from '@/components/docs/DocsLayout';
-import { TableOfContents, TocEntry } from '@/components/docs/TableOfContents';
 import { DocsSearch } from '@/components/docs/DocsSearch';
 import { DocMarkdownRenderer } from '@/components/docs/DocMarkdownRenderer';
-import { GitHubRepoSelector } from '@/components/repos/GitHubRepoSelector';
 import { extractHeadings } from '@/lib/doc-utils';
-import { Badge } from '@/components/ui/badge';
+import { mockDocuments } from '@/lib/mock-data';
+import { useSession } from 'next-auth/react';
+import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
-  BookOpen,
-  Github,
-  Sparkles,
-  Search,
-  ArrowRight,
-  Layout,
-  ShieldCheck,
-  Cpu
+  Copy,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  ChevronDown,
+  Github
 } from 'lucide-react';
+import Link from 'next/link';
 
-const docsContent = `
-# Getting Started with Legac
-
-Legac is a high-performance document modernization platform. We help teams transform legacy documentation into clean, structured, and searchable assets using advanced AI.
-
-## Key Features
-
-- **AI-Powered Extraction**: Automatically identify key entities, dates, and relationships in legacy docs.
-- **Markdown Modernization**: Convert standard formats (PDF, DOCX) into high-fidelity Markdown.
-- **Semantic Search**: Find documents based on intent, not just keywords.
-- **Zero-Config Integration**: Connect your repositories and let Legac handle the rest.
-
-## Why Choose Legac?
-
-Working with legacy codebases often means dealing with outdated or missing documentation. Legac solves this by auditing your existing files and generating a modern docs-as-code infrastructure.
-
-### Secure by Design
-Your data is encrypted at rest and in transit. We support private repository linking and enterpise-grade auth.
-
-### Developer Experience
-Designed with developers in mind. Use our CLI, API, or this web dashboard to manage your documentation lifecycle.
-`;
-
-const sections = [
+const sidebarSections = [
   {
-    title: 'General',
+    title: 'Get started',
     items: [
-      { label: 'Introduction', anchor: 'getting-started' },
-      { label: 'Key Features', anchor: 'key-features' },
-      { label: 'Why Choose Legac?', anchor: 'why-choose-legac' },
+      { label: 'Overview', anchor: '#' },
+      { label: 'Quickstart', anchor: '#' },
+      { label: 'Models', anchor: '#' },
+      { label: 'Pricing', anchor: '#' },
     ],
   },
   {
-    title: 'Integration',
+    title: 'Core concepts',
     items: [
-      { label: 'GitHub Sync', anchor: 'github-sync' },
-      { label: 'CLI Usage', anchor: 'cli-usage' },
+      { label: 'Text generation', anchor: '#' },
+      { label: 'Code generation', anchor: '#' },
+      { label: 'Images and vision', anchor: '#' },
+      { label: 'Audio and speech', anchor: '#' },
+      { label: 'Structured output', anchor: '#' },
     ],
   },
 ];
 
-const searchEntries = [
-  ...sections[0].items,
-  ...sections[1].items,
-];
+export default function DocumentViewerPage() {
+  const params = useParams();
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
-export default function DocsPage() {
   const [searchOpen, setSearchOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'content' | 'github'>('content');
-  const tocEntries = extractHeadings(docsContent);
+  const [copied, setCopied] = useState(false);
 
-  // Ctrl+K binding
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        setSearchOpen(true);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
+
+  const document = mockDocuments.find((doc) => doc.id === parseInt(params.id as string));
+
+  const tocEntries = document?.content ? extractHeadings(document.content) : [];
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  if (status === 'loading') return <div className="min-h-screen bg-white" />;
+  if (!document) return <div className="min-h-screen bg-white flex items-center justify-center text-zinc-900">Document not found</div>;
 
   return (
-    <>
+    <DocsShell
+      sections={sidebarSections}
+      activeAnchor=""
+      onSearchOpen={() => setSearchOpen(true)}
+    >
       <DocsSearch
-        entries={searchEntries}
+        entries={tocEntries}
         open={searchOpen}
         onOpenChange={setSearchOpen}
       />
 
-      <DocsShell
-        sections={sections}
-        activeAnchor=""
-        onSearchOpen={() => setSearchOpen(true)}
-      >
-        <div className="container max-w-6xl mx-auto px-6 py-12">
-          {/* Hero Section */}
-          <div className="mb-16 text-center lg:text-left space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-bold uppercase tracking-widest animate-fade-in-up">
-              <Sparkles className="h-3.5 w-3.5" />
-              Product Documentation
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-              Transform <span className="text-brand-blue">Legacy</span> into Clarity.
+      <div className="flex w-full bg-white">
+        {/* Main Content Area */}
+        <main className="flex-1 px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+          {/* Header Area with Title & Buttons */}
+          <div className="flex items-center justify-between mb-3">
+            <h1 className="text-4xl font-bold tracking-tight text-zinc-950">
+              {document.name}
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Unlock the secrets of your legacy codebases with AI-driven documentation auditing and modernization.
-            </p>
+            <div className="flex items-center gap-1.5">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={copyToClipboard}
+                className="h-8 px-3 text-[13px] font-medium text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 border border-zinc-200 rounded-md gap-2"
+              >
+                {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+                Copy Page
+                <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-500 hover:text-zinc-900 border border-zinc-200 bg-zinc-50/50">
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-500 hover:text-zinc-900 border border-zinc-200 bg-zinc-50/50">
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-12">
-            {/* Main Center Area */}
-            <div className="flex-1 min-w-0">
-              {/* View Switcher Tabs */}
-              <div className="flex items-center gap-1 p-1 bg-muted/30 rounded-xl border w-fit mb-10">
-                <Button
-                  variant={activeTab === 'content' ? 'secondary' : 'ghost'}
-                  size="sm"
-                  className={`gap-2 rounded-lg text-xs font-semibold px-4 transition-all ${activeTab === 'content' ? 'shadow-sm border border-brand-blue/10' : ''}`}
-                  onClick={() => setActiveTab('content')}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  Documentation
-                </Button>
-                <Button
-                  variant={activeTab === 'github' ? 'secondary' : 'ghost'}
-                  size="sm"
-                  className={`gap-2 rounded-lg text-xs font-semibold px-4 transition-all ${activeTab === 'github' ? 'shadow-sm border border-brand-blue/10' : ''}`}
-                  onClick={() => setActiveTab('github')}
-                >
-                  <Github className="h-4 w-4" />
-                  Import from GitHub
-                </Button>
-              </div>
+          <div className="text-[17px] text-zinc-600 leading-7 mb-4">
+            {document.name === 'Getting Started with Legac' ? 'legac is a set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks and AI models. Open Source. Open Code.' : `Transform your ${document.type} files with Legac's professional extraction platform.`}
+          </div>
 
-              {activeTab === 'content' ? (
-                <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="bg-white dark:bg-zinc-950 p-8 md:p-12 rounded-3xl border shadow-sm prose-card">
-                    <DocMarkdownRenderer content={docsContent} />
-                  </div>
+          {/* Content */}
+          <DocMarkdownRenderer content={document.content} />
 
-                  {/* Features Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {[
-                      { title: 'Extraction', icon: Cpu, desc: 'AI entities & metadata extraction.' },
-                      { title: 'Modern UI', icon: Layout, desc: 'Clean, responsive design system.' },
-                      { title: 'Secure', icon: ShieldCheck, desc: 'Enterprise-grade data security.' },
-                    ].map((feat, idx) => (
-                      <div key={feat.title} className="p-6 rounded-2xl border bg-muted/10 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-md transition-all group">
-                        <feat.icon className="h-8 w-8 text-brand-blue mb-4 transition-transform group-hover:scale-110" />
-                        <h3 className="font-bold mb-2 uppercase tracking-wide text-xs">{feat.title}</h3>
-                        <p className="text-sm text-muted-foreground">{feat.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="bg-white dark:bg-zinc-950 p-8 md:p-10 rounded-3xl border shadow-sm">
-                    <div className="mb-8">
-                      <h2 className="text-2xl font-bold mb-2">Connect Your Repository</h2>
-                      <p className="text-muted-foreground text-sm">Select a GitHub repository to sync your documentation with Legac.</p>
-                    </div>
-                    <GitHubRepoSelector />
-                  </div>
+          {/* Footer Nav */}
+          <div className="mt-16 flex items-center justify-between border-t border-zinc-100 pt-8">
+            <Link href="#" className="flex flex-col gap-1 group text-left">
+              <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Previous</span>
+              <span className="text-sm font-semibold text-zinc-600 group-hover:text-zinc-950 transition-colors">Overview</span>
+            </Link>
+            <Link href="#" className="flex flex-col gap-1 group text-right">
+              <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Next</span>
+              <span className="text-sm font-semibold text-zinc-600 group-hover:text-zinc-950 transition-colors">Quickstart</span>
+            </Link>
+          </div>
+        </main>
 
-                  <div className="p-6 rounded-2xl border-2 border-dashed border-brand-blue/20 bg-brand-blue/5">
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 rounded-xl bg-brand-blue/10 border border-brand-blue/20">
-                        <Search className="h-6 w-6 text-brand-blue" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm">Looking for private repos?</h4>
-                        <p className="text-xs text-muted-foreground mt-1">Make sure you have granted permission in your account settings.</p>
-                      </div>
-                      <Button variant="outline" size="sm" className="ml-auto text-xs font-bold gap-2">
-                        Manage Auth
-                        <ArrowRight className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
+        {/* Right Sidebar (ToC + Deploy) */}
+        <aside className="hidden xl:block w-64 shrink-0 px-6 border-l border-zinc-100">
+          <div className="sticky top-[80px] py-10 space-y-10 h-fit">
+            <div className="space-y-4">
+              <h4 className="text-[13px] font-bold text-zinc-950 mb-4">On This Page</h4>
+              <nav className="flex flex-col gap-3">
+                {tocEntries.map((entry) => (
+                  <a
+                    key={entry.anchor}
+                    href={entry.anchor}
+                    className="text-[13px] text-zinc-500 hover:text-zinc-900 transition-colors"
+                  >
+                    {entry.label}
+                  </a>
+                ))}
+              </nav>
             </div>
 
-            {/* Right Sidebar - Sticky ToC */}
-            <aside className="hidden lg:block w-72 shrink-0">
-              <div className="sticky top-28 space-y-8">
-                {activeTab === 'content' && (
-                  <div className="p-6 rounded-2xl border bg-muted/5">
-                    <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-6 flex items-center gap-2">
-                      <div className="h-1 w-1 bg-brand-blue rounded-full" />
-                      Page Outline
-                    </h2>
-                    <TableOfContents entries={tocEntries} />
-                  </div>
-                )}
-
-                <div className="p-6 rounded-2xl border bg-brand-blue text-white shadow-xl shadow-brand-blue/30">
-                  <h3 className="font-bold mb-2">Need Help?</h3>
-                  <p className="text-xs text-brand-blue-hover dark:text-zinc-200 mb-4 leading-relaxed">
-                    Join our community Discord or contact support for enterprise queries.
-                  </p>
-                  <Button variant="secondary" size="sm" className="w-full text-xs font-bold gap-2">
-                    Get Support
-                    <ArrowRight className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
-            </aside>
+            {/* Push to Repository Card */}
+            <div className="p-5 rounded-xl border border-zinc-200 bg-zinc-50/50 space-y-4 shadow-sm">
+              <h5 className="text-[13px] font-bold text-zinc-950 leading-tight">
+                Push to Your Repository
+              </h5>
+              <p className="text-[12px] text-zinc-500 leading-relaxed">
+                Sync your documentation changes directly to your connected GitHub project.
+              </p>
+              <Button className="w-full bg-zinc-950 text-white hover:bg-zinc-800 h-9 text-xs font-bold rounded-md">
+                <Github />
+                Push now
+              </Button>
+            </div>
           </div>
-        </div>
-      </DocsShell>
-
-      <style jsx global>{`
-        .prose-card .prose {
-          font-size: 1.0625rem !important;
-        }
-      `}</style>
-    </>
+        </aside>
+      </div>
+    </DocsShell>
   );
 }
