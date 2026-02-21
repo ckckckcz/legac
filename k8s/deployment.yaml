@@ -47,6 +47,11 @@ spec:
                 secretKeyRef:
                   name: legac-secret
                   key: NEXTAUTH_URL
+            - name: AUTH_TRUST_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: AUTH_TRUST_HOST
             - name: NEXT_PUBLIC_SAWERIA_USERNAME
               value: "legacy"
             - name: NEXT_PUBLIC_KREATE_USERNAME
