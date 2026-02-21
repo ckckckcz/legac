@@ -25,7 +25,7 @@ export default function InstallCommand() {
     }
 
     return (
-        <div className="mt-12 w-full max-w-2xl">
+        <div className="mt-6 w-full max-w-2xl">
             {/* Command Box */}
             <div className="rounded-lg border border-border bg-card">
                 {/* Package Manager Selector */}
