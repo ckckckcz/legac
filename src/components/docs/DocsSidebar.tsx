@@ -1,6 +1,8 @@
 'use client'
 
 import { Search, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import type { DocsSection } from '@/components/docs/DocsLayout'
 
 interface DocsSidebarProps {
@@ -10,6 +12,7 @@ interface DocsSidebarProps {
 }
 
 export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSidebarProps) {
+  const params = useParams()
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-zinc-100 bg-white py-6 pl-6 pr-4 sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto">
       {/* Search Bar */}
@@ -36,10 +39,15 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSideba
             <div className="flex flex-col gap-0.5">
               {section.items.map((item) => {
                 const isActive = activeAnchor === item.anchor
+                // If the anchor doesn't start with '#', it's a sub-page of the current doc
+                const href = item.anchor.startsWith('#')
+                  ? item.anchor
+                  : `/docs/${params.id}?page=${item.anchor}`
+
                 return (
-                  <a
+                  <Link
                     key={item.anchor}
-                    href={item.anchor.startsWith('#') ? item.anchor : `#${item.anchor}`}
+                    href={href}
                     className={`flex items-center justify-between group px-2 py-1.5 rounded-md text-[13px] font-medium transition-all ${isActive
                       ? 'bg-brand-blue/5 text-brand-blue'
                       : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50'
@@ -47,7 +55,7 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSideba
                   >
                     <span>{item.label}</span>
                     {isActive && <div className="w-1.5 h-1.5 rounded-full bg-brand-blue opacity-50" />}
-                  </a>
+                  </Link>
                 )
               })}
             </div>

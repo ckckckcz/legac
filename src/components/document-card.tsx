@@ -32,6 +32,8 @@ const typeColors: Record<string, string> = {
     'Image': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
     'Spreadsheet': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
     'Presentation': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+    'Markdown': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+    'Design': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
 }
 
 export function DocumentCard({

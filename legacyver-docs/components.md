@@ -1,56 +1,4 @@
-export interface DocumentSubPage {
-    id: string;
-    name: string;
-    content: string;
-}
-
-export interface Document {
-    id: number | string;
-    name: string;
-    type: string;
-    category?: string;
-    size: string;
-    uploadDate: string;
-    status: 'published' | 'draft' | 'archived';
-    thumbnail: string;
-    content?: string;
-    pages?: DocumentSubPage[];
-}
-
-export const mockDocuments: Document[] = [
-    {
-        id: 'legacyver-docs',
-        name: 'Legacyver: src Analysis',
-        type: 'Documentation',
-        category: 'Generated AI',
-        size: '3.3 KB',
-        uploadDate: '2026-02-21',
-        status: 'published',
-        thumbnail: '📚',
-        pages: [
-            {
-                id: 'index',
-                name: 'Overview',
-                content: `# src — Documentation
-
-**Primary language:** typescript  
-**Total files:** 1  
-**Analyzed at:** 2026-02-21T17:51:44.572Z
-
-## Files
-
-- [components.tsx](components)
-
-## Dependency Graph
-
-\`\`\`mermaid
-graph TD
-\`\`\``
-            },
-            {
-                id: 'components',
-                name: 'components.md',
-                content: `## Overview
+## Overview
 
 This file contains a collection of React components and a utility function for formatting currency. The components include a button and a user card, while the utility function formats a given amount with a specified currency.
 
@@ -63,11 +11,11 @@ The Button component is a reusable React component that renders a button with a 
 #### Parameters
 
 | Parameter | Type       | Description                                            |
-| --------- | ---------- | ------------------------------------------------------ |
+| --------- | ---------- | ------------------------------------------------------ | -------- | ---------------------------------------------- |
 | label     | string     | The text to be displayed on the button                 |
 | onClick   | () => void | The function to be called when the button is clicked   |
 | disabled  | boolean    | Optional disabled state of the button (default: false) |
-| variant   | 'primary' | 'secondary' | 'danger' | The variant of the button (default: 'primary') |
+| variant   | 'primary'  | 'secondary'                                            | 'danger' | The variant of the button (default: 'primary') |
 
 #### Return Value
 
@@ -113,7 +61,9 @@ The formatCurrency function returns a string representing the formatted amount.
 
 ## Usage Example
 
-\`\`\`tsx
+No clear usage example is visible in the provided code, but the components and function can be used as follows:
+
+```tsx
 import React from "react";
 import { Button, UserCard, formatCurrency } from "./components";
 
@@ -134,16 +84,4 @@ const App = () => {
     </div>
   );
 };
-\`\`\``
-            },
-            {
-                id: 'summary',
-                name: 'Summary',
-                content: `# Summary
-
-- [components.tsx](components)
-`
-            }
-        ]
-    }
-];
+```

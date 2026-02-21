@@ -15,93 +15,10 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Search, Filter, Plus, X } from 'lucide-react'
+import { mockDocuments } from '@/lib/mock-data'
 
-// Mock data untuk documents
-const mockDocuments = [
-    {
-        id: '1',
-        name: 'Q4 Financial Report 2024',
-        type: 'PDF',
-        category: 'Finance',
-        uploadDate: 'Dec 15, 2024',
-        size: '2.4 MB',
-        status: 'published' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '2',
-        name: 'Project Proposal - Website Redesign',
-        type: 'Word',
-        category: 'Projects',
-        uploadDate: 'Dec 10, 2024',
-        size: '1.2 MB',
-        status: 'draft' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '3',
-        name: 'Team Photo from Conference',
-        type: 'Image',
-        category: 'Marketing',
-        uploadDate: 'Dec 8, 2024',
-        size: '3.8 MB',
-        status: 'published' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '4',
-        name: 'Budget Spreadsheet Q1 2025',
-        type: 'Spreadsheet',
-        category: 'Finance',
-        uploadDate: 'Dec 5, 2024',
-        size: '856 KB',
-        status: 'draft' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '5',
-        name: 'Product Launch Presentation',
-        type: 'Presentation',
-        category: 'Marketing',
-        uploadDate: 'Nov 28, 2024',
-        size: '4.2 MB',
-        status: 'published' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '6',
-        name: 'Employee Handbook 2025',
-        type: 'PDF',
-        category: 'HR',
-        uploadDate: 'Nov 20, 2024',
-        size: '1.9 MB',
-        status: 'published' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '7',
-        name: 'UI Design System Assets',
-        type: 'Presentation',
-        category: 'Design',
-        uploadDate: 'Nov 15, 2024',
-        size: '5.1 MB',
-        status: 'archived' as const,
-        thumbnail: undefined,
-    },
-    {
-        id: '8',
-        name: 'Customer Analytics Data',
-        type: 'Spreadsheet',
-        category: 'Analytics',
-        uploadDate: 'Nov 10, 2024',
-        size: '2.1 MB',
-        status: 'published' as const,
-        thumbnail: undefined,
-    },
-]
-
-const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', 'Analytics']
-const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation']
+const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', 'Analytics', 'Engineering', 'Strategy', 'Management', 'Generated AI']
+const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation', 'Markdown', 'Design']
 
 export default function DocumentManagementPage() {
     const router = useRouter()
