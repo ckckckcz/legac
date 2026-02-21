@@ -1,5 +1,52 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Setup
+
+### Required Environment Variables
+
+This application requires the following environment variables to be configured:
+
+#### Database Configuration
+- `DATABASE_URL`: PostgreSQL connection string for the application database
+
+#### GitHub OAuth Configuration
+- `GITHUB_ID`: GitHub OAuth application ID
+- `GITHUB_SECRET`: GitHub OAuth application secret
+- `AUTH_SECRET`: NextAuth secret key for session encryption (use a secure random string)
+
+#### Optional Configuration
+- `REACT_APP_GITHUB_TOKEN`: GitHub personal access token for GitHub API calls (optional, used for public API access)
+
+### Local Development Setup
+
+1. Create a `.env.local` file in the project root
+2. Add all required environment variables:
+   ```
+   DATABASE_URL="postgresql://user:password@host:port/database"
+   GITHUB_ID="your_github_oauth_app_id"
+   GITHUB_SECRET="your_github_oauth_app_secret"
+   AUTH_SECRET="generate_a_random_secure_string"
+   REACT_APP_GITHUB_TOKEN="your_github_token_optional"
+   ```
+
+### GitHub OAuth Setup
+
+To set up GitHub OAuth for this application:
+
+1. Go to GitHub Settings > Developer settings > OAuth Apps
+2. Create a new OAuth App with the following:
+   - **Application name**: Your app name
+   - **Homepage URL**: `http://localhost:3000` (for local dev)
+   - **Authorization callback URL**: `http://localhost:3000/api/auth/callback/github`
+3. Copy the Client ID and Client Secret and add them to your `.env.local` file as `GITHUB_ID` and `GITHUB_SECRET`
+
+### Production Deployment
+
+For production deployment, set environment variables through your hosting platform's environment configuration:
+- Set `GITHUB_ID`, `GITHUB_SECRET`, and `AUTH_SECRET` in your production environment variables
+- Update the GitHub OAuth app's callback URL to your production domain: `https://yourdomain.com/api/auth/callback/github`
+- Use a strong, randomly-generated string for `AUTH_SECRET` in production
+
 ## Getting Started
 
 First, run the development server:

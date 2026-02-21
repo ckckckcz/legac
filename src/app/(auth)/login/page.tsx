@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-
+import { useState, useEffect } from "react";
 
 const Logo = () => (
     <div className="flex items-center gap-2">
@@ -14,19 +15,101 @@ const Logo = () => (
     </div>
 );
 
+// Allowed redirect URLs to prevent open redirect vulnerabilities
+const ALLOWED_REDIRECT_URLS = [
+  "/user/dashboard",
+  "/profile",
+  "/home",
+  "/",
+];
+
+function isAllowedRedirectUrl(url: string): boolean {
+  // Only allow relative URLs that start with /
+  if (!url.startsWith("/")) return false;
+  
+  // Check against whitelist
+  return ALLOWED_REDIRECT_URLS.some(allowed => url.startsWith(allowed));
+}
+
 export default function LoginPage() {
-    const { data: session } = useSession();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { data: session, status } = useSession();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const callbackUrl = searchParams.get("callbackUrl") || "/user/dashboard";
+    const oauthError = searchParams.get("error");
+
+    // Redirect authenticated users away from login page
+    useEffect(() => {
+        if (status === "authenticated" && session?.user) {
+            // Validate and redirect to callback URL
+            const redirectUrl = isAllowedRedirectUrl(callbackUrl) ? callbackUrl : "/user/dashboard";
+            router.push(redirectUrl);
+        }
+    }, [status, session, callbackUrl, router]);
+
+    // Display OAuth error if present
+    useEffect(() => {
+        if (oauthError) {
+            setError(getErrorMessage(oauthError));
+        }
+    }, [oauthError]);
 
     const handleGitHubSignIn = async () => {
-        await signIn("github", {
-            redirect: true,
-            callbackUrl: "/user/dashboard"
-        });
+        try {
+            setIsLoading(true);
+            setError(null);
+            
+            // Validate callback URL for security
+            const validCallbackUrl = isAllowedRedirectUrl(callbackUrl) ? callbackUrl : "/user/dashboard";
+            
+            await signIn("github", {
+                redirect: true,
+                callbackUrl: validCallbackUrl
+            });
+        } catch (err) {
+            setIsLoading(false);
+            setError("Failed to redirect to GitHub. Please try again.");
+            console.error("GitHub sign-in error:", err);
+        }
     };
 
     const handleSignOut = async () => {
-        await signOut({ redirect: true, callbackUrl: "/" });
+        try {
+            setIsLoading(true);
+            await signOut({ redirect: true, callbackUrl: "/" });
+        } catch (err) {
+            setIsLoading(false);
+            setError("Failed to sign out. Please try again.");
+            console.error("Sign-out error:", err);
+        }
     };
+
+    // Show loading state while checking session status
+    if (status === "loading") {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-white">
+                <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue"></div>
+                    <p className="mt-4 text-gray-600">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Redirect loading state during OAuth redirect
+    if (isLoading && !error) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-white">
+                <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue"></div>
+                    <p className="mt-4 text-gray-600">Redirecting to GitHub...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex min-h-screen bg-white font-sans overflow-hidden">
@@ -50,19 +133,45 @@ export default function LoginPage() {
                     </div>
 
                     <div className="space-y-6">
+                        {/* Error message display */}
+                        {error && (
+                            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm">
+                                <div className="font-semibold mb-1">Authentication Error</div>
+                                <div>{error}</div>
+                                <button
+                                    onClick={() => setError(null)}
+                                    className="mt-2 text-red-700 hover:text-red-900 font-medium text-xs"
+                                >
+                                    Dismiss
+                                </button>
+                            </div>
+                        )}
+
                         <Button
                             onClick={handleGitHubSignIn}
+                            disabled={isLoading}
                             variant="outline"
-                            className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm"
+                            className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Sign in with GitHub"
                         >
-                            <svg fill="#000000" width="800px" height="800px" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg"><path d="m12.301 0h.093c2.242 0 4.34.613 6.137 1.68l-.055-.031c1.871 1.094 3.386 2.609 4.449 4.422l.031.058c1.04 1.769 1.654 3.896 1.654 6.166 0 5.406-3.483 10-8.327 11.658l-.087.026c-.063.02-.135.031-.209.031-.162 0-.312-.054-.433-.144l.002.001c-.128-.115-.208-.281-.208-.466 0-.005 0-.01 0-.014v.001q0-.048.008-1.226t.008-2.154c.007-.075.011-.161.011-.249 0-.792-.323-1.508-.844-2.025.618-.061 1.176-.163 1.718-.305l-.076.017c.573-.16 1.073-.373 1.537-.642l-.031.017c.508-.28.938-.636 1.292-1.058l.006-.007c.372-.476.663-1.036.84-1.645l.009-.035c.209-.683.329-1.468.329-2.281 0-.045 0-.091-.001-.136v.007c0-.022.001-.047.001-.072 0-1.248-.482-2.383-1.269-3.23l.003.003c.168-.44.265-.948.265-1.479 0-.649-.145-1.263-.404-1.814l.011.026c-.115-.022-.246-.035-.381-.035-.334 0-.649.078-.929.216l.012-.005c-.568.21-1.054.448-1.512.726l.038-.022-.609.384c-.922-.264-1.981-.416-3.075-.416s-2.153.152-3.157.436l.081-.02q-.256-.176-.681-.433c-.373-.214-.814-.421-1.272-.595l-.066-.022c-.293-.154-.64-.244-1.009-.244-.124 0-.246.01-.364.03l.013-.002c-.248.524-.393 1.139-.393 1.788 0 .531.097 1.04.275 1.509l-.01-.029c-.785.844-1.266 1.979-1.266 3.227 0 .025 0 .051.001.076v-.004c-.001.039-.001.084-.001.13 0 .809.12 1.591.344 2.327l-.015-.057c.189.643.476 1.202.85 1.693l-.009-.013c.354.435.782.793 1.267 1.062l.022.011c.432.252.933.465 1.46.614l.046.011c.466.125 1.024.227 1.595.284l.046.004c-.431.428-.718 1-.784 1.638l-.001.012c-.207.101-.448.183-.699.236l-.021.004c-.256.051-.549.08-.85.08-.022 0-.044 0-.066 0h.003c-.394-.008-.756-.136-1.055-.348l.006.004c-.371-.259-.671-.595-.881-.986l-.007-.015c-.198-.336-.459-.614-.768-.827l-.009-.006c-.225-.169-.49-.301-.776-.38l-.016-.004-.32-.048c-.023-.002-.05-.003-.077-.003-.14 0-.273.028-.394.077l.007-.003q-.128.072-.08.184c.039.086.087.16.145.225l-.001-.001c.061.072.13.135.205.19l.003.002.112.08c.283.148.516.354.693.6l.006.009c.17.215.396.393.651.517l.016.007.208.104c.179.081.386.129.602.129.069 0 .136-.006.202-.018l-.008.001c.174.453.526.815.977.992l.018.007c.518.213 1.12.337 1.754.337.078 0 .155-.002.231-.007l-.011.001c0 .446 0 .903.008 1.363t.008 1.25c0 .185-.08.351-.208.466l.002-.001c-.121.09-.271.144-.433.144-.074 0-.146-.01-.209-.031l.006.002c-4.844-1.658-8.327-6.252-8.327-11.658 0-2.27.614-4.397 1.687-6.224l-.033.058c1.063-1.813 2.578-3.328 4.449-4.422l.055.031c1.796-1.067 3.895-1.68 6.137-1.68z" /></svg>
-                            Log In with GitHub
+                            {isLoading ? (
+                                <>
+                                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-700"></div>
+                                    Signing in...
+                                </>
+                            ) : (
+                                <>
+                                    <svg fill="#000000" width="800px" height="800px" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5"><path d="m12.301 0h.093c2.242 0 4.34.613 6.137 1.68l-.055-.031c1.871 1.094 3.386 2.609 4.449 4.422l.031.058c1.04 1.769 1.654 3.896 1.654 6.166 0 5.406-3.483 10-8.327 11.658l-.087.026c-.063.02-.135.031-.209.031-.162 0-.312-.054-.433-.144l.002.001c-.128-.115-.208-.281-.208-.466 0-.005 0-.01 0-.014v.001q0-.048.008-1.226t.008-2.154c.007-.075.011-.161.011-.249 0-.792-.323-1.508-.844-2.025.618-.061 1.176-.163 1.718-.305l-.076.017c.573-.16 1.073-.373 1.537-.642l-.031.017c.508-.28.938-.636 1.292-1.058l.006-.007c.372-.476.663-1.036.84-1.645l.009-.035c.209-.683.329-1.468.329-2.281 0-.045 0-.091-.001-.136v.007c0-.022.001-.047.001-.072 0-1.248-.482-2.383-1.269-3.23l.003.003c.168-.44.265-.948.265-1.479 0-.649-.145-1.263-.404-1.814l.011.026c-.115-.022-.246-.035-.381-.035-.334 0-.649.078-.929.216l.012-.005c-.568.21-1.054.448-1.512.726l.038-.022-.609.384c-.922-.264-1.981-.416-3.075-.416s-2.153.152-3.157.436l.081-.02q-.256-.176-.681-.433c-.373-.214-.814-.421-1.272-.595l-.066-.022c-.293-.154-.64-.244-1.009-.244-.124 0-.246.01-.364.03l.013-.002c-.248.524-.393 1.139-.393 1.788 0 .531.097 1.04.275 1.509l-.01-.029c-.785.844-1.266 1.979-1.266 3.227 0 .025 0 .051.001.076v-.004c-.001.039-.001.084-.001.13 0 .809.12 1.591.344 2.327l-.015-.057c.189.643.476 1.202.85 1.693l-.009-.013c.354.435.782.793 1.267 1.062l.022.011c.432.252.933.465 1.46.614l.046.011c.466.125 1.024.227 1.595.284l.046.004c-.431.428-.718 1-.784 1.638l-.001.012c-.207.101-.448.183-.699.236l-.021.004c-.256.051-.549.08-.85.08-.022 0-.044 0-.066 0h.003c-.394-.008-.756-.136-1.055-.348l.006.004c-.371-.259-.671-.595-.881-.986l-.007-.015c-.198-.336-.459-.614-.768-.827l-.009-.006c-.225-.169-.49-.301-.776-.38l-.016-.004-.32-.048c-.023-.002-.05-.003-.077-.003-.14 0-.273.028-.394.077l.007-.003q-.128.072-.08.184c.039.086.087.16.145.225l-.001-.001c.061.072.13.135.205.19l.003.002.112.08c.283.148.516.354.693.6..." /></svg>
+                                    Log In with GitHub
+                                </>
+                            )}
                         </Button>
                         {session && (
                             <Button
                                 onClick={handleSignOut}
+                                disabled={isLoading}
                                 variant="outline"
-                                className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm"
+                                className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 Sign Out
                             </Button>
@@ -165,3 +274,20 @@ export default function LoginPage() {
         </div>
     );
 }
+
+// Helper function to get user-friendly error messages
+function getErrorMessage(errorCode: string): string {
+    const errorMessages: Record<string, string> = {
+        "OAuthSignin": "Failed to sign in with GitHub. Please check your GitHub OAuth app configuration.",
+        "OAuthCallback": "Failed to process GitHub OAuth response. Please try again.",
+        "OAuthCreateAccount": "Failed to create account from GitHub data. Please try again.",
+        "EmailCreateAccount": "Unable to sign in with this email.",
+        "Callback": "The sign-in callback returned an error. Please try again.",
+        "OAuthAccountNotLinked": "This GitHub account is not linked to your account.",
+        "EmailSignInError": "Check your email address.",
+        "CredentialsSignin": "Sign in failed. Check the details you provided are correct.",
+        "default": "An authentication error occurred. Please try again."
+    };
+    return errorMessages[errorCode] || errorMessages["default"];
+}
+

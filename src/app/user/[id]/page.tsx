@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { Sidebar } from '@/components/sidebar'
 import { DocumentGrid } from '@/components/document-grid'
 import { DocumentCard } from '@/components/document-card'
@@ -103,11 +105,37 @@ const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', '
 const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation']
 
 export default function DocumentManagementPage() {
+    const router = useRouter()
+    const { data: session, status } = useSession()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [showUploadModal, setShowUploadModal] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedType, setSelectedType] = useState('All')
+
+    // Redirect to login if not authenticated
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login?callbackUrl=/user/dashboard')
+        }
+    }, [status, router])
+
+    // Show loading state while checking authentication
+    if (status === 'loading') {
+        return (
+            <div className="flex h-screen items-center justify-center bg-background">
+                <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    <p className="mt-4 text-muted-foreground">Loading...</p>
+                </div>
+            </div>
+        )
+    }
+
+    // Don't render content if not authenticated
+    if (status !== 'authenticated' || !session?.user) {
+        return null
+    }
 
     // Filter documents based on search and filters
     const filteredDocuments = mockDocuments.filter((doc) => {

@@ -37,7 +37,7 @@ export default function Home() {
         </ul>
 
         <a
-          href="#"
+          href="/login"
           className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-b from-[#34558b] to-[#2a4a36] border border-[rgba(120,180,140,0.4)] px-6 py-2.5 text-sm font-medium text-white no-underline shadow-[0_0_15px_rgba(61,107,79,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] hover:opacity-90 transition"
         >
           Start for free
