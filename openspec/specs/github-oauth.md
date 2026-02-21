@@ -144,7 +144,7 @@ The system SHALL properly handle GitHub OAuth callbacks and redirect users corre
 - **THEN** the redirect is rejected and the user is sent to a default safe page
 
 ### Client-Side Session Management
-The system SHALL provide client-side access to session data via useSession hook and SessionProvider.
+The system SHALL provide client-side access to session data via useSession hook and SessionProvider. The profile page SHALL use the authenticated user's GitHub username from the session as the primary source for profile data, falling back to a `?user=` query parameter for viewing other users' profiles.
 
 #### Scenario: Components can access session data
 - **WHEN** a component calls useSession()
@@ -165,6 +165,18 @@ The system SHALL provide client-side access to session data via useSession hook 
 #### Scenario: Protected route checks session
 - **WHEN** a user visits a protected route
 - **THEN** the component checks if the user is authenticated
+
+#### Scenario: Profile page displays authenticated user's GitHub profile
+- **WHEN** an authenticated user navigates to /profile
+- **THEN** the page fetches and displays the GitHub profile of the currently signed-in user, not a hardcoded default
+
+#### Scenario: Profile page redirects unauthenticated users
+- **WHEN** an unauthenticated user navigates to /profile
+- **THEN** they are redirected to /login with callbackUrl=/profile preserved
+
+#### Scenario: Profile page shows loading state while session resolves
+- **WHEN** a user navigates to /profile and the session is still initializing
+- **THEN** a skeleton loading state is shown until the session and profile data are ready
 
 ### JWT Token Storage in localStorage
 The system SHALL store JWT tokens in localStorage to persist session tokens across page reloads.
@@ -228,6 +240,10 @@ The system SHALL implement proper session expiration and cleanup of localStorage
 #### Scenario: Expired sessions are detected and cleared
 - **WHEN** a server session expires
 - **THEN** localStorage is also cleared to prevent stale data
+
+#### Scenario: Session is cleared when logout is triggered from the sidebar
+- **WHEN** a user clicks the "Logout" button in the sidebar
+- **THEN** `broadcastSessionClear()` is called before `signOut`, removing localStorage session and token data and firing a storage event so all other open tabs also clear their session state
 
 ### Authentication Error Handling
 The system SHALL display clear error messages when authentication fails.

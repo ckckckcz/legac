@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { signOut } from 'next-auth/react'
 import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import { broadcastSessionClear } from '@/lib/utils/storage-sync'
 
 interface SidebarProps {
     isOpen: boolean
@@ -19,6 +21,7 @@ interface NavItemProps {
     onClick?: () => void
     variant?: 'default' | 'destructive'
     badge?: number
+    disabled?: boolean
 }
 
 /**
@@ -31,6 +34,7 @@ function SidebarNavItem({
     onClick,
     variant = 'default',
     badge,
+    disabled,
 }: NavItemProps) {
     const isDestructive = variant === 'destructive'
     
@@ -43,6 +47,7 @@ function SidebarNavItem({
                     : 'text-foreground hover:bg-accent'
             }`}
             onClick={onClick}
+            disabled={disabled}
         >
             {icon}
             <span className="text-sm font-medium flex-1 text-left">{label}</span>
@@ -62,10 +67,26 @@ function SidebarNavItem({
 }
 
 export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
+    const [isLoggingOut, setIsLoggingOut] = useState(false)
+    const [logoutError, setLogoutError] = useState<string | null>(null)
+
     const handleNavClick = () => {
         // Close sidebar on mobile when navigation item is clicked
         if (window.innerWidth < 768) {
             setIsOpen(false)
+        }
+    }
+
+    const handleLogout = async () => {
+        try {
+            setIsLoggingOut(true)
+            setLogoutError(null)
+            broadcastSessionClear()
+            await signOut({ redirect: true, callbackUrl: '/' })
+        } catch (err) {
+            console.error('Sign-out error:', err)
+            setLogoutError('Failed to sign out. Please try again.')
+            setIsLoggingOut(false)
         }
     }
 
@@ -159,10 +180,14 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                         />
                         <SidebarNavItem
                             icon={<LogOut className="w-5 h-5" />}
-                            label="Logout"
+                            label={isLoggingOut ? 'Signing out...' : 'Logout'}
                             variant="destructive"
-                            onClick={handleNavClick}
+                            onClick={handleLogout}
+                            disabled={isLoggingOut}
                         />
+                        {logoutError && (
+                            <p className="text-destructive text-xs px-3 pt-1">{logoutError}</p>
+                        )}
                     </div>
                 </div>
             </aside>

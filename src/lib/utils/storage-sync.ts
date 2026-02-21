@@ -6,6 +6,7 @@
 import {
   SESSION_STORAGE_KEY,
   TOKEN_STORAGE_KEY,
+  SESSION_EXPIRY_KEY,
 } from "@/lib/types/session-storage";
 
 /**
@@ -73,9 +74,10 @@ export function broadcastSessionClear(): void {
   try {
     // Set to null to trigger storage event in other tabs
     localStorage.setItem("legac_session_cleared", Date.now().toString());
-    // Clear session data from localStorage
+    // Clear all session data from localStorage
     localStorage.removeItem(SESSION_STORAGE_KEY);
     localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(SESSION_EXPIRY_KEY);
   } catch (error) {
     console.error("Failed to broadcast session clear:", error);
   }

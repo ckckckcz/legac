@@ -6,6 +6,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import useGitHubProfile from '@/lib/hooks/useGitHubProfile';
 import { GitHubProfileCard } from '@/components/profile/GitHubProfileCard';
 import { GitHubStatsSection } from '@/components/profile/GitHubStatsSection';
@@ -18,11 +19,47 @@ interface ProfilePageProps {
 }
 
 export function ProfilePage({ username }: ProfilePageProps) {
+  const { data: session, status } = useSession();
   const searchParams = useSearchParams();
-  const paramUsername = searchParams.get('user');
-  const finalUsername = username || paramUsername || 'octocat';
 
-  const { loading, error, data, retry } = useGitHubProfile(finalUsername);
+  // Username resolution priority:
+  // 1. Prop (programmatic override)
+  // 2. ?user= query param (view another user's profile)
+  // 3. Authenticated session username (logged-in user's own profile)
+  // No hardcoded fallback — require real authentication.
+  const paramUsername = searchParams.get('user');
+  const sessionUsername = (session?.user as any)?.username as string | undefined;
+  const finalUsername = username || paramUsername || sessionUsername;
+
+  // While session is initialising, show skeleton to avoid premature fetch
+  if (status === 'loading' || (!finalUsername && status !== 'unauthenticated')) {
+    return (
+      <div className="w-full space-y-4">
+        <ProfileSkeleton />
+      </div>
+    );
+  }
+
+  // No username available and user is not authenticated — show auth error
+  if (!finalUsername) {
+    return (
+      <ProfileError
+        error={new Error('You must be signed in to view your profile.')}
+        onRetry={() => { window.location.href = '/login?callbackUrl=/profile'; }}
+        username="(not signed in)"
+      />
+    );
+  }
+
+  return <ProfileContent username={finalUsername} />;
+}
+
+/**
+ * Inner component that performs the GitHub API fetch once a username is known.
+ * Kept separate so hooks are not called conditionally.
+ */
+function ProfileContent({ username }: { username: string }) {
+  const { loading, error, data, retry } = useGitHubProfile(username);
 
   // Loading State
   if (loading && !data) {
@@ -39,7 +76,7 @@ export function ProfilePage({ username }: ProfilePageProps) {
       <ProfileError
         error={error}
         onRetry={retry}
-        username={finalUsername}
+        username={username}
       />
     );
   }
