@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: legac
+  namespace: weci-holic
+  labels:
+    app: legac
+spec:
+  selector:
+    app: legac
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

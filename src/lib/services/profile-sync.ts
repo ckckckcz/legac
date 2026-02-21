@@ -4,7 +4,7 @@ import { ProfileService } from './profile-service';
 import { UserProfile } from '@/lib/types/profile';
 
 interface GitHubUserData {
-  id: number;
+  id: string | number;
   name: string | null;
   email: string | null;
   avatar_url: string | null;
@@ -16,7 +16,7 @@ export class ProfileSync {
    * Called on first profile access or login
    */
   static async syncGitHubProfile(
-    githubId: number,
+    githubId: string | number,
     githubData: GitHubUserData
   ): Promise<UserProfile> {
     try {
@@ -54,7 +54,7 @@ export class ProfileSync {
    * Identifies mismatches that need manual resolution
    */
   static async checkProfileSync(
-    githubId: number,
+    githubId: string | number,
     githubData: GitHubUserData,
     dbProfile: UserProfile
   ): Promise<{ isSynced: boolean; mismatches: string[] }> {
@@ -86,7 +86,7 @@ export class ProfileSync {
    * Updates database profile with latest GitHub information
    */
   static async resyncProfile(
-    githubId: number,
+    githubId: string | number,
     githubData: GitHubUserData
   ): Promise<UserProfile> {
     try {
@@ -113,7 +113,7 @@ export class ProfileSync {
    * Log profile sync events for audit trail
    */
   static async logSyncEvent(
-    githubId: number,
+    githubId: string | number,
     action: 'created' | 'synced' | 'mismatch_detected' | 'resynced',
     details?: Record<string, any>
   ): Promise<void> {

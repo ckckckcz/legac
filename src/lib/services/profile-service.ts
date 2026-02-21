@@ -6,7 +6,7 @@ export class ProfileService {
   /**
    * Get user profile by GitHub ID
    */
-  static async getProfileByGithubId(githubId: number): Promise<UserProfile | null> {
+  static async getProfileByGithubId(githubId: string | number): Promise<UserProfile | null> {
     try {
       // TODO: Implement database query
       // const result = await db.query(
@@ -26,7 +26,7 @@ export class ProfileService {
   /**
    * Create a new user profile
    */
-  static async createProfile(githubId: number, data: UserProfileInput): Promise<UserProfile> {
+  static async createProfile(githubId: string | number, data: UserProfileInput): Promise<UserProfile> {
     try {
       // TODO: Implement database insert
       // const result = await db.query(
@@ -56,7 +56,7 @@ export class ProfileService {
   /**
    * Update user profile
    */
-  static async updateProfile(githubId: number, data: UserProfileInput): Promise<UserProfile> {
+  static async updateProfile(githubId: string | number, data: UserProfileInput): Promise<UserProfile> {
     try {
       // TODO: Implement database update
       // const result = await db.query(
@@ -86,7 +86,7 @@ export class ProfileService {
   /**
    * Delete user profile
    */
-  static async deleteProfile(githubId: number): Promise<boolean> {
+  static async deleteProfile(githubId: string | number): Promise<boolean> {
     try {
       // TODO: Implement database delete
       // const result = await db.query(
@@ -106,7 +106,7 @@ export class ProfileService {
   /**
    * Update user avatar URL
    */
-  static async updateAvatarUrl(githubId: number, avatarUrl: string, isCustom: boolean = false): Promise<UserProfile> {
+  static async updateAvatarUrl(githubId: string | number, avatarUrl: string, isCustom: boolean = false): Promise<UserProfile> {
     try {
       const column = isCustom ? 'custom_avatar_url' : 'avatar_url';
       // TODO: Implement database update
@@ -136,7 +136,7 @@ export class ProfileService {
   /**
    * Check if profile exists
    */
-  static async profileExists(githubId: number): Promise<boolean> {
+  static async profileExists(githubId: string | number): Promise<boolean> {
     try {
       // TODO: Implement database check
       // const result = await db.query(

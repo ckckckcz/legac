@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legac
+  namespace: weci-holic
+  labels:
+    app: legac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legac
+  template:
+    metadata:
+      labels:
+        app: legac
+    spec:
+      containers:
+        - name: legac
+          image: dhnillhaq/legac:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: DATABASE_URL
+            - name: GITHUB_ID
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: GITHUB_ID
+            - name: GITHUB_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: GITHUB_SECRET
+            - name: AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: AUTH_SECRET
+            - name: NEXTAUTH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: legac-secret
+                  key: NEXTAUTH_URL
+            - name: NEXT_PUBLIC_SAWERIA_USERNAME
+              value: "legacy"
+            - name: NEXT_PUBLIC_KREATE_USERNAME
+              value: "legacy"
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 30

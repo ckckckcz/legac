@@ -9,7 +9,7 @@ export class AvatarStorage {
   /**
    * Save uploaded avatar file locally
    */
-  static async saveAvatarLocally(file: Buffer, userId: number, extension: string): Promise<string> {
+  static async saveAvatarLocally(file: Buffer, userId: string | number, extension: string): Promise<string> {
     try {
       // Ensure avatars directory exists
       const dir = path.join(process.cwd(), AVATARS_DIR);

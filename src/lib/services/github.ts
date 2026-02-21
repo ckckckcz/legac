@@ -29,13 +29,6 @@ export interface GitHubUserStats {
   contributions?: number;
 }
 
-interface GitHubApiError {
-  message: string;
-  status: number;
-  rateLimitRemaining?: number;
-  rateLimitReset?: number;
-}
-
 export class GitHubApiError extends Error {
   constructor(
     public message: string,

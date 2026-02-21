@@ -28,8 +28,7 @@ export async function withProfileAuth(
 
       if (userId && userId !== 'avatar' && userId !== 'activity') {
         // For specific user profile endpoints
-        const paramUserId = parseInt(userId, 10);
-        if (isNaN(paramUserId) || paramUserId !== session.user.id) {
+        if (userId !== session.user.id) {
           return NextResponse.json(
             { error: 'Forbidden: Cannot access other users profiles' },
             { status: 403 }
@@ -62,8 +61,8 @@ export async function requireAuth(req: NextRequest): Promise<boolean> {
  */
 export async function verifyUserOwnership(
   req: NextRequest,
-  targetUserId: number
+  targetUserId: string | number
 ): Promise<boolean> {
   const session = await auth();
-  return session?.user?.id === targetUserId;
+  return session?.user?.id === String(targetUserId);
 }
