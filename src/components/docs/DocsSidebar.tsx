@@ -92,7 +92,7 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSideba
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
             <SheetHeader className="px-4 pt-4 pb-2">
-              <SheetTitle>Documentation</SheetTitle>
+              <SheetTitle>Legac</SheetTitle>
             </SheetHeader>
             {onSearchOpen && (
               <div className="px-2 pb-1">

@@ -2,7 +2,7 @@
 
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
-import InstallCommand from "@/components/ui/command";
+import InstallCommand from "@/components/ui/install-command";
 import { Navbar } from "@/components/Navbar";
 
 export default function Home() {

@@ -1,4 +1,15 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+
 export function Navbar() {
+  const pathname = usePathname()
+
+  // Hide navbar on docs pages
+  if (pathname?.startsWith('/docs')) {
+    return null
+  }
+
   return (
     <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
       <a href="#" className="flex items-center gap-2 text-lg font-semibold text-gray-900 no-underline">
