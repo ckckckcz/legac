@@ -1,17 +1,22 @@
 /**
  * Profile Page Route
- * Located at /profile - displays GitHub profile page with sidebar
+ * Located at /user/profile/[username] - displays GitHub profile page with sidebar
  */
 
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, use } from 'react';
 import { useSession } from 'next-auth/react';
 import { Sidebar } from '@/components/sidebar';
 import { ProfilePage } from '@/components/profile/ProfilePage';
 import { ProfileSkeleton } from '@/components/profile/ProfileSkeleton';
 
-export default function Page() {
+interface PageProps {
+  params: Promise<{ username: string }>;
+}
+
+export default function Page({ params }: PageProps) {
+  const { username } = use(params);
   const { status } = useSession();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -45,7 +50,7 @@ export default function Page() {
       <main className="flex-1 overflow-auto">
         <div className="container max-w-4xl mx-auto px-4 py-8 md:pt-8">
           <Suspense fallback={<ProfileSkeleton />}>
-            <ProfilePage />
+            <ProfilePage username={username} />
           </Suspense>
         </div>
       </main>

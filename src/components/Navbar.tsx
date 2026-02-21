@@ -5,8 +5,9 @@ import { usePathname } from 'next/navigation'
 export function Navbar() {
   const pathname = usePathname()
 
-  // Hide navbar on docs pages
-  if (pathname?.startsWith('/docs')) {
+  // Hide navbar on docs, profile, and user pages
+  const hiddenPaths = ['/docs', '/profile', '/user']
+  if (hiddenPaths.some(path => pathname?.startsWith(path))) {
     return null
   }
 

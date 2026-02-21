@@ -1,3 +1,5 @@
+## MODIFIED Requirements
+
 ### Requirement: Docs search command palette
 The system SHALL provide a `Ctrl+K` keyboard shortcut that opens a search command palette allowing users to search across documentation section titles and item names, and navigate to the matching content anchor on selection. The command palette modal panel (input field and results list) SHALL be rendered visibly when opened, regardless of the CSS overflow or positioning context of the surrounding layout.
 

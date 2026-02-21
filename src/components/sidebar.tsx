@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -67,6 +67,8 @@ function SidebarNavItem({
 }
 
 export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
+    const { data: session } = useSession()
+    const username = (session?.user as any)?.username as string | undefined
     const [isLoggingOut, setIsLoggingOut] = useState(false)
     const [logoutError, setLogoutError] = useState<string | null>(null)
 
@@ -170,7 +172,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                         <SidebarNavItem
                             icon={<User className="w-5 h-5 text-muted-foreground" />}
                             label="Profile"
-                            href="/profile"
+                            href={username ? `/user/profile/${username}` : undefined}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem
