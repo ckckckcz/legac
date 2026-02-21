@@ -189,7 +189,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                         <SidebarNavItem
                             icon={<Heart className="w-5 h-5 text-muted-foreground" />}
                             label="Donation"
-                            href={username ? `/user/profile/${username}` : undefined}
+                            href={userId ? `/user/${userId}/donation` : undefined}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem
