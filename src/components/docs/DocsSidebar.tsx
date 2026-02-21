@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronRight, ChevronDown, Menu } from 'lucide-react'
+import { ChevronRight, ChevronDown, Menu, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -16,6 +16,7 @@ import type { DocsSection } from '@/components/docs/DocsLayout'
 interface DocsSidebarProps {
   sections: DocsSection[]
   activeAnchor?: string
+  onSearchOpen?: () => void
 }
 
 function NavTree({
@@ -78,7 +79,7 @@ function NavTree({
   )
 }
 
-export function DocsSidebar({ sections, activeAnchor }: DocsSidebarProps) {
+export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSidebarProps) {
   return (
     <>
       {/* Mobile Sheet trigger */}
@@ -93,6 +94,21 @@ export function DocsSidebar({ sections, activeAnchor }: DocsSidebarProps) {
             <SheetHeader className="px-4 pt-4 pb-2">
               <SheetTitle>Documentation</SheetTitle>
             </SheetHeader>
+            {onSearchOpen && (
+              <div className="px-2 pb-1">
+                <button
+                  onClick={onSearchOpen}
+                  className="flex items-center w-full gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-sm text-muted-foreground hover:bg-muted transition-colors"
+                  aria-label="Search docs (Ctrl+K)"
+                >
+                  <Search className="h-3.5 w-3.5 shrink-0" />
+                  <span className="flex-1 text-left text-xs">Search docs...</span>
+                  <kbd className="inline-flex items-center rounded border border-border bg-background px-1.5 py-2 text-xs font-mono text-muted-foreground">
+                    CTRL + K
+                  </kbd>
+                </button>
+              </div>
+            )}
             <NavTree sections={sections} activeAnchor={activeAnchor} />
           </SheetContent>
         </Sheet>
@@ -105,6 +121,21 @@ export function DocsSidebar({ sections, activeAnchor }: DocsSidebarProps) {
             Documentation
           </p>
         </div>
+        {onSearchOpen && (
+          <div className="px-2 pt-2">
+            <button
+              onClick={onSearchOpen}
+              className="flex items-center w-full gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-sm text-muted-foreground hover:bg-muted transition-colors"
+              aria-label="Search docs (Ctrl+K)"
+            >
+              <Search className="h-3.5 w-3.5 shrink-0" />
+              <span className="flex-1 text-left text-xs">Search docs...</span>
+              <kbd className="inline-flex items-center rounded border border-border bg-background px-1.5 py-0.5 text-xs font-mono text-muted-foreground">
+                CTRL + K
+              </kbd>
+            </button>
+          </div>
+        )}
         <NavTree sections={sections} activeAnchor={activeAnchor} />
       </aside>
     </>

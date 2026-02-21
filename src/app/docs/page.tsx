@@ -146,7 +146,7 @@ export default function DocsPage() {
         activeAnchor={activeAnchor}
         onSearchOpen={() => setSearchOpen(true)}
       >
-        <div className="container max-w-3xl mx-auto px-6 py-8">
+        <div className="container max-w-4xl mx-auto px-6 py-8">
           {/* Page title */}
           <h1 className="text-3xl font-bold mb-2">Documentation</h1>
           <p className="text-muted-foreground mb-6">
