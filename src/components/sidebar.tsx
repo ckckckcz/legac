@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User } from 'lucide-react'
+import { Menu, X, Files, BarChart3, Settings, LogOut, Upload, FolderOpen, User, Github } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { broadcastSessionClear } from '@/lib/utils/storage-sync'
@@ -37,15 +38,14 @@ function SidebarNavItem({
     disabled,
 }: NavItemProps) {
     const isDestructive = variant === 'destructive'
-    
+
     const content = (
         <Button
             variant="ghost"
-            className={`w-full justify-start px-3 gap-3 transition-colors ${
-                isDestructive
-                    ? 'text-destructive hover:text-destructive hover:bg-destructive/10'
-                    : 'text-foreground hover:bg-accent'
-            }`}
+            className={`w-full justify-start px-3 gap-3 transition-colors ${isDestructive
+                ? 'text-destructive hover:text-destructive hover:bg-destructive/10'
+                : 'text-foreground hover:bg-accent'
+                }`}
             onClick={onClick}
             disabled={disabled}
         >
@@ -71,6 +71,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
     const username = (session?.user as any)?.username as string | undefined
     const [isLoggingOut, setIsLoggingOut] = useState(false)
     const [logoutError, setLogoutError] = useState<string | null>(null)
+    const [githubLink, setGithubLink] = useState('')
 
     const handleNavClick = () => {
         // Close sidebar on mobile when navigation item is clicked
@@ -116,9 +117,8 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
 
             {/* Sidebar Container */}
             <aside
-                className={`fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-background transform transition-transform duration-300 md:relative md:translate-x-0 md:transform-none ${
-                    isOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
+                className={`fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-background transform transition-transform duration-300 md:relative md:translate-x-0 md:transform-none ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
             >
                 {/* Sidebar Content */}
                 <div className="h-full flex flex-col p-6">
@@ -142,8 +142,8 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                                 onClick={handleNavClick}
                             />
                             <SidebarNavItem
-                                icon={<FolderOpen className="w-5 h-5 text-muted-foreground" />}
-                                label="Categories"
+                                icon={<Github className="w-5 h-5 text-muted-foreground" />}
+                                label="Repository"
                                 onClick={handleNavClick}
                             />
                             <SidebarNavItem
@@ -153,18 +153,32 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                             />
                         </div>
 
-                        {/* Upload Button */}
-                        <Button
-                            onClick={() => {
-                                onUploadClick()
-                                handleNavClick()
-                            }}
-                            className="w-full mb-8"
-                            size="lg"
-                        >
-                            <Upload className="w-4 h-4 mr-2" />
-                            Upload Document
-                        </Button>
+                        {/* GitHub Import Section */}
+                        <div className="mb-6 px-1">
+                            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2 ml-1">Connect GitHub</p>
+                            <div className="flex flex-col gap-2 p-3 rounded-xl bg-muted/40 border border-border/50">
+                                <Input
+                                    placeholder="github.com/user/repo"
+                                    className="h-8 text-xs bg-background border-border/50 focus-visible:ring-primary/20"
+                                    value={githubLink}
+                                    onChange={(e) => setGithubLink(e.target.value)}
+                                />
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="w-full text-xs h-8 font-bold hover:bg-primary hover:text-primary-foreground transition-all"
+                                    onClick={() => {
+                                        if (githubLink) {
+                                            alert(`Importing from: ${githubLink}`)
+                                            setGithubLink('')
+                                        }
+                                    }}
+                                >
+                                    <Github className="w-3.5 h-3.5 mr-2" />
+                                    Connect Link
+                                </Button>
+                            </div>
+                        </div>
                     </nav>
 
                     {/* User Section */}

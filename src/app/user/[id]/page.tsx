@@ -15,9 +15,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { RepoList } from '@/components/repos/RepoList'
 import { Search, Filter, Plus, X } from 'lucide-react'
 
-// Mock data untuk documents
 const mockDocuments = [
     {
         id: '1',
@@ -182,76 +183,87 @@ export default function DocumentManagementPage() {
 
             {/* Main Content */}
             <main className="flex-1 overflow-auto md:ml-0">
+                <Tabs defaultValue="documents" className="flex flex-col h-full">
                 {/* Top Navigation Bar */}
                 <div className="sticky top-0 z-20 border-b border-border bg-background">
-                    <div className="p-6">
+                    <div className="p-6 pb-0">
                         <div className="flex flex-col gap-4">
                             {/* Header */}
                             <div>
-                                <h1 className="text-3xl font-bold tracking-tight mb-2">Document Management</h1>
+                                <h1 className="text-3xl font-bold tracking-tight mb-2">Dashboard</h1>
                                 <p className="text-muted-foreground">
-                                    Manage and organize all your documents in one place
+                                    Manage your documents and GitHub repositories
                                 </p>
                             </div>
 
-                            {/* Search and Controls */}
-                            <div className="flex flex-col md:flex-row gap-3">
-                                {/* Search Bar */}
-                                <div className="relative flex-1">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                                    <Input
-                                        placeholder="Search documents..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="pl-10"
-                                    />
-                                </div>
-
-                                {/* Upload Button - Desktop */}
-                                <Button
-                                    onClick={handleUpload}
-                                    className="bg-primary hover:bg-primary/90 hidden md:flex"
-                                    size="lg"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Upload
-                                </Button>
-                            </div>
-
-                            {/* Filters */}
-                            <div className="flex flex-col md:flex-row gap-3">
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <Filter className="w-4 h-4" />
-                                    <span>Filter by:</span>
-                                </div>
-
-                                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                                    <SelectTrigger className="w-full md:w-48">
-                                        <SelectValue placeholder="Category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map((cat) => (
-                                            <SelectItem key={cat} value={cat}>
-                                                {cat}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-
-                                <Select value={selectedType} onValueChange={setSelectedType}>
-                                    <SelectTrigger className="w-full md:w-48">
-                                        <SelectValue placeholder="File Type" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {fileTypes.map((type) => (
-                                            <SelectItem key={type} value={type}>
-                                                {type}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
+                            {/* Tabs navigation */}
+                            <TabsList className="w-fit">
+                                <TabsTrigger value="documents">Documents</TabsTrigger>
+                                <TabsTrigger value="repository">Repository</TabsTrigger>
+                            </TabsList>
                         </div>
+                    </div>
+                </div>
+
+                {/* Documents tab */}
+                <TabsContent value="documents" className="flex-1 overflow-auto mt-0">
+                {/* Search and Controls */}
+                <div className="sticky top-0 z-10 border-b border-border bg-background px-6 py-3">
+                    <div className="flex flex-col md:flex-row gap-3">
+                        {/* Search Bar */}
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                            <Input
+                                placeholder="Search documents..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
+
+                        {/* Upload Button - Desktop */}
+                        <Button
+                            onClick={handleUpload}
+                            className="bg-primary hover:bg-primary/90 hidden md:flex"
+                            size="lg"
+                        >
+                            <Plus className="w-4 h-4 mr-2" />
+                            Upload
+                        </Button>
+                    </div>
+
+                    {/* Filters */}
+                    <div className="flex flex-col md:flex-row gap-3 mt-3">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Filter className="w-4 h-4" />
+                            <span>Filter by:</span>
+                        </div>
+
+                        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                            <SelectTrigger className="w-full md:w-48">
+                                <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {categories.map((cat) => (
+                                    <SelectItem key={cat} value={cat}>
+                                        {cat}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+
+                        <Select value={selectedType} onValueChange={setSelectedType}>
+                            <SelectTrigger className="w-full md:w-48">
+                                <SelectValue placeholder="File Type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {fileTypes.map((type) => (
+                                    <SelectItem key={type} value={type}>
+                                        {type}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 
@@ -284,6 +296,22 @@ export default function DocumentManagementPage() {
                         Showing {filteredDocuments.length} of {mockDocuments.length} documents
                     </div>
                 </div>
+                </TabsContent>
+
+                {/* Repository tab */}
+                <TabsContent value="repository" className="flex-1 overflow-auto mt-0">
+                    <div className="p-6">
+                        <div className="mb-4">
+                            <h2 className="text-xl font-semibold">GitHub Repositories</h2>
+                            <p className="text-sm text-muted-foreground mt-1">
+                                Your public and private GitHub repositories
+                            </p>
+                        </div>
+                        <RepoList />
+                    </div>
+                </TabsContent>
+
+                </Tabs>
             </main>
         </div>
     )
