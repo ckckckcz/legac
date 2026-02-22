@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Phone, MapPin, Instagram, Twitter, Linkedin, ArrowRight } from "lucide-react";
+import SplitText from "@/components/ui/split-text";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,18 +40,26 @@ export default function LegacyverFooter() {
 
           >
             <div className="w-full md:w-80 lg:w-96">
-              <h2
-                className="text-2xl sm:text-3xl font-bold text-black mb-4 font-bricolage"
-
-              >
-                Legacyver
-              </h2>
-              <p
-                className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6 font-bricolage"
-
-              >
-                We're a creative digital agency that builds websites, apps, and product designs to help your business grow online.
-              </p>
+              <div className="mb-4">
+                <SplitText
+                  text="Legacyver"
+                  className="text-2xl sm:text-3xl font-bold text-black font-bricolage"
+                  delay={100}
+                  duration={1.5}
+                  splitType="chars"
+                  textAlign="left"
+                />
+              </div>
+              <div className="mb-6">
+                <SplitText
+                  text="We're a creative digital agency that builds websites, apps, and product designs to help your business grow online."
+                  className="text-gray-400 text-xs sm:text-sm leading-relaxed font-bricolage"
+                  delay={30}
+                  duration={1}
+                  splitType="words"
+                  textAlign="left"
+                />
+              </div>
               {/* Contact info */}
               <div className="space-y-3" >
                 <div className="flex items-center gap-3 text-gray-400 text-xs sm:text-sm font-bricolage">

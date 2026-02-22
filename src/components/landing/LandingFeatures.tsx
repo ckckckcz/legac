@@ -9,6 +9,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import SplitText from "@/components/ui/split-text";
 
 interface Feature {
   icon: LucideIcon;
@@ -67,16 +68,28 @@ export function LandingFeatures() {
     <section id="features" className="py-24 px-4 bg-white relative">
       <div className="max-w-7xl  mx-auto relative z-10">
         <div className="text-center mb-16">
-          <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-brand-blue/5 mb-6">
+          <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-brand-blue/5 mb-6 animate-fade-in-up">
             Fitur
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
-            Semua yang Anda butuhkan
+            <SplitText
+              text="Semua yang Anda butuhkan"
+              delay={50}
+              duration={1}
+              splitType="words"
+              textAlign="center"
+            />
           </h2>
-          <p className="mt-6 text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Dari analisis kode hingga dokumentasi otomatis — Legac menyediakan
-            semua tools yang dibutuhkan tim Anda.
-          </p>
+          <div className="mt-6">
+            <SplitText
+              text="Dari analisis kode hingga dokumentasi otomatis — Legac menyediakan semua tools yang dibutuhkan tim Anda."
+              className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed"
+              delay={20}
+              duration={1.2}
+              splitType="words"
+              textAlign="center"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
