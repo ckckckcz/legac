@@ -70,33 +70,33 @@ function CliAuthContent() {
   }, [status, code, port, done, session]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden font-sans">
       {/* Decorative background elements */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-slate-100 rounded-full opacity-30 blur-3xl -z-10" />
-      <div className="absolute bottom-0 left-20 w-96 h-96 bg-slate-100 rounded-full opacity-20 blur-3xl -z-10" />
+      <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full opacity-30 blur-3xl -z-10" />
+      <div className="absolute bottom-0 left-20 w-96 h-96 bg-brand-blue/5 rounded-full opacity-20 blur-3xl -z-10" />
 
-      <div className="text-center p-8 rounded-lg bg-white border border-slate-200 max-w-md shadow-lg">
+      <div className="text-center p-10 rounded-3xl bg-card border border-border max-w-md shadow-xl backdrop-blur-sm">
         {/* Icon/Logo area */}
-        <div className="mb-6 flex justify-center">
-          <div className="w-12 h-12  flex items-center justify-center">
+        <div className="mb-8 flex justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center border border-primary/10">
             <Image src="/logo.png" alt="Legacyver Logo" width={40} height={32} className="object-contain" />
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-slate-900 mb-3">
+        <h1 className="text-3xl font-black text-foreground mb-2 tracking-tight">
           Legacyver CLI
         </h1>
-        <p className="text-sm text-slate-500 mb-6">
-          Authentication
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-8">
+          Authentication Terminal
         </p>
 
-        <p className={`text-base font-medium ${error ? "text-red-600" : "text-slate-700"}`}>
+        <p className={`text-base font-semibold ${error ? "text-destructive" : "text-foreground"}`}>
           {message}
         </p>
 
         {!error && !done && (
-          <div className="mt-6 flex justify-center">
-            <div className="animate-spin h-6 w-6 border-2 border-slate-300 border-t-slate-900 rounded-full"></div>
+          <div className="mt-8 flex justify-center">
+            <div className="animate-spin h-6 w-6 border-2 border-primary/20 border-t-primary rounded-full"></div>
           </div>
         )}
 
@@ -104,24 +104,24 @@ function CliAuthContent() {
           <>
             {/* Confetti animation on success */}
             <ConfettiAnimation />
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-700 text-sm font-medium">
+            <div className="mt-8 p-5 bg-primary/5 border border-primary/10 rounded-2xl">
+              <p className="text-primary text-sm font-bold">
                 ✓ Authentication successful
               </p>
-              <p className="text-green-600 text-xs mt-2">
-                You can close this tab after the CLI confirms login.
+              <p className="text-muted-foreground text-xs mt-2">
+                Your CLI is now linked. You can close this tab and return to your terminal.
               </p>
             </div>
           </>
         )}
 
         {error && (
-          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700 text-sm font-medium mb-2">
+          <div className="mt-8 p-5 bg-destructive/5 border border-destructive/10 rounded-2xl">
+            <p className="text-destructive text-sm font-bold mb-2">
               Authentication failed
             </p>
-            <p className="text-red-600 text-xs">
-              Run <code className="bg-red-100 px-2 py-1 rounded font-mono">legacyver login</code> to try again.
+            <p className="text-muted-foreground text-xs">
+              Run <code className="bg-destructive/10 text-destructive px-2 py-1 rounded font-mono text-[10px]">legacyver login</code> to try again.
             </p>
           </div>
         )}
@@ -134,8 +134,11 @@ export default function CliAuthPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gray-950">
-          <div className="text-white">Loading...</div>
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p className="mt-4 text-muted-foreground text-sm font-medium">Preparing authentication...</p>
+          </div>
         </div>
       }
     >

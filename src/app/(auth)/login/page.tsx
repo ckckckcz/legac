@@ -120,32 +120,43 @@ function LoginContent() {
     }
 
     return (
-        <div className="flex min-h-screen bg-white font-sans overflow-hidden">
+        <div className="flex min-h-screen bg-background font-sans overflow-hidden">
 
             {/* Left Side (Form) */}
-            <div className="flex-[1.4] flex flex-col p-6 lg:p-12 relative z-10 bg-white">
-                <div className="flex justify-between items-center mb-16">
-                    <Image src="/logo.png" alt="Legacyver Logo" width={60} height={40} className="object-contain" />
+            <div className="flex-[1.4] flex flex-col p-6 lg:p-12 relative z-10 bg-background/50 backdrop-blur-3xl">
+                <div className="flex justify-between items-center mb-16 px-4">
+                    <div className="flex items-center gap-2 group cursor-pointer">
+                        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center transition-transform group-hover:scale-105 shadow-lg shadow-primary/20">
+                            <Image src="/logo.png" alt="Legacyver Logo" width={24} height={24} className="object-contain" />
+                        </div>
+                        <span className="text-xl font-black tracking-tighter text-foreground">Legacyver</span>
+                    </div>
                 </div>
 
                 <div className="flex-1 flex flex-col justify-center max-w-lg mx-auto w-full px-4 lg:px-0">
-                    <div className="mb-10 text-center">
-                        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2 tracking-tight">Get Started Now</h1>
-                        <p className="text-gray-500 text-base">Please enter your information to access your account.</p>
+                    <div className="mb-12 text-center lg:text-left">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-3">Welcome Back</p>
+                        <h1 className="text-4xl lg:text-5xl font-black text-foreground mb-3 tracking-tighter">Get Started Now</h1>
+                        <p className="text-muted-foreground text-base max-w-sm">Access your account to manage your legacy documentation seamlessly.</p>
                     </div>
 
                     <div className="space-y-6">
                         {/* Error message display */}
                         {error && (
-                            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm">
-                                <div className="font-semibold mb-1">Authentication Error</div>
-                                <div>{error}</div>
-                                <button
+                            <div className="p-5 bg-destructive/5 border border-destructive/10 rounded-2xl text-destructive text-sm animate-in fade-in slide-in-from-top-2 duration-300">
+                                <div className="font-bold mb-1 flex items-center gap-2">
+                                    <div className="w-1 h-1 rounded-full bg-destructive" />
+                                    Authentication Error
+                                </div>
+                                <div className="text-xs opacity-80 mb-3">{error}</div>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
                                     onClick={() => setError(null)}
-                                    className="mt-2 text-red-700 hover:text-red-900 font-medium text-xs"
+                                    className="h-7 px-3 text-[10px] font-bold rounded-lg border-destructive/20 hover:bg-destructive/10 hover:text-destructive transition-colors"
                                 >
                                     Dismiss
-                                </button>
+                                </Button>
                             </div>
                         )}
 
@@ -153,31 +164,42 @@ function LoginContent() {
                             onClick={handleGitHubSignIn}
                             disabled={isLoading}
                             variant="outline"
-                            className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="h-14 w-full border-border bg-card hover:bg-accent/50 hover:border-primary/30 font-bold text-foreground transition-all flex items-center justify-center gap-4 rounded-2xl border cursor-pointer shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed group"
                             aria-label="Sign in with GitHub"
                         >
                             {isLoading ? (
                                 <>
-                                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-700"></div>
-                                    Signing in...
+                                    <div className="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+                                    <span className="text-sm">Signing in...</span>
                                 </>
                             ) : (
                                 <>
-                                    <Image src="/github.png" alt="GitHub" width={20} height={20} className="w-5 h-5 object-contain" />
-                                    Log In with GitHub
+                                    <div className="relative">
+                                        <Image src="/github.png" alt="GitHub" width={24} height={24} className="w-6 h-6 object-contain group-hover:scale-110 transition-transform" />
+                                        <div className="absolute -inset-1 bg-primary/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </div>
+                                    <span className="text-sm">Log In with GitHub</span>
                                 </>
                             )}
                         </Button>
+
                         {session && (
                             <Button
                                 onClick={handleSignOut}
                                 disabled={isLoading}
-                                variant="outline"
-                                className="h-12 w-full border-gray-200 hover:bg-gray-50 font-semibold text-gray-700 transition-all flex items-center justify-center gap-3 rounded-xl border cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                variant="ghost"
+                                className="h-14 w-full text-muted-foreground hover:text-destructive hover:bg-destructive/5 font-bold transition-all flex items-center justify-center gap-3 rounded-2xl text-sm"
                             >
-                                Sign Out
+                                <div className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" />
+                                Sign Out Current Session
                             </Button>
                         )}
+                    </div>
+
+                    <div className="mt-16 text-center lg:text-left">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/30">
+                            © 2026 Legacyver Platform
+                        </p>
                     </div>
                 </div>
             </div>
