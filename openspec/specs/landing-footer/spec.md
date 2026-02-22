@@ -65,3 +65,14 @@ The system SHALL render the footer with a dark background (e.g., `bg-gray-950`) 
 
 - **WHEN** the footer is rendered
 - **THEN** the footer container has a dark background color and light-colored text
+
+### Requirement: Footer Localization (Indonesian)
+
+The Footer SHALL render all user-facing text and navigation links in Indonesian.
+
+#### Scenario: Footer content translation
+
+- **WHEN** the footer is rendered
+- **THEN** column headers like "Company", "Resources" are translated to "Perusahaan", "Sumber Daya".
+- **THEN** navigation links (Home, Features, etc.) and footer descriptions are rendered in Indonesian.
+- **THEN** the copyright notice follows the Indonesian format.

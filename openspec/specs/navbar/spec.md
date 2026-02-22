@@ -36,3 +36,13 @@ The system SHALL provide a standalone `Navbar` React component exported from `sr
 
 - **WHEN** `src/app/page.tsx` renders
 - **THEN** the top navigation is rendered via the `<Navbar />` component with no inline `<nav>` block remaining in the page file
+
+### Requirement: Navbar Localization (Indonesian)
+
+The Navbar SHALL render all user-facing text and navigation links in Indonesian, except for the logo/brand name.
+
+#### Scenario: Navbar links translation
+
+- **WHEN** the Navbar is rendered
+- **THEN** links like "Home", "Features", "Testimonial" etc. are translated to appropriate Indonesian equivalents (e.g., "Beranda", "Fitur", "Testimoni").
+- **THEN** action buttons like "Start for free" and "Login" become "Mulai Gratis" and "Masuk".
