@@ -140,16 +140,6 @@ export default function DocumentManagementPage() {
                                         className="pl-10"
                                     />
                                 </div>
-
-                                {/* Upload Button - Desktop */}
-                                <Button
-                                    onClick={handleUpload}
-                                    className="bg-primary hover:bg-primary/90 hidden md:flex"
-                                    size="lg"
-                                >
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Upload
-                                </Button>
                             </div>
                         </div>
                     </div>

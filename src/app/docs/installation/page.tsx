@@ -68,8 +68,8 @@ export default function DocsInstallationPage() {
             sections={[]}
             onSearchOpen={() => setSearchOpen(true)}
         >
-            <div className="flex w-full bg-white">
-                <main className="flex-1 px-6 lg:px-8 py-8 max-w-3xl mx-auto font-sans">
+            <div className="min-h-full">
+                <main className="px-6 lg:px-8 py-10 max-w-4xl mx-auto font-sans">
                     <div className="space-y-3 mb-12">
                         <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950">
                             Panduan Instalasi

@@ -45,7 +45,7 @@ export function LandingAbout() {
         </h2>
 
         <SplitText
-          text="Legac adalah platform berbasis AI yang dirancang untuk tim yang mewarisi codebase besar dan kompleks. Kami memetakan struktur database, endpoint API, dan alur logika bisnis secara otomatis sehingga Anda bisa memahami, mendokumentasikan, dan merefactor dengan percaya diri."
+          text="Legacyver adalah platform berbasis AI yang dirancang untuk tim yang mewarisi codebase besar dan kompleks. Kami memetakan struktur database, endpoint API, dan alur logika bisnis secara otomatis — sehingga Anda bisa memahami, mendokumentasikan, dan merefactor dengan percaya diri."
           className="max-w-2xl lg:block hidden text-gray-600 text-sm sm:text-base md:text-xl leading-relaxed text-left md:text-center"
           delay={10}
           duration={0.5}

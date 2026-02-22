@@ -20,7 +20,7 @@ const VALUE_PROPS: ValueProp[] = [
     icon: Map,
     title: "Pemetaan Otomatis",
     description:
-      "Legac memetakan seluruh struktur kodebase Anda — database, endpoint, dan logika bisnis — tanpa konfigurasi manual.",
+      "Legacyver memetakan seluruh struktur kodebase Anda — database, endpoint, dan logika bisnis — tanpa konfigurasi manual.",
   },
   {
     icon: Zap,

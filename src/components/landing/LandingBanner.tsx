@@ -20,7 +20,7 @@ export default function Banner() {
                 {/* Description */}
                 <div className="mb-4 sm:mb-6 max-w-2xl">
                     <SplitText
-                        text="Legac automatically scans your existing projects to generate comprehensive technical documentation, dependency maps, and architectural insights, helping your team move faster with less risk."
+                        text="Legacyver automatically scans your existing projects to generate comprehensive technical documentation, dependency maps, and architectural insights, helping your team move faster with less risk."
                         className="text-sm sm:text-base md:text-base lg:text-lg text-black/90 leading-relaxed"
                         delay={15}
                         duration={1.2}

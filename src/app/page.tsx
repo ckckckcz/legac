@@ -13,7 +13,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("npm i legac");
+    navigator.clipboard.writeText("npm install -g legacyver");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -113,7 +113,7 @@ export default function Home() {
 
           <div className="max-w-xl lg:mb-10 mb-6Z px-2 md:px-0">
             <SplitText
-              text="Legac memetakan struktur database, endpoint, dan logika aplikasi legacy Anda secara otomatis. Berhenti meraba dalam kegelapan dan mulai refactor dengan percaya diri."
+              text="Legacyver memetakan struktur database, endpoint, dan logika aplikasi legacy Anda secara otomatis. Berhenti meraba dalam kegelapan dan mulai refactor dengan percaya diri."
               className="text-gray-500 text-base sm:text-lg md:text-xl font-medium leading-relaxed"
               delay={30}
               duration={0.5}

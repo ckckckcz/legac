@@ -88,103 +88,103 @@ export default function DocumentViewerPage() {
         onOpenChange={setSearchOpen}
       />
 
-      <div className="flex w-full bg-white">
-        {/* Main Content Area */}
-        <main className="flex-1 px-6 lg:px-10 py-10 max-w-4xl mx-auto">
-          {/* Header Area with Title & Buttons */}
-          <div className="flex items-center justify-between mb-3">
-            <h1 className="text-4xl font-bold tracking-tight text-zinc-950">
-              {activePage?.name || document.name}
-            </h1>
-            <div className="flex items-center gap-1.5">
-              <Link href={`/user/${session?.user?.id || 'dashboard'}`}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 px-3 text-[12px] font-bold text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 border border-zinc-200 rounded-md gap-2"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  Back to Profile
-                </Button>
-              </Link>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-500 hover:text-zinc-900 border border-zinc-200 bg-zinc-50/50">
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-500 hover:text-zinc-900 border border-zinc-200 bg-zinc-50/50">
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+      <div className="min-h-full">
+        {/* Sticky Header - Style follows Parent Page */}
+        <div className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur-md">
+          <div className="p-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight mb-1 text-foreground">
+                  {activePage?.name || document.name}
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                  {activePageId === 'index' ? 'Documentation overview and file analysis.' : `Browsing ${activePage?.name}`}
+                </p>
+              </div>
 
-          <div className="text-[17px] text-zinc-600 leading-7 mb-4">
-            {activePageId === 'index' ? 'Documentation overview and file analysis for the current repository.' : `View detailed documentation for ${activePage?.name}.`}
-          </div>
-
-          {/* Content */}
-          <DocMarkdownRenderer content={content} />
-
-          {/* Footer Nav */}
-          <div className="mt-16 flex items-center justify-between border-t border-zinc-100 pt-8">
-            {(() => {
-              const pages = document.pages || [];
-              const currentIndex = pages.findIndex(p => p.id === activePageId);
-              const prevPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
-              const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
-
-              return (
-                <>
-                  {prevPage ? (
-                    <Link href={`/docs/${document.id}?page=${prevPage.id}`} className="flex flex-col gap-1 group text-left max-w-[45%]">
-                      <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Previous</span>
-                      <span className="text-sm font-semibold text-zinc-600 group-hover:text-zinc-950 transition-colors line-clamp-1">{prevPage.name}</span>
-                    </Link>
-                  ) : <div />}
-
-                  {nextPage ? (
-                    <Link href={`/docs/${document.id}?page=${nextPage.id}`} className="flex flex-col gap-1 group text-right max-w-[45%]">
-                      <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Next</span>
-                      <span className="text-sm font-semibold text-zinc-600 group-hover:text-zinc-950 transition-colors line-clamp-1">{nextPage.name}</span>
-                    </Link>
-                  ) : <div />}
-                </>
-              );
-            })()}
-          </div>
-        </main>
-
-        {/* Right Sidebar (ToC + Deploy) */}
-        <aside className="hidden xl:block w-64 shrink-0 px-6 border-l border-zinc-100">
-          <div className="sticky top-[80px] py-10 space-y-10 h-fit">
-            <div className="space-y-4">
-              <h4 className="text-[13px] font-bold text-zinc-950 mb-4">On This Page</h4>
-              <nav className="flex flex-col gap-3">
-                {tocEntries.map((entry) => (
-                  <a
-                    key={entry.anchor}
-                    href={entry.anchor}
-                    className="text-[13px] text-zinc-500 hover:text-zinc-900 transition-colors"
+              <div className="flex items-center gap-2">
+                <Link href={`/user/${session?.user?.id || 'dashboard'}`}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-4 text-xs font-semibold gap-2"
                   >
-                    {entry.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Push to Repository Card */}
-            <div className="p-5 rounded-xl border border-zinc-200 bg-zinc-50/50 space-y-4 shadow-sm">
-              <h5 className="text-[13px] font-bold text-zinc-950 leading-tight">
-                Push to Your Repository
-              </h5>
-              <p className="text-[12px] text-zinc-500 leading-relaxed">
-                Sync your documentation changes directly to your connected GitHub project.
-              </p>
-              <Button className="w-full bg-zinc-950 text-white hover:bg-zinc-800 h-9 text-xs font-bold rounded-md">
-                <Github className="h-3.5 w-3.5 mr-2" />
-                Push now
-              </Button>
+                    <ArrowLeft className="h-4 w-4" />
+                    Back to Profile
+                  </Button>
+                </Link>
+                <div className="flex items-center gap-1">
+                  <Button variant="outline" size="icon" className="h-9 w-9">
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="h-9 w-9">
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-        </aside>
+        </div>
+
+        <div className="flex w-full">
+          {/* Main Content Area */}
+          <main className="flex-1 px-6 lg:px-10 py-10 max-w-5xl mx-auto">
+            {/* Content Card (Optional: can be plain or on a card) */}
+            <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
+              <div className="p-8 lg:p-12">
+                <DocMarkdownRenderer content={content} />
+              </div>
+            </div>
+
+            {/* Footer Nav */}
+            <div className="mt-12 flex items-center justify-between border-t border-border pt-8">
+              {(() => {
+                const pages = document.pages || [];
+                const currentIndex = pages.findIndex(p => p.id === activePageId);
+                const prevPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
+                const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
+
+                return (
+                  <>
+                    {prevPage ? (
+                      <Link href={`/docs/${document.id}?page=${prevPage.id}`} className="flex flex-col gap-1 group text-left max-w-[45%]">
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Previous</span>
+                        <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">{prevPage.name}</span>
+                      </Link>
+                    ) : <div />}
+
+                    {nextPage ? (
+                      <Link href={`/docs/${document.id}?page=${nextPage.id}`} className="flex flex-col gap-1 group text-right max-w-[45%]">
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Next</span>
+                        <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">{nextPage.name}</span>
+                      </Link>
+                    ) : <div />}
+                  </>
+                );
+              })()}
+            </div>
+          </main>
+
+          {/* Right Sidebar (ToC) */}
+          <aside className="hidden xl:block w-72 shrink-0 px-8 py-10 border-l border-border">
+            <div className="sticky top-32 space-y-8">
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold text-foreground uppercase tracking-[0.1em] mb-4">On This Page</h4>
+                <nav className="flex flex-col gap-3">
+                  {tocEntries.map((entry) => (
+                    <a
+                      key={entry.anchor}
+                      href={entry.anchor}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors block"
+                    >
+                      {entry.label}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
     </DocsShell>
   );

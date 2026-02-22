@@ -14,8 +14,8 @@ export default function DocsOverviewPage() {
             sections={[]}
             onSearchOpen={() => setSearchOpen(true)}
         >
-            <div className="flex w-full bg-white">
-                <main className="flex-1 px-6 lg:px-10 py-10 max-w-4xl mx-auto">
+            <div className="min-h-full">
+                <main className="px-6 lg:px-10 py-12 max-w-5xl mx-auto">
                     {/* Hero Section */}
                     <div className="space-y-4 mb-6">
                         <h1 className="text-4xl font-bold tracking-tight text-zinc-950">
