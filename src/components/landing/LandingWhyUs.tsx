@@ -56,7 +56,7 @@ const VALUE_PROPS: ValueProp[] = [
 export function LandingWhyUs() {
   return (
     <section id="why-us" className="py-24 px-4 bg-gray-50/50 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-white mb-6">
             Mengapa Legac?

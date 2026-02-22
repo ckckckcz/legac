@@ -33,7 +33,7 @@ export default function LegacyverFooter() {
       className="relative overflow-hidden bg-white"
     >
       <div className="relative z-10 px-4 sm:px-6 py-12 sm:py-16 lg:px-8">
-        <div className="mx-auto max-w-[93rem]">
+        <div className="mx-auto max-w-7xl">
           <div
             className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-12"
 
@@ -124,7 +124,7 @@ export default function LegacyverFooter() {
 
           >
             <div className="text-7xl sm:text-9xl md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-bold font-bricolage bg-gradient-to-b from-black to-white bg-clip-text text-transparent">
-              Legacyve
+              Legacyv
             </div>
           </div>
 

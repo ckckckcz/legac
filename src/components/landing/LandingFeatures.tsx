@@ -65,7 +65,7 @@ const FEATURES: Feature[] = [
 export function LandingFeatures() {
   return (
     <section id="features" className="py-24 px-4 bg-white relative">
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl  mx-auto relative z-10">
         <div className="text-center mb-16">
           <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-brand-blue/5 mb-6">
             Fitur

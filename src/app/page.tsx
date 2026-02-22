@@ -6,6 +6,7 @@ import InstallCommand from "@/components/ui/install-command";
 import { LandingAbout } from "@/components/landing/LandingAbout";
 import { LandingWhyUs } from "@/components/landing/LandingWhyUs";
 import { LandingFeatures } from "@/components/landing/LandingFeatures";
+import LandingBanner from "@/components/landing/LandingBanner";
 import LandingFooter from "@/components/landing/LandingFooter";
 
 export default function Home() {
@@ -73,6 +74,8 @@ export default function Home() {
 
       {/* ============ FEATURES SECTION ============ */}
       <LandingFeatures />
+
+      <LandingBanner />
 
       {/* ============ FOOTER SECTION ============ */}
       <LandingFooter />
