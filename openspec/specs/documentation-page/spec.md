@@ -1,16 +1,21 @@
 ### Requirement: Documentation page route
 
-The system SHALL provide a protected route at `/docs` that is accessible only to authenticated users, enforced by Next.js middleware before any page content is served.
+The system SHALL provide routes starting at `/docs`. Static routes (`/docs`, `/docs/installation`) SHALL be publicly accessible. Dynamic document routes (`/docs/[id]`) SHALL remain protected and accessible only to authenticated users, enforced by Next.js middleware.
 
-#### Scenario: Unauthenticated user is redirected from /docs
+#### Scenario: Unauthenticated user can access static docs
 
-- **WHEN** an unauthenticated user navigates to `/docs`
-- **THEN** the middleware redirects them to `/login?callbackUrl=/docs` without rendering any page HTML
+- **WHEN** an unauthenticated user navigates to `/docs` or `/docs/installation`
+- **THEN** the system renders the requested page without redirection.
 
-#### Scenario: Authenticated user can access /docs
+#### Scenario: Unauthenticated user is redirected from dynamic docs
 
-- **WHEN** an authenticated user navigates to `/docs`
-- **THEN** the documentation page renders with the full layout
+- **WHEN** an unauthenticated user navigates to `/docs/123` (or any dynamic ID)
+- **THEN** the middleware redirects them to `/login?callbackUrl=/docs/123`.
+
+#### Scenario: Authenticated user can access all docs
+
+- **WHEN** an authenticated user navigates to any `/docs` path
+- **THEN** the page renders with the full layout.
 
 ### Requirement: Three-region page layout
 
@@ -47,7 +52,12 @@ The system SHALL render a self-contained docs layout shell consisting of a minim
 
 ### Requirement: Docs navigation sidebar
 
-The system SHALL render a docs-specific sidebar containing section groups with collapsible sub-item lists, item counts displayed as badges, an active item highlight, anchor-based navigation for sub-items, and a search affordance element that opens the docs search modal.
+The system SHALL render a docs-specific sidebar containing global static navigation links (Overview, Installation) and dynamic section groups for repositories/documents. It SHALL support collapsible sub-item lists, item counts displayed as badges, an active item highlight, and a search affordance.
+
+#### Scenario: Sidebar displays both static and dynamic items
+
+- **WHEN** the docs nav sidebar is rendered
+- **THEN** it shows "Overview" and "Installation" as top-level items, followed by dynamic document groups.
 
 #### Scenario: Section groups are displayed with item counts
 
@@ -64,9 +74,9 @@ The system SHALL render a docs-specific sidebar containing section groups with c
 - **WHEN** a user clicks an expanded section group
 - **THEN** the group collapses, hiding its child items and rotating the chevron back
 
-#### Scenario: Active item is visually highlighted
+#### Scenario: Active item is visually highlighted across static and dynamic routes
 
-- **WHEN** a navigation item is the currently selected item
+- **WHEN** a navigation item is the currently selected item (static or dynamic)
 - **THEN** it is rendered with a highlighted background to indicate active state
 
 #### Scenario: Sub-item click navigates to content anchor

@@ -1,72 +1,67 @@
 ﻿{
-  "changeName": "auth-navbar",
-  "changeDir": "D:\\legac\\openspec\\changes\\auth-navbar",
+  "changeName": "documentation-page",
+  "changeDir": "D:\\legac\\openspec\\changes\\documentation-page",
   "schemaName": "spec-driven",
   "contextFiles": {
-    "proposal": "D:\\legac\\openspec\\changes\\auth-navbar\\proposal.md",
-    "specs": "D:\\legac\\openspec\\changes\\auth-navbar\\specs\\**\\*.md",
-    "design": "D:\\legac\\openspec\\changes\\auth-navbar\\design.md",
-    "tasks": "D:\\legac\\openspec\\changes\\auth-navbar\\tasks.md"
+    "proposal": "D:\\legac\\openspec\\changes\\documentation-page\\proposal.md",
+    "specs": "D:\\legac\\openspec\\changes\\documentation-page\\specs\\**\\*.md",
+    "design": "D:\\legac\\openspec\\changes\\documentation-page\\design.md",
+    "tasks": "D:\\legac\\openspec\\changes\\documentation-page\\tasks.md"
   },
   "progress": {
-    "total": 11,
+    "total": 10,
     "complete": 0,
-    "remaining": 11
+    "remaining": 10
   },
   "tasks": [
     {
       "id": "1",
-      "description": "1.1 Ensure `Avatar` and `DropdownMenu` components are available in `src/components/ui`.",
+      "description": "1.1 Update `DocsSidebar.tsx` to include static links (Overview, Installation) as top-level navigation items.",
       "done": false
     },
     {
       "id": "2",
-      "description": "1.2 Import `useAuthSession` hook in `src/components/Navbar.tsx`.",
+      "description": "1.2 Implement active state logic in sidebar using `usePathname` for static routes.",
       "done": false
     },
     {
       "id": "3",
-      "description": "1.3 Add `\"use client\"` directive to `src/components/Navbar.tsx` if missing.",
+      "description": "1.3 Ensure `DocsShell.tsx` correctly handles layout rendering for routes without a dynamic ID.",
       "done": false
     },
     {
       "id": "4",
-      "description": "2.1 Wrap the \"Start for free\" button in a conditional check for `!session`.",
+      "description": "2.1 Create `src/app/docs/page.tsx` for the Overview page.",
       "done": false
     },
     {
       "id": "5",
-      "description": "2.2 Implement the authenticated UI section that displays when `session` is present.",
+      "description": "2.2 Implement Overview page content using premium UI sections (Hero, Key Features).",
       "done": false
     },
     {
       "id": "6",
-      "description": "2.3 Integrate the `Avatar` component with the user's profile image (or fallback).",
+      "description": "2.3 Create `src/app/docs/installation/page.tsx` for the Installation page.",
       "done": false
     },
     {
       "id": "7",
-      "description": "2.4 Implement the `DropdownMenu` with the following items:",
+      "description": "2.4 Implement Installation page content with step-by-step setup guides and code snippets.",
       "done": false
     },
     {
       "id": "8",
-      "description": "3.1 Optimize loading state to prevent layout shift while session is being fetched.",
+      "description": "3.1 Verify sidebar transition between static and dynamic documentation categories.",
       "done": false
     },
     {
       "id": "9",
-      "description": "3.2 Verify mobile responsiveness of the profile dropdown.",
+      "description": "3.2 Add \"Back to Profile\" and pagination links (\"Next: Installation\") to static pages.",
       "done": false
     },
     {
       "id": "10",
-      "description": "3.3 Test navigation for all dropdown links.",
-      "done": false
-    },
-    {
-      "id": "11",
-      "description": "3.4 Verify that clicking Logout correctly clears the session and updates the UI back to the \"Start for free\" button.",
+      "description": "3.3 Test responsive behavior for static pages on mobile devices (mobile sheet sidebar).",
       "done": false
     }
   ],
