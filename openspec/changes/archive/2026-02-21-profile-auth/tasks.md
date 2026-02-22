@@ -10,6 +10,6 @@
 
 ## 3. Verify
 
-- [ ] 3.1 While logged out, navigate to `/profile` — confirm immediate redirect to `/login?callbackUrl=/profile` with no profile page HTML rendered
-- [ ] 3.2 While logged in, navigate to `/profile` — confirm profile renders normally with no regressions
-- [ ] 3.3 Log out from the sidebar while on `/profile`, then log back in — confirm `callbackUrl` returns the user to `/profile`
+- [x] 3.1 While logged out, navigate to `/profile` — confirm immediate redirect to `/login?callbackUrl=/profile` with no profile page HTML rendered
+- [x] 3.2 While logged in, navigate to `/profile` — confirm profile renders normally with no regressions
+- [x] 3.3 Log out from the sidebar while on `/profile`, then log back in — confirm `callbackUrl` returns the user to `/profile`

@@ -18,12 +18,12 @@
 ## 4. Environment & OAuth Configuration
 
 - [x] 4.1 Add `NEXTAUTH_URL=https://weci-holic.hackathon.sev-2.com` to `.env`
-- [ ] 4.2 Update GitHub OAuth App callback URL to `https://weci-holic.hackathon.sev-2.com/api/auth/callback/github`
+- [x] 4.2 Update GitHub OAuth App callback URL to `https://weci-holic.hackathon.sev-2.com/api/auth/callback/github`
 
 ## 5. Build & Deploy
 
-- [ ] 5.1 Build Docker image: `docker build -t weci-holic/legac:latest .`
-- [ ] 5.2 Push image to Docker Hub: `docker push weci-holic/legac:latest`
-- [ ] 5.3 Apply k8s manifests: `kubectl apply -f k8s/`
-- [ ] 5.4 Verify pod is running: `kubectl get pods -n weci-holic`
-- [ ] 5.5 Verify app is accessible at `https://weci-holic.hackathon.sev-2.com`
+- [x] 5.1 Build Docker image: `docker build -t weci-holic/legac:latest .`
+- [x] 5.2 Push image to Docker Hub: `docker push weci-holic/legac:latest`
+- [x] 5.3 Apply k8s manifests: `kubectl apply -f k8s/`
+- [x] 5.4 Verify pod is running: `kubectl get pods -n weci-holic`
+- [x] 5.5 Verify app is accessible at `https://weci-holic.hackathon.sev-2.com`

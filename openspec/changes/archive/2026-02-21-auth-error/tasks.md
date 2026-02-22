@@ -24,8 +24,8 @@
 
 ## 5. Verification
 
-- [ ] 5.1 Log in via GitHub OAuth and confirm `legac_auth_token` is present in localStorage with a non-null `value`
-- [ ] 5.2 Log in via GitHub OAuth and confirm `legac_session_data` in localStorage contains the correct GitHub username, name, and email
-- [ ] 5.3 Navigate to `/profile` while authenticated and confirm the page displays your own GitHub profile, not "The Octocat"
-- [ ] 5.4 Open `/profile` in a new tab while unauthenticated and confirm redirect to `/login?callbackUrl=%2Fprofile`
-- [ ] 5.5 Log out and confirm `legac_auth_token` and `legac_session_data` are removed from localStorage
+- [x] 5.1 Log in via GitHub OAuth and confirm `legac_auth_token` is present in localStorage with a non-null `value`
+- [x] 5.2 Log in via GitHub OAuth and confirm `legac_session_data` in localStorage contains the correct GitHub username, name, and email
+- [x] 5.3 Navigate to `/profile` while authenticated and confirm the page displays your own GitHub profile, not "The Octocat"
+- [x] 5.4 Open `/profile` in a new tab while unauthenticated and confirm redirect to `/login?callbackUrl=%2Fprofile`
+- [x] 5.5 Log out and confirm `legac_auth_token` and `legac_session_data` are removed from localStorage

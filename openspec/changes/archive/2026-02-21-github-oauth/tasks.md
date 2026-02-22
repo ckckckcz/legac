@@ -2,9 +2,9 @@
 
 - [x] 1.1 Install `next-auth@beta` package
 - [x] 1.2 Generate `AUTH_SECRET` using `openssl rand -base64 32`
-- [ ] 1.3 Create GitHub OAuth application in GitHub Settings → Developer Settings → OAuth Apps
-- [ ] 1.4 Configure GitHub OAuth app with Authorization callback URL
-- [ ] 1.5 Set environment variables (`GITHUB_ID`, `GITHUB_SECRET`, `AUTH_SECRET`) in `.env.local`
+- [x] 1.3 Create GitHub OAuth application in GitHub Settings → Developer Settings → OAuth Apps
+- [x] 1.4 Configure GitHub OAuth app with Authorization callback URL
+- [x] 1.5 Set environment variables (`GITHUB_ID`, `GITHUB_SECRET`, `AUTH_SECRET`) in `.env.local`
 
 ## 2. NextAuth Configuration
 
@@ -20,7 +20,7 @@
 - [x] 3.1 Create directory structure `src/app/api/auth/[...nextauth]/`
 - [x] 3.2 Create `src/app/api/auth/[...nextauth]/route.ts` API handler
 - [x] 3.3 Export NextAuth handler for GET and POST methods
-- [ ] 3.4 Test OAuth callback endpoint is reachable at `/api/auth/callback/github`
+- [x] 3.4 Test OAuth callback endpoint is reachable at `/api/auth/callback/github`
 
 ## 4. Middleware Protection
 
@@ -46,10 +46,10 @@
 
 ## 7. Testing and Validation
 
-- [ ] 7.1 Test GitHub OAuth sign-in flow end-to-end
-- [ ] 7.2 Verify session persists across page reloads
-- [ ] 7.3 Verify session is cleared after sign-out
-- [ ] 7.4 Verify unauthenticated users cannot access protected routes
-- [ ] 7.5 Verify authenticated users can access protected routes
-- [ ] 7.6 Verify user profile data is correctly retrieved and stored in session
-- [ ] 7.7 Test missing environment variable handling (graceful degradation)
+- [x] 7.1 Test GitHub OAuth sign-in flow end-to-end
+- [x] 7.2 Verify session persists across page reloads
+- [x] 7.3 Verify session is cleared after sign-out
+- [x] 7.4 Verify unauthenticated users cannot access protected routes
+- [x] 7.5 Verify authenticated users can access protected routes
+- [x] 7.6 Verify user profile data is correctly retrieved and stored in session
+- [x] 7.7 Test missing environment variable handling (graceful degradation)
