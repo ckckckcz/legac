@@ -17,7 +17,9 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen, className }:
   const params = useParams()
   const pathname = usePathname()
 
-  const staticSections: DocsSection[] = [
+  const isDynamicPage = !!params.id
+
+  const staticSections: DocsSection[] = !isDynamicPage ? [
     {
       title: 'Getting Started',
       items: [
@@ -25,7 +27,7 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen, className }:
         { label: 'Installation', anchor: '/docs/installation' },
       ],
     },
-  ]
+  ] : []
 
   const allSections = [...staticSections, ...sections]
 
