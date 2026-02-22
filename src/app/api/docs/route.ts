@@ -18,22 +18,51 @@ export async function GET() {
 
     const pool = getPool();
 
-    // Get GitHub numeric ID from session
-    const githubId = (session as any).user?.id;
-
-    // Find app.users row for this GitHub user
+    // Try multiple strategies to find the user in app.users:
+    // 1. session.user.id might be GitHub numeric ID (if token.githubId was set)
+    // 2. Use GitHub access token to fetch real GitHub profile (most reliable)
     let userId: string | null = null;
-    if (githubId) {
+
+    // Strategy 1: Try session.user.id as github_id
+    const sessionId = (session as any).user?.id;
+    if (sessionId && /^\d+$/.test(String(sessionId))) {
       const userRow = await pool.query(
         "SELECT id FROM app.users WHERE github_id = $1",
-        [githubId]
+        [sessionId]
       );
       if (userRow.rows.length > 0) {
         userId = userRow.rows[0].id;
       }
     }
 
-    // If no user found, return empty list
+    // Strategy 2: If not found, use GitHub API with access token
+    if (!userId) {
+      const accessToken = (session as any).accessToken;
+      if (accessToken) {
+        try {
+          const ghRes = await fetch("https://api.github.com/user", {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              Accept: "application/json",
+            },
+          });
+          if (ghRes.ok) {
+            const ghProfile = await ghRes.json();
+            const userRow = await pool.query(
+              "SELECT id FROM app.users WHERE github_id = $1",
+              [ghProfile.id]
+            );
+            if (userRow.rows.length > 0) {
+              userId = userRow.rows[0].id;
+            }
+          }
+        } catch {
+          // GitHub API call failed, continue without it
+        }
+      }
+    }
+
+    // If still no user found, return empty list
     if (!userId) {
       return NextResponse.json({ docs: [] });
     }

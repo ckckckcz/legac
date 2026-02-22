@@ -35,7 +35,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-900 no-underline hover:opacity-80 transition-opacity">
           <img src="/logo.png" alt="Legac Logo" className="w-10 h-10 object-contain" />
-          <span>Legac</span>
+          <span>Legacyver</span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0 font-medium">

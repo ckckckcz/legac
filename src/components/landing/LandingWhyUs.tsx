@@ -60,11 +60,11 @@ export function LandingWhyUs() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-white mb-6 animate-fade-in-up">
-            Mengapa Legac?
+            Mengapa Legacyver?
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
             <SplitText
-              text="Kenapa tim memilih Legac"
+              text="Kenapa tim memilih Legacyver"
               delay={50}
               duration={1}
               splitType="words"
@@ -73,7 +73,7 @@ export function LandingWhyUs() {
           </h2>
           <div className="mt-6">
             <SplitText
-              text="Legac bukan sekadar tools dokumentasi — ini adalah copilot untuk memahami dan menguasai sistem yang paling kompleks sekalipun."
+              text="Legacyver bukan sekadar tools dokumentasi — ini adalah copilot untuk memahami dan menguasai sistem yang paling kompleks sekalipun."
               className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed"
               delay={20}
               duration={1.2}

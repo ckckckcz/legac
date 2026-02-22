@@ -149,33 +149,6 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                                 onClick={handleNavClick}
                             />
                         </div>
-
-                        {/* GitHub Connection */}
-                        <div className="space-y-2.5 px-0.5">
-                            <p className="px-2.5 text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/50">Connect</p>
-                            <div className="space-y-2 p-2.5 rounded-xl bg-muted/30 border border-border/50 transition-colors hover:bg-muted/40 group">
-                                <Input
-                                    placeholder="user/repo"
-                                    className="h-8 text-[11px] bg-background border-border/40 focus-visible:ring-primary/20"
-                                    value={githubLink}
-                                    onChange={(e) => setGithubLink(e.target.value)}
-                                />
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="w-full text-[11px] h-7.5 font-bold hover:bg-primary hover:text-primary-foreground transition-all gap-2"
-                                    onClick={() => {
-                                        if (githubLink) {
-                                            alert(`Connecting: ${githubLink}`)
-                                            setGithubLink('')
-                                        }
-                                    }}
-                                >
-                                    <Github size={12} />
-                                    <span>Sync Repo</span>
-                                </Button>
-                            </div>
-                        </div>
                     </nav>
 
                     {/* Footer */}

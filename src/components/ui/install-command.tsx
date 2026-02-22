@@ -10,8 +10,8 @@ export default function InstallCommand() {
     const [copied, setCopied] = useState(false)
 
     const commands: Record<PackageManager, string> = {
-        npm: "npm install legac",
-        pnpm: "pnpm add legac",
+        npm: "npm install -g legacyver",
+        pnpm: "pnpm install -g legacyver",
     }
 
     const handleCopy = async () => {

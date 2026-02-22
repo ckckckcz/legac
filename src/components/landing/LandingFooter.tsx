@@ -43,7 +43,7 @@ export default function LegacyverFooter() {
               <div className="mb-4 flex items-center gap-3">
                 <img src="/logo.png" alt="Legac Logo" className="w-12 h-12 object-contain" />
                 <SplitText
-                  text="Legac"
+                  text="Legacyver"
                   className="text-2xl sm:text-3xl font-bold text-black font-bricolage"
                   delay={100}
                   duration={1.5}
