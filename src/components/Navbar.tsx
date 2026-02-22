@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
-import { LogOut, User, Github } from 'lucide-react'
+import { LogOut, User, Github, ArrowRight } from 'lucide-react'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -49,10 +49,12 @@ export function Navbar() {
           ) : !isAuthenticated ? (
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white no-underline shadow-lg shadow-brand-blue/20 hover:bg-brand-blue-hover transition-all hover:scale-105 active:scale-95"
+              className="group relative inline-flex items-center gap-3 rounded-full bg-[#34558b] pl-5 pr-1.5 py-1.5 text-xs font-semibold text-white no-underline transition-all hover:bg-[#34558b] hover:shadow-xl active:scale-95 shadow-lg shadow-black/10"
             >
-              Start for free
-              <span className="text-lg">›</span>
+              <span className="tracking-wide">Get Started Free</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white transition-transform  group-hover:-rotate-45">
+                <ArrowRight className="h-4 w-4 text-[#0d041a]" />
+              </div>
             </Link>
           ) : (
             <DropdownMenu>

@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Rocket, Star } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link"
 import SplitText from "@/components/ui/split-text";
 import CountUp from "@/components/ui/count-text";
 
@@ -60,9 +59,11 @@ export function LandingAbout() {
         />
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
-          <Button size="lg" className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 h-12 rounded-full shadow-lg shadow-brand-blue/20 transition-all hover:scale-105 active:scale-95">
-            Mulai Sekarang
-          </Button>
+          <Link href="/login">
+            <Button size="lg" className="bg-brand-blue hover:bg-brand-blue-hover text-white px-8 h-12 rounded-full shadow-lg shadow-brand-blue/20 transition-all hover:scale-105 active:scale-95">
+              Mulai Sekarang
+            </Button>
+          </Link>
           <Button size="lg" variant="outline" className="px-8 h-12 rounded-full border-gray-200 hover:bg-gray-50 transition-all">
             Pelajari Lebih Lanjut
           </Button>
