@@ -2,21 +2,17 @@ import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Protected routes that require authentication
-const protectedRoutes = ["/user", "/docs"];
-
 // Public routes that don't require authentication
 const publicRoutes = ["/", "/login"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
   // Check if route is protected
-  const isProtectedRoute = protectedRoutes.some(route => 
-    pathname.startsWith(route)
-  );
-  
-  const isPublicRoute = publicRoutes.includes(pathname);
+  const isStaticDoc = pathname === "/docs" || pathname === "/docs/installation";
+  const isProtectedRoute =
+    pathname.startsWith("/user") ||
+    (pathname.startsWith("/docs") && !isStaticDoc);
 
   // Get session
   const session = await auth();

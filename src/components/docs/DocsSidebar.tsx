@@ -1,20 +1,40 @@
 'use client'
 
-import { Search, ChevronRight } from 'lucide-react'
+import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import type { DocsSection } from '@/components/docs/DocsLayout'
+import { cn } from '@/lib/utils'
 
 interface DocsSidebarProps {
   sections: DocsSection[]
   activeAnchor?: string
   onSearchOpen?: () => void
+  className?: string
 }
 
-export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSidebarProps) {
+export function DocsSidebar({ sections, activeAnchor, onSearchOpen, className }: DocsSidebarProps) {
   const params = useParams()
+  const pathname = usePathname()
+
+  const staticSections: DocsSection[] = [
+    {
+      title: 'Getting Started',
+      items: [
+        { label: 'Overview', anchor: '/docs' },
+        { label: 'Installation', anchor: '/docs/installation' },
+      ],
+    },
+  ]
+
+  const allSections = [...staticSections, ...sections]
+
   return (
-    <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-zinc-100 bg-white py-6 pl-6 pr-4 sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto">
+    <aside className={cn(
+      "hidden lg:flex flex-col w-64 shrink-0 border-r border-zinc-100 bg-white py-6 pl-6 pr-4 sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto",
+      className
+    )}>
+
       {/* Search Bar */}
       <div className="mb-8">
         <button
@@ -31,18 +51,25 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSideba
       </div>
 
       <nav className="flex flex-col gap-8 pb-10">
-        {sections.map((section) => (
+        {allSections.map((section) => (
           <div key={section.title} className="space-y-3">
             <h5 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-400 pl-2">
               {section.title}
             </h5>
             <div className="flex flex-col gap-0.5">
               {section.items.map((item) => {
-                const isActive = activeAnchor === item.anchor
-                // If the anchor doesn't start with '#', it's a sub-page of the current doc
-                const href = item.anchor.startsWith('#')
-                  ? item.anchor
-                  : `/docs/${params.id}?page=${item.anchor}`
+                const isStatic = item.anchor.startsWith('/docs')
+                const isActive = isStatic
+                  ? pathname === item.anchor
+                  : activeAnchor === item.anchor
+
+                // Construct href
+                let href = item.anchor
+                if (!isStatic) {
+                  href = item.anchor.startsWith('#')
+                    ? item.anchor
+                    : `/docs/${params.id}?page=${item.anchor}`
+                }
 
                 return (
                   <Link

@@ -7,6 +7,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Zap, Map, ShieldCheck, GitBranch, Clock, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import SplitText from "@/components/ui/split-text";
 
 interface ValueProp {
   icon: LucideIcon;
@@ -56,18 +57,30 @@ const VALUE_PROPS: ValueProp[] = [
 export function LandingWhyUs() {
   return (
     <section id="why-us" className="py-24 px-4 bg-gray-50/50 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-white mb-6">
+          <Badge variant="outline" className="text-sm px-4 py-1.5 border-brand-blue/20 text-brand-blue bg-white mb-6 animate-fade-in-up">
             Mengapa Legac?
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 leading-tight">
-            Kenapa tim memilih Legac
+            <SplitText
+              text="Kenapa tim memilih Legac"
+              delay={50}
+              duration={1}
+              splitType="words"
+              textAlign="center"
+            />
           </h2>
-          <p className="mt-6 text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Legac bukan sekadar tools dokumentasi — ini adalah copilot untuk
-            memahami dan menguasai sistem yang paling kompleks sekalipun.
-          </p>
+          <div className="mt-6">
+            <SplitText
+              text="Legac bukan sekadar tools dokumentasi — ini adalah copilot untuk memahami dan menguasai sistem yang paling kompleks sekalipun."
+              className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed"
+              delay={20}
+              duration={1.2}
+              splitType="words"
+              textAlign="center"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

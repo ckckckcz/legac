@@ -1,9 +1,17 @@
 'use client'
 
-import { FileText, Download, Trash2, Eye, Clock, HardDrive } from 'lucide-react'
+import { FileText, Download, Trash2, Eye, Clock, HardDrive, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import { useState } from 'react'
+import JSZip from 'jszip'
+
+export interface DocumentSubPage {
+    id: string;
+    name: string;
+    content: string;
+}
 
 export interface Document {
     id: string | number
@@ -14,6 +22,8 @@ export interface Document {
     size: string
     status: 'draft' | 'published' | 'archived' | string
     thumbnail?: string
+    content?: string
+    pages?: DocumentSubPage[]
 }
 
 interface DocumentCardProps {
@@ -34,24 +44,59 @@ const typeColors: Record<string, string> = {
     'Presentation': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
     'Markdown': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
     'Design': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+    'Documentation': 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200',
 }
 
 export function DocumentCard({
     document
 }: DocumentCardProps) {
-    const { id, name, type, category, uploadDate, size, status, thumbnail } = document
+    const { id, name, type, category, uploadDate, size, status, thumbnail, pages, content } = document
+    const [isDownloading, setIsDownloading] = useState(false)
     const currentStatus = statusConfig[status] || statusConfig.draft
+
+    const handleDownload = async () => {
+        setIsDownloading(true)
+        try {
+            const zip = new JSZip()
+            const folderName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+
+            if (pages && pages.length > 0) {
+                // If it's a multi-page doc, add each page
+                const docsFolder = zip.folder(folderName)
+                pages.forEach(page => {
+                    docsFolder?.file(`${page.name}.md`, page.content)
+                })
+            } else if (content) {
+                // Single doc download
+                zip.file(`${folderName}.md`, content)
+            } else {
+                throw new Error('No content to download')
+            }
+
+            const blob = await zip.generateAsync({ type: 'blob' })
+            const url = window.URL.createObjectURL(blob)
+            const link = window.document.createElement('a')
+            link.href = url
+            link.download = `${folderName}.zip`
+            window.document.body.appendChild(link)
+            link.click()
+            window.document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
+        } catch (error) {
+            console.error('Download failed:', error)
+        } finally {
+            setIsDownloading(false)
+        }
+    }
 
     return (
         <div className="group border border-border rounded-lg overflow-hidden bg-card hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
             {/* Thumbnail Section */}
             <div className="relative w-full h-40 bg-muted flex items-center justify-center overflow-hidden">
                 {thumbnail ? (
-                    <img
-                        src={thumbnail}
-                        alt={name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                    <div className="w-full h-full bg-zinc-50 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform duration-300">
+                        {thumbnail}
+                    </div>
                 ) : (
                     <div className="flex flex-col items-center gap-2 text-muted-foreground">
                         <FileText className="w-12 h-12" />
@@ -110,10 +155,16 @@ export function DocumentCard({
                         <Button
                             variant="outline"
                             size="icon"
-                            className="h-9 w-9 shrink-0 hover:bg-primary/5 hover:text-primary transition-colors"
-                            title="Download document"
+                            disabled={isDownloading}
+                            onClick={handleDownload}
+                            className="h-9 w-9 shrink-0 hover:bg-primary/5 hover:text-primary transition-colors disabled:opacity-50"
+                            title="Download document as zip"
                         >
-                            <Download className="w-4 h-4" />
+                            {isDownloading ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <Download className="w-4 h-4" />
+                            )}
                         </Button>
                         <Button
                             variant="outline"
