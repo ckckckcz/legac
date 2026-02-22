@@ -1,12 +1,13 @@
-# src — Documentation
+# repos — Documentation
 
 **Primary language:** typescript  
-**Total files:** 1  
-**Analyzed at:** 2026-02-21T17:51:44.572Z
+**Total files:** 2  
+**Analyzed at:** 2026-02-22T02:54:39.465Z  
 
 ## Files
 
-- [components.tsx](components.md)
+- [route.ts](route.md)
+- [[owner]/[repo]/detail/route.ts]([owner]/[repo]/detail/route.md)
 
 ## Dependency Graph
 

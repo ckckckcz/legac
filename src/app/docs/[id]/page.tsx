@@ -5,7 +5,7 @@ import { DocsShell } from '@/components/docs/DocsLayout';
 import { DocsSearch } from '@/components/docs/DocsSearch';
 import { DocMarkdownRenderer } from '@/components/docs/DocMarkdownRenderer';
 import { extractHeadings } from '@/lib/doc-utils';
-import { mockDocuments } from '@/lib/mock-data';
+import type { Document } from '@/lib/mock-data';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -27,6 +27,8 @@ export default function DocumentViewerPage() {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [document, setDocument] = useState<Document | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -34,7 +36,21 @@ export default function DocumentViewerPage() {
     }
   }, [status, router]);
 
-  const document = mockDocuments.find((doc) => doc.id.toString() === params.id);
+  // Fetch document from API
+  useEffect(() => {
+    if (status !== 'authenticated' || !params.id) return;
+    setLoading(true);
+    fetch(`/api/docs/${params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        setDocument(data.doc || null);
+      })
+      .catch(err => {
+        console.error('Failed to fetch document:', err);
+        setDocument(null);
+      })
+      .finally(() => setLoading(false));
+  }, [status, params.id]);
 
   // Handle sub-pages
   const activePageId = searchParams.get('page') || 'index';
@@ -59,7 +75,7 @@ export default function DocumentViewerPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (status === 'loading') return <div className="min-h-screen bg-white" />;
+  if (status === 'loading' || loading) return <div className="min-h-screen bg-white" />;
   if (!document) return <div className="min-h-screen bg-white flex items-center justify-center text-zinc-900">Document not found</div>;
 
   return (
