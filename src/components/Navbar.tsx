@@ -21,7 +21,7 @@ export function Navbar() {
   const { session, isAuthenticated, user, isLoading } = useAuthSession()
 
   // Hide navbar on docs, profile, and user pages
-  const hiddenPaths = ['/profile', '/user', '/login']
+  const hiddenPaths = ['/profile', '/user', '/login', '/cli-auth', '/docs']
   if (hiddenPaths.some(path => pathname?.startsWith(path))) {
     return null
   }

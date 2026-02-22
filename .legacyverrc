@@ -1,0 +1,7 @@
+{
+  "provider": "openrouter",
+  "model": "qwen/qwen3-vl-30b-a3b-thinking",
+  "format": "markdown",
+  "out": "./legacyver-docs",
+  "apiKey": "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"
+}

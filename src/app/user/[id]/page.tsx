@@ -151,40 +151,6 @@ export default function DocumentManagementPage() {
                                     Upload
                                 </Button>
                             </div>
-
-                            {/* Filters */}
-                            <div className="flex flex-col md:flex-row gap-3">
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <Filter className="w-4 h-4" />
-                                    <span>Filter by:</span>
-                                </div>
-
-                                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                                    <SelectTrigger className="w-full md:w-48">
-                                        <SelectValue placeholder="Category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map((cat) => (
-                                            <SelectItem key={cat} value={cat}>
-                                                {cat}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-
-                                <Select value={selectedType} onValueChange={setSelectedType}>
-                                    <SelectTrigger className="w-full md:w-48">
-                                        <SelectValue placeholder="File Type" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {fileTypes.map((type) => (
-                                            <SelectItem key={type} value={type}>
-                                                {type}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
                         </div>
                     </div>
                 </div>

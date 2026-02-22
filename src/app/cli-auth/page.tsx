@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
 import { useEffect, useState, Suspense } from "react";
+import Image from "next/image";
+import ConfettiAnimation from "@/components/confentti";
 
 function CliAuthContent() {
   const searchParams = useSearchParams();
@@ -68,28 +70,60 @@ function CliAuthContent() {
   }, [status, code, port, done, session]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <div className="text-center p-8 rounded-lg bg-gray-900 border border-gray-800 max-w-md">
-        <h1 className="text-2xl font-bold text-white mb-4">
-          Legacyver CLI Login
+    <div className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-slate-100 rounded-full opacity-30 blur-3xl -z-10" />
+      <div className="absolute bottom-0 left-20 w-96 h-96 bg-slate-100 rounded-full opacity-20 blur-3xl -z-10" />
+
+      <div className="text-center p-8 rounded-lg bg-white border border-slate-200 max-w-md shadow-lg">
+        {/* Icon/Logo area */}
+        <div className="mb-6 flex justify-center">
+          <div className="w-12 h-12  flex items-center justify-center">
+            <Image src="/logo.png" alt="Legacyver Logo" width={40} height={32} className="object-contain" />
+          </div>
+        </div>
+
+        <h1 className="text-3xl font-bold text-slate-900 mb-3">
+          Legacyver CLI
         </h1>
-        <p className={`text-lg ${error ? "text-red-400" : "text-gray-300"}`}>
+        <p className="text-sm text-slate-500 mb-6">
+          Authentication
+        </p>
+
+        <p className={`text-base font-medium ${error ? "text-red-600" : "text-slate-700"}`}>
           {message}
         </p>
+
         {!error && !done && (
-          <div className="mt-4">
-            <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
+          <div className="mt-6 flex justify-center">
+            <div className="animate-spin h-6 w-6 border-2 border-slate-300 border-t-slate-900 rounded-full"></div>
           </div>
         )}
+
         {done && (
-          <p className="text-green-400 mt-4 text-sm">
-            You can close this tab after the CLI confirms login.
-          </p>
+          <>
+            {/* Confetti animation on success */}
+            <ConfettiAnimation />
+            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-700 text-sm font-medium">
+                ✓ Authentication successful
+              </p>
+              <p className="text-green-600 text-xs mt-2">
+                You can close this tab after the CLI confirms login.
+              </p>
+            </div>
+          </>
         )}
+
         {error && (
-          <p className="text-gray-500 mt-4 text-sm">
-            Run <code className="bg-gray-800 px-2 py-1 rounded">legacyver login</code> to try again.
-          </p>
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 text-sm font-medium mb-2">
+              Authentication failed
+            </p>
+            <p className="text-red-600 text-xs">
+              Run <code className="bg-red-100 px-2 py-1 rounded font-mono">legacyver login</code> to try again.
+            </p>
+          </div>
         )}
       </div>
     </div>
