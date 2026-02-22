@@ -40,9 +40,10 @@ export default function LegacyverFooter() {
 
           >
             <div className="w-full md:w-80 lg:w-96">
-              <div className="mb-4">
+              <div className="mb-4 flex items-center gap-3">
+                <img src="/logo.png" alt="Legac Logo" className="w-12 h-12 object-contain" />
                 <SplitText
-                  text="Legacyver"
+                  text="Legac"
                   className="text-2xl sm:text-3xl font-bold text-black font-bricolage"
                   delay={100}
                   duration={1.5}
@@ -133,7 +134,7 @@ export default function LegacyverFooter() {
 
           >
             <div className="text-7xl sm:text-9xl md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-bold font-bricolage bg-gradient-to-b from-black to-white bg-clip-text text-transparent">
-              Legacyv
+              Legac
             </div>
           </div>
 
@@ -144,7 +145,7 @@ export default function LegacyverFooter() {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400 font-bricolage">
-                <span>© 2026 Legacyver. All rights reserved.</span>
+                <span>© 2026 Legac. All rights reserved.</span>
                 <div className="flex gap-3 sm:gap-4">
                   <a href="#" className="hover:text-black transition-colors">
                     Privacy Policy

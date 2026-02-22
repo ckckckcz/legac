@@ -5,7 +5,6 @@ import { useState } from "react";
 import InstallCommand from "@/components/ui/install-command";
 import { LandingAbout } from "@/components/landing/LandingAbout";
 import { LandingWhyUs } from "@/components/landing/LandingWhyUs";
-import { LandingFeatures } from "@/components/landing/LandingFeatures";
 import LandingBanner from "@/components/landing/LandingBanner";
 import LandingFooter from "@/components/landing/LandingFooter";
 import SplitText from "@/components/ui/split-text";
@@ -133,9 +132,6 @@ export default function Home() {
 
       {/* ============ WHY US SECTION ============ */}
       <LandingWhyUs />
-
-      {/* ============ FEATURES SECTION ============ */}
-      <LandingFeatures />
 
       <LandingBanner />
 

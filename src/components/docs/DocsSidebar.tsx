@@ -15,6 +15,14 @@ export function DocsSidebar({ sections, activeAnchor, onSearchOpen }: DocsSideba
   const params = useParams()
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-zinc-100 bg-white py-6 pl-6 pr-4 sticky top-[72px] h-[calc(100vh-72px)] overflow-y-auto">
+      {/* Logo */}
+      <div className="mb-6">
+        <Link href="/" className="flex items-center gap-2 group">
+          <img src="/logo.png" alt="Legac Logo" className="w-10 h-10 object-contain transition-transform group-hover:scale-105" />
+          <span className="text-xl font-bold tracking-tight text-zinc-900">Legac</span>
+        </Link>
+      </div>
+
       {/* Search Bar */}
       <div className="mb-8">
         <button

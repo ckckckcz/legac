@@ -1,11 +1,13 @@
+## MODIFIED Requirements
+
 ### Requirement: Navbar component
 
-The system SHALL provide a standalone `Navbar` React component exported from `src/components/Navbar.tsx` that renders the landing page top navigation bar, including the official `logo.png` image, navigation links, and conditionally renders either a CTA button or user profile dropdown based on authentication state.
+The system SHALL provide a standalone `Navbar` React component exported from `src/components/Navbar.tsx` that renders the landing page top navigation bar, including the logo, navigation links, and conditionally renders either a CTA button or user profile dropdown based on authentication state.
 
 #### Scenario: Navbar renders logo
 
 - **WHEN** the `Navbar` component is rendered
-- **THEN** the official `logo.png` image and "Legac" wordmark are visible as a linked element
+- **THEN** the Legac logo SVG and "Legac" wordmark are visible as a linked element
 
 #### Scenario: Navbar renders navigation links on desktop
 
