@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import Image from 'next/image'
 import { broadcastSessionClear } from '@/lib/utils/storage-sync'
 
 interface SidebarProps {
@@ -125,10 +126,10 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
                     {/* Header */}
                     <div className="mb-6 mt-2">
                         <Link href="/" className="flex items-center gap-2.5 px-1 group">
-                            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
-                                <Files className="w-4 h-4 text-primary-foreground" />
+                            <div className="w-7 h-7 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
+                                <Image src="/logo.png" alt="Logo" width={60} height={60} className="w-16 h-full" />
                             </div>
-                            <span className="text-lg font-black tracking-tighter text-foreground group-hover:text-primary transition-colors">Legac</span>
+                            <span className="text-lg font-black tracking-tighter text-foreground group-hover:text-primary transition-colors">Legacyver</span>
                         </Link>
                     </div>
 
