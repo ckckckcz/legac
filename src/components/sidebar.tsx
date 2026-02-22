@@ -123,7 +123,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick }: SidebarProps) {
             >
                 <div className="h-full flex flex-col p-4">
                     {/* Header */}
-                    <div className="mb-6 mt-10 md:mt-2">
+                    <div className="mb-6 mt-2">
                         <Link href="/" className="flex items-center gap-2.5 px-1 group">
                             <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
                                 <Files className="w-4 h-4 text-primary-foreground" />

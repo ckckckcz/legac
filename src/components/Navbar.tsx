@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 import { useAuthSession } from '@/lib/use-auth-session'
@@ -14,15 +14,21 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
-import { LogOut, User, Github, ArrowRight } from 'lucide-react'
+import { LogOut, User, Github, ArrowRight, Menu, X } from 'lucide-react'
+import { useState } from 'react'
 
 export function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const params = useParams()
   const { session, isAuthenticated, user, isLoading } = useAuthSession()
 
-  // Hide navbar on docs, profile, and user pages
-  const hiddenPaths = ['/profile', '/user', '/login', '/cli-auth', '/docs']
-  if (hiddenPaths.some(path => pathname?.startsWith(path))) {
+  // Pantau apakah kita di halaman dokumentasi dinamis (/docs/[id])
+  const isDynamicDoc = pathname?.startsWith('/docs/') && !!params.id
+
+  // Sembunyikan navbar di halaman tertentu
+  const hiddenPaths = ['/profile', '/user', '/login', '/cli-auth']
+  if (hiddenPaths.some(path => pathname?.startsWith(path)) || isDynamicDoc) {
     return null
   }
 
@@ -33,15 +39,28 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-900 no-underline hover:opacity-80 transition-opacity">
+        {/* Logo hanya di desktop */}
+        <div className="hidden md:flex items-center gap-2 text-xl font-bold text-gray-900">
           <img src="/logo.png" alt="Legac Logo" className="w-10 h-10 object-contain" />
           <span>Legacyver</span>
-        </Link>
+        </div>
 
+        {/* Desktop menu */}
         <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0 font-medium">
           <li><Link href="/" className="text-sm text-brand-blue no-underline">Home</Link></li>
           <li><Link href="/docs/" className="text-sm text-gray-500 no-underline hover:text-brand-blue transition-colors font-semibold">Docs</Link></li>
         </ul>
+
+        {/* Hamburger menu for mobile */}
+        <div className="md:hidden flex items-center">
+          <button
+            className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6 text-brand-blue" />
+          </button>
+        </div>
 
         <div className="flex items-center gap-4">
           {isLoading ? (
@@ -99,6 +118,30 @@ export function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile menu drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 shadow-lg animate-fade-in-up transition-all duration-300">
+          <div className="max-w-7xl mx-auto flex flex-col px-6 py-4 gap-4">
+            <div className="flex items-center justify-between mb-4 animate-fade-in-up transition-all duration-300">
+              <div className="flex items-center gap-2">
+                <img src="/logo.png" alt="Legac Logo" className="w-10 h-10 object-contain" />
+                <span className="text-xl font-bold text-gray-900">Legacyver</span>
+              </div>
+              <button
+                className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6 text-brand-blue" />
+              </button>
+            </div>
+            <hr className="border-gray-200 mb-2" />
+            <Link href="/" className="text-base font-semibold text-brand-blue no-underline py-2" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link href="/docs/" className="text-base font-semibold text-gray-500 no-underline py-2 hover:text-brand-blue transition-colors" onClick={() => setMobileMenuOpen(false)}>Docs</Link>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

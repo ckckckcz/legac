@@ -1,0 +1,532 @@
+{
+  "auth.ts": {
+    "hash": "sha256:48975308291f2cb9be4b0f35c384326329b0bff72202924b34e82c295b9242f2",
+    "docFile": "D:\\legac\\legacyver-docs\\auth.md",
+    "generatedAt": "2026-02-22T04:50:47.041Z"
+  },
+  "middleware.ts": {
+    "hash": "sha256:744170fc70c34b7ae62f5ea480b6db258e0850c2a24ad23cf3830dd4e4ca9e0c",
+    "docFile": "D:\\legac\\legacyver-docs\\middleware.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "app/layout.tsx": {
+    "hash": "sha256:a78c05dd707482bfbfc80e9e5c098194a0668fc6c3941d830364019537bc191a",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\layout.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "app/page.tsx": {
+    "hash": "sha256:64ccf595445f2079c233dccd72298aac3fcc51dca52da0311cee67c06b85be20",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/auth-session-provider.tsx": {
+    "hash": "sha256:20ff0adb40d6d78b584a3a8fe49a73ac2c2472b5ef45a691e507d4409ccde18e",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\auth-session-provider.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/AuthErrorBoundary.tsx": {
+    "hash": "sha256:f4b29a8ea3c474c96a588046df8c2684b178e4c816e21e5c059e1ce0b657d2f6",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\AuthErrorBoundary.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/confentti.tsx": {
+    "hash": "sha256:4490c587297d8c3715a783496c7e9312e6d6a220c3910797c858a385ad3b6f44",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\confentti.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/document-card.tsx": {
+    "hash": "sha256:8f931bb6cf64fd52bbfc68a6a998816bcff4e0dd7a856d48b4e479b368727b0f",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\document-card.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/document-grid.tsx": {
+    "hash": "sha256:531c2a848cc9944b63083048afab606ccd69acf586ec759c4561319dd34d392c",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\document-grid.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/form-field.tsx": {
+    "hash": "sha256:03164a2f61a2204a73b15ccc4c468adcc0575e2e85f513505c1431488e9dcaad",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\form-field.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/Navbar.tsx": {
+    "hash": "sha256:53f44858f67d88e7c2dc094115090772d0ad1e5e890aa3a8467e07d93b3e10a6",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\Navbar.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ProtectedRoute.tsx": {
+    "hash": "sha256:64ea944ceebd8a70980386449a6f3e33b45f334c7b4cf2f6e8bbc2caea2c4c3f",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ProtectedRoute.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/SessionSync.tsx": {
+    "hash": "sha256:b2c16e11a1518725c4d160f966275aea379c2dce338d550df730bbf6b4a7c805",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\SessionSync.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/sidebar.tsx": {
+    "hash": "sha256:85aab52272a09b62d4d194162b783a520f9d0e4bb9d971f911fe6c80dccd1db6",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\sidebar.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/auth-utils.ts": {
+    "hash": "sha256:3b0121709680eb58a71ba4474f1ff2a610b1a1509d3e9e618704efbe5cb84e66",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\auth-utils.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/db.ts": {
+    "hash": "sha256:f41e83834daa8f84450d94a0f2b0155da1e25d0d9e7f9082a1bbb6695f19c9da",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\db.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/doc-utils.ts": {
+    "hash": "sha256:367f1721da1e14a16e8eca222ca219c560da00f0e6921abdcfd1e5991bc2e01d",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\doc-utils.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/mock-data.ts": {
+    "hash": "sha256:60d8842fd185c145ab339abc4bb02216e9306d385c3fb5a9e29f5ef2ce0c24e9",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\mock-data.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/mock-repos.ts": {
+    "hash": "sha256:bef1783e49cebc4987367b6203c6797f233d8acd1a81be8d1a322f2021d4c08e",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\mock-repos.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/use-auth-session.ts": {
+    "hash": "sha256:7d1661d162d75813852c5912ebce3c410839bed1fd8a687c7437966b4edbff50",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\use-auth-session.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "lib/utils.ts": {
+    "hash": "sha256:7c8c3dfc0cdd370d44932828eb067ef771c8fe7996693221d5d4b90af6d54f2d",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "app/docs/page.tsx": {
+    "hash": "sha256:a7b2a5327cc179925b00524303fb414a0c657707588923c403ebee2fdb8fcb06",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\docs\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "app/cli-auth/page.tsx": {
+    "hash": "sha256:56d728f0b2fe90640568f29a052c57d293ea413ee9da0ce07d970374065b6418",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\cli-auth\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/docs/DocMarkdownRenderer.tsx": {
+    "hash": "sha256:84ea447cac105d77dbc80513e31044440fc1c842b4721696cd628bfbfdac5a39",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\docs\\DocMarkdownRenderer.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/docs/DocsLayout.tsx": {
+    "hash": "sha256:c86351269ca98e3e7d31880567891986cf6c890bfe84cabf4efa678b66bd2fff",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\docs\\DocsLayout.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/docs/DocsSearch.tsx": {
+    "hash": "sha256:481e93fac75a265a329ee25d34c2ab5bf35347a5b5af172ea4ea77454c9bec08",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\docs\\DocsSearch.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/docs/DocsSidebar.tsx": {
+    "hash": "sha256:52b980987cdac35e33d3e9dbc7520dcb5674fc33a123cc7cb2d429439606c2bd",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\docs\\DocsSidebar.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/docs/TableOfContents.tsx": {
+    "hash": "sha256:5ddd612a85b717a704a05f3a2d845aa193dfff8b7758368a681cac61e00d30d9",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\docs\\TableOfContents.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/donation/KreateCard.tsx": {
+    "hash": "sha256:66b5610f9ff1ab6472cdc3353f9ba2c361184143a6fc3b84503289a6ecb3dd47",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\donation\\KreateCard.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/donation/SaweriaCard.tsx": {
+    "hash": "sha256:3f90d77ab687d0787dbacf3b85fdfe81a1c6651388cc75c23e805532fe96933b",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\donation\\SaweriaCard.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/landing/LandingAbout.tsx": {
+    "hash": "sha256:c2d4466717e2e9b7e197f385dea6af45490199cb42dfd1157317ea13834200a8",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\landing\\LandingAbout.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/landing/LandingBanner.tsx": {
+    "hash": "sha256:d7783e96ae1f27ded1aa933bacf59afaa6e70a522ac34defaaea15cda4ca0259",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\landing\\LandingBanner.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/landing/LandingFooter.tsx": {
+    "hash": "sha256:4777ddd96464170454c561a80b9260f1bde3f2af6216930048065468b8bff898",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\landing\\LandingFooter.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/landing/LandingWhyUs.tsx": {
+    "hash": "sha256:6950547fceeda06ed85eadccc4ed88040488d2d0332a5e9581452f7a29d08712",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\landing\\LandingWhyUs.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/GitHubProfileCard.tsx": {
+    "hash": "sha256:fe5de537208cbb857a63b46ee9bbe31ce5268116b84428c6c0b0a2954e7181ca",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\GitHubProfileCard.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/GitHubStatsSection.tsx": {
+    "hash": "sha256:872fe7457919e3666764e6ace8cfd4648e9bdd9a6766b9609334d86630065303",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\GitHubStatsSection.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/index.ts": {
+    "hash": "sha256:babc1fb734434fb559f02738e063f9aa83febeef740a5d247a0badb9c08e9f27",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\index.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/ProfileError.tsx": {
+    "hash": "sha256:9ee85a72bec6a747ac1a246563ba1336e07d25715606660374dc5e41ece04e6b",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\ProfileError.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/ProfileMetadataSection.tsx": {
+    "hash": "sha256:206813db3442723659a9b8cad8d445ca5cd7137053de439f1cca278059c1d2b1",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\ProfileMetadataSection.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/ProfilePage.tsx": {
+    "hash": "sha256:d2716709ba4af71f58fd2772bf32532c8e3cd677fdd2861f26644684684cf1df",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\ProfilePage.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/profile/ProfileSkeleton.tsx": {
+    "hash": "sha256:a7db32712b11bc981adf82e13b4f5940942901abd5b3a3676042d848933663a8",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\profile\\ProfileSkeleton.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/GitHubRepoSelector.tsx": {
+    "hash": "sha256:408e528f3830b91a15d852ade86c2a0f05dafaa8aa6423708d9c385c5d78b2f2",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\GitHubRepoSelector.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/RepoCard.tsx": {
+    "hash": "sha256:0722be8cd166bd45e9a07b79b58d5ca4606f2b19ec4e7b645d767bcd51470900",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\RepoCard.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/RepoCommits.tsx": {
+    "hash": "sha256:66167ad3a198a07d55e18a671ed67671eb58f5207c58f0ec5d541f3f7c742df5",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\RepoCommits.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/RepoContributors.tsx": {
+    "hash": "sha256:76544687eae874fdcc64f79d7afa4d672b17f49a06c033a90c83539eb0ea057f",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\RepoContributors.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/RepoDetail.tsx": {
+    "hash": "sha256:9ccfc7acc2421eaba96a2ef689b6868b0af3b46dfcb1d3e8d5c5135217f132a6",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\RepoDetail.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/repos/RepoList.tsx": {
+    "hash": "sha256:7de116e4e9ceedd10d0177010f4346f4678ffd205101fb2d29d22f065c90f677",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\repos\\RepoList.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/accordion.tsx": {
+    "hash": "sha256:848c9181a1ea07260e618726610d0dca6b85d0312605617872d78663a1124391",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\accordion.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/avatar.tsx": {
+    "hash": "sha256:7f7372f72ad231e3743ef4c15d319029d96b50800624b8bc6a0c572269532730",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\avatar.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/badge.tsx": {
+    "hash": "sha256:6dbd83d8aa66b16389225ca9fbce387c03c5b8196a34e0f7bab97a2d18480f6c",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\badge.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/button.tsx": {
+    "hash": "sha256:cd98acc71988e234da58315ba3d98b9592dfc91e646cebaafc1d205609ce5eae",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\button.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/card.tsx": {
+    "hash": "sha256:2040cdff27cd1ed771e0ebbd15abcd73d31f2f1e4be6664bd6816fffd2a87476",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\card.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/command.tsx": {
+    "hash": "sha256:1f9266c1d11ea808249ca4784cf7dc416fad10a7f2075bf2406e193e4ebb7c67",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\command.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/count-text.tsx": {
+    "hash": "sha256:1190ae47a80b3dce6e21cc65d4905c698f8abd9af091f1edd678408b2e4dd533",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\count-text.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/dialog.tsx": {
+    "hash": "sha256:0596a93da7e192fd71780e43d1b7d9dcb55e98590b9f1240c3b3a14a06e63b91",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\dialog.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/dot-background.tsx": {
+    "hash": "sha256:c9c5864f9a2d5853806fcba8dd470a689fcf3406e381ce3240aa07614bd408b6",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\dot-background.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/dropdown-menu.tsx": {
+    "hash": "sha256:0aaca96982afd01a7b719cf6be95442b783c84e20867ddec5344aeeb5eba95a2",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\dropdown-menu.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/input.tsx": {
+    "hash": "sha256:56b7fd30208addbcc2468cfda4f5bc0a55342211deaab61ee35b1c352b1622f1",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\input.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/install-command.tsx": {
+    "hash": "sha256:2aa028543b3d34f7ebab28137616006eaf8c42bc55afe7db23b14e833a736e60",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\install-command.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/label.tsx": {
+    "hash": "sha256:a476e41f08b9de5bd447de66a33d8bc2ad18f2fa6b96c064778bab4b6f439f4c",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\label.md",
+    "generatedAt": "2026-02-22T04:50:47.042Z"
+  },
+  "components/ui/scroll-area.tsx": {
+    "hash": "sha256:b0ed96ab12c0dccc6d09760434d417b4ecf4ab670b09917655c4ead87ff66577",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\scroll-area.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/select.tsx": {
+    "hash": "sha256:9b8551781236b51cc744419501208b1846407e4d6973b31180d97613206a20d0",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\select.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/separator.tsx": {
+    "hash": "sha256:bbd16f077778bb123cc86a16384751f53bfd22cee5cfdf6715862bdcd711cf12",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\separator.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/sheet.tsx": {
+    "hash": "sha256:da11633018b8af9a11eb86a0d64cd63eee031ef86a84ff35e9735f6d35333d49",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\sheet.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/skeleton.tsx": {
+    "hash": "sha256:7a7d65f32399c0620c72a23e60355eb7b17411b4c0f0fde354990a6cef5df64f",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\skeleton.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/split-text.tsx": {
+    "hash": "sha256:051a74c0cd9525a91ff7405aca8730f6c09b692eeb75423e714dabd2367e3df8",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\split-text.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "components/ui/tabs.tsx": {
+    "hash": "sha256:87d9e9fbc18d985156978d3e83bfc538c61e76362f4efd0e0956005c9f9bbede",
+    "docFile": "D:\\legac\\legacyver-docs\\components\\ui\\tabs.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/hooks/use-activity.ts": {
+    "hash": "sha256:a486355f36b8f5d5795a94a5a4a0b4e698c2815b0803ccfb4e31a3998aeae3ea",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\hooks\\use-activity.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/hooks/use-profile.ts": {
+    "hash": "sha256:6a1c4abf7c1dc7f758ae53e82e547fd70b536a8db9474117b80e57fb472c3aa9",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\hooks\\use-profile.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/hooks/use-settings.ts": {
+    "hash": "sha256:dbf4a81d161f8c5fec5c33d6582fe57c06f06edcc2442d55557ba6c32c5957a6",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\hooks\\use-settings.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/hooks/useGitHubProfile.ts": {
+    "hash": "sha256:3dbccd22129f6288255754d8f5fb693c7ee7f58785f3a71654374611f2137c27",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\hooks\\useGitHubProfile.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/hooks/useSessionStorage.ts": {
+    "hash": "sha256:06885c3f726ff4bbfdaaabd8b1f4ea62ba10be3010ebd864ca05f3cd7467c9b3",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\hooks\\useSessionStorage.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/middleware/activity-logger.ts": {
+    "hash": "sha256:74bb4ca5b33fd9eefe8cf0bdb388efc0ea862307e58286b338c5832c1eaa4cb3",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\middleware\\activity-logger.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/middleware/profile-auth.ts": {
+    "hash": "sha256:b3412056903391cc82b73385c2a68ff898a973527758240af030cb676a3f1daa",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\middleware\\profile-auth.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/activity-service.ts": {
+    "hash": "sha256:e785d1258e7be6e96da673193ddaf32d1b32c86ce55eed16952005c608d7ce7d",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\activity-service.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/avatar-storage.ts": {
+    "hash": "sha256:15ea2426cf71f7c576eb1de4baf75d5ee13255658790ca187848854ba853a430",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\avatar-storage.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/github.ts": {
+    "hash": "sha256:92919c62d9ad7045e42607107b47d8cbd9a7ea5ecaf23a958d1099ea127eb7c2",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\github.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/profile-service.ts": {
+    "hash": "sha256:dfb054dd3dd2a98d0f1900720619fe256e362fb853e75534cb55b7cb9c927d79",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\profile-service.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/profile-sync.ts": {
+    "hash": "sha256:3bcf6024e2d6c8157e32143795c7c06f8c0e43c9824fb5e78046ad6c6798ad35",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\profile-sync.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/services/repo-service.ts": {
+    "hash": "sha256:f3174606eff0d7038323cbc6c3e18f04846db16b58462983472471134ed8897a",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\services\\repo-service.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/types/github-profile.ts": {
+    "hash": "sha256:2367162f9c350c3ca4d3be318684d8a065e23d66753a7ce8f6e7972801615532",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\types\\github-profile.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/types/profile.ts": {
+    "hash": "sha256:4a317a903a7bbe83438301cf837d1b6cba9e90f97b1c560a2ab9c32acbc18d6b",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\types\\profile.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/types/session-storage.ts": {
+    "hash": "sha256:ea3974b8e400af5e4d56fcc74b3aff9860bcb3259158c93e4b0aef127256b03d",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\types\\session-storage.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/cache.ts": {
+    "hash": "sha256:840781490a309888b6a5890f6c3e6fd0745659f6488ec5839d441b81adaf507b",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\cache.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/image-validator.ts": {
+    "hash": "sha256:426d0bdcaab92fe75c1729634c4d54dc16201ebd3520b9a489a823ebbdf676d2",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\image-validator.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/initials.ts": {
+    "hash": "sha256:1ad6ab8bf2e8abdbdcc22467b5cc4f01176a2aac7219be96e42af65c81a5cbd9",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\initials.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/language-icon.ts": {
+    "hash": "sha256:5fa8d6886728d58cd6bb066f86f741e6d0bfb82f01ab214ecaa6f0679ee8c251",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\language-icon.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/session-storage.ts": {
+    "hash": "sha256:2da687da8c684a6c608c43613adbc4062179c8a7d95406e4b0568cd0dddf03dc",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\session-storage.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "lib/utils/storage-sync.ts": {
+    "hash": "sha256:7973d86c2fbc38c861b1e879ecfeaf6e660e97151c7d2856b592e1c8c9876dd6",
+    "docFile": "D:\\legac\\legacyver-docs\\lib\\utils\\storage-sync.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "app/(auth)/login/page.tsx": {
+    "hash": "sha256:34f5f422debddbd06009ed9c7c4e0b47260f570afc6cb0b5467ee086b1e74e6b",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\(auth)\\login\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.043Z"
+  },
+  "app/api/docs/route.ts": {
+    "hash": "sha256:566d0271a60e43c45d7b0b14290410d3683287f245d47e4930e8aa9a5365b7a7",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\docs\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/profile/route.ts": {
+    "hash": "sha256:9dbab719118bdd7ce8e9a5e112af2d9fce28e0da35dbf3e89281c7b55d4a3597",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\profile\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/repos/route.ts": {
+    "hash": "sha256:8f6175df3f794ec2be821bb113c9ce54cf933d4869fb94ee6520802626cdca27",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\repos\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/settings/route.ts": {
+    "hash": "sha256:44c85eb3aeb38b4f2c80bfa1a496d0df11be0abc61bd2d3e99e3cb100ee4363c",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\settings\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/docs/installation/page.tsx": {
+    "hash": "sha256:92eb18d14fcce5def4e196d222b3d8ba0c188e8959144ff3bf30d863826d60ae",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\docs\\installation\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/docs/[id]/page.tsx": {
+    "hash": "sha256:73c6d2c8b4daac25f3dbbfa7b9b4de1e197067c834d8b2c8d635023d80301465",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\docs\\[id]\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/user/[id]/page.tsx": {
+    "hash": "sha256:4454b5eb26c760d27c932185da6b5c4e6e7a70b04afb54f84698f8aea0626dfd",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\user\\[id]\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/auth/cli/route.ts": {
+    "hash": "sha256:3d20c4665e343a7cfd4359396b165b33ce651c9b655584781c1a34bccea22601",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\auth\\cli\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/auth/[...nextauth]/route.ts": {
+    "hash": "sha256:c3e8185d66af3fe7019dd236a463365cce7e1e8dcaea2a7c3b8f0b103e930ce4",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\auth\\[...nextauth]\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/docs/[id]/route.ts": {
+    "hash": "sha256:6b5bd9c3516b7ff37d0f1eb8d49f21a586c101d680d09568b2ea5297def97bcc",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\docs\\[id]\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/profile/activity/route.ts": {
+    "hash": "sha256:b505b549e5c91f86c9567ccec69ea35570b2e635536f807ab026bdf96367ceb3",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\profile\\activity\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/profile/avatar/route.ts": {
+    "hash": "sha256:ca1a1f1deffd06933de1ca6b22e06773dd13c96f8b47e19a8c6542644204a61e",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\profile\\avatar\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/user/profile/[username]/page.tsx": {
+    "hash": "sha256:704bde35f008a798accc66dcc659166ac93c9a8ac73f54288c62fdb5f8d11132",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\user\\profile\\[username]\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/user/[id]/donation/page.tsx": {
+    "hash": "sha256:54c70b460c97eafb8eb627910bc76cde4c1e2da1cc636a5011b44441691dc684",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\user\\[id]\\donation\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/user/[id]/repository/page.tsx": {
+    "hash": "sha256:f7e728704d20bd282e44b5d3c93d4a6198fd3412bca2901f75af72406f480c10",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\user\\[id]\\repository\\page.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  },
+  "app/api/repos/[owner]/[repo]/detail/route.ts": {
+    "hash": "sha256:e590da8a924696cf53f76569486f10aff6062019f4e98563a6ce5bbc38f60aa3",
+    "docFile": "D:\\legac\\legacyver-docs\\app\\api\\repos\\[owner]\\[repo]\\detail\\route.md",
+    "generatedAt": "2026-02-22T04:50:47.044Z"
+  }
+}

@@ -20,10 +20,13 @@ export default function Home() {
   return (
     <>
       {/* ============ HERO SECTION ============ */}
-      <section className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 overflow-hidden bg-white">
+      <section
+        className="relative flex flex-col lg:items-center lg:justify-center lg:text-center px-4 overflow-hidden bg-white
+        md:min-h-screen md:py-0 py-12 mt-20 lg:mt-0"
+      >
         {/* Decorative Gradients */}
-        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-brand-blue/20 rounded-full blur-[700px] pointer-events-none" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] bg-brand-green/20 rounded-full blur-[200px] pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-brand-blue/20 rounded-full blur-[700px] pointer-events-none hidden md:block" />
+        <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] bg-brand-green/20 rounded-full blur-[200px] pointer-events-none hidden md:block" />
 
         {/* Dot Background Layers */}
         <div
@@ -54,14 +57,16 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 flex flex-col items-center">
+        <div className="relative z-20 flex flex-col items-center w-full">
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-5 py-2 text-sm text-gray-600 mb-6 animate-fade-in-up">
             <span className="text-green-700 text-xl">✦</span>
             <strong className="text-gray-900">Codebase Legacy</strong>
           </div>
 
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-gray-900 leading-[1.05] mb-8 flex flex-wrap justify-center gap-x-4">
-            <div className="w-full flex justify-center gap-x-4">
+          <h1
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-gray-900 leading-[1.1] lg:mb-8 mb-4 flex flex-wrap justify-center gap-x-2 w-full"
+          >
+            <div className="w-full flex justify-center gap-x-2 flex-wrap">
               <SplitText
                 text="AI-Powered"
                 className="bg-gradient-to-r from-brand-blue to-brand-green bg-clip-text text-transparent"
@@ -106,10 +111,10 @@ export default function Home() {
             </div>
           </h1>
 
-          <div className="max-w-xl mb-10">
+          <div className="max-w-xl lg:mb-10 mb-6Z px-2 md:px-0">
             <SplitText
               text="Legac memetakan struktur database, endpoint, dan logika aplikasi legacy Anda secara otomatis. Berhenti meraba dalam kegelapan dan mulai refactor dengan percaya diri."
-              className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed"
+              className="text-gray-500 text-base sm:text-lg md:text-xl font-medium leading-relaxed"
               delay={30}
               duration={0.5}
               ease="power3.out"
