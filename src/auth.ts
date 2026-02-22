@@ -19,12 +19,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user, account, profile }) {
       if (user) {
+        // user.id from GitHub provider = GitHub numeric user ID as string
         token.id = user.id;
         token.email = user.email;
         token.image = user.image;
       }
       if (profile) {
         token.username = (profile as any).login;
+        // Store GitHub numeric ID explicitly from profile (most reliable source)
+        token.githubId = String((profile as any).id);
       }
       if (account) {
         token.accessToken = account.access_token;
@@ -34,7 +37,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        // Prefer githubId from profile, fall back to token.id, then token.sub
+        session.user.id = (token.githubId as string) || (token.id as string) || (token.sub as string);
         session.user.email = token.email as string;
         session.user.image = token.image as string;
         (session.user as any).username = token.username as string;
@@ -47,6 +51,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
+      // Allow redirects back to CLI auth page after OAuth
+      else if (url.includes("/cli-auth")) return url;
       return baseUrl + "/user/dashboard";
     },
     async signIn({ user, account, profile }) {

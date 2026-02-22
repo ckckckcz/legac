@@ -15,10 +15,10 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Search, Filter, Plus, X } from 'lucide-react'
-import { mockDocuments } from '@/lib/mock-data'
+import type { Document } from '@/lib/mock-data'
 
 const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', 'Analytics', 'Engineering', 'Strategy', 'Management', 'Generated AI']
-const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation', 'Markdown', 'Design']
+const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation', 'Markdown', 'Design', 'Documentation']
 
 export default function DocumentManagementPage() {
     const router = useRouter()
@@ -28,6 +28,8 @@ export default function DocumentManagementPage() {
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedType, setSelectedType] = useState('All')
+    const [documents, setDocuments] = useState<Document[]>([])
+    const [loading, setLoading] = useState(true)
 
     // Redirect to login if not authenticated
     useEffect(() => {
@@ -35,6 +37,22 @@ export default function DocumentManagementPage() {
             router.push('/login?callbackUrl=/user/dashboard')
         }
     }, [status, router])
+
+    // Fetch documents from API
+    useEffect(() => {
+        if (status !== 'authenticated') return
+        setLoading(true)
+        fetch('/api/docs')
+            .then(res => res.json())
+            .then(data => {
+                setDocuments(data.docs || [])
+            })
+            .catch(err => {
+                console.error('Failed to fetch documents:', err)
+                setDocuments([])
+            })
+            .finally(() => setLoading(false))
+    }, [status])
 
     // Show loading state while checking authentication
     if (status === 'loading') {
@@ -54,7 +72,7 @@ export default function DocumentManagementPage() {
     }
 
     // Filter documents based on search and filters
-    const filteredDocuments = mockDocuments.filter((doc) => {
+    const filteredDocuments = documents.filter((doc) => {
         const matchesSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase())
         const matchesCategory = selectedCategory === 'All' || doc.category === selectedCategory
         const matchesType = selectedType === 'All' || doc.type === selectedType
@@ -173,7 +191,12 @@ export default function DocumentManagementPage() {
 
                 {/* Documents Grid */}
                 <div className="p-6">
-                    {filteredDocuments.length > 0 ? (
+                    {loading ? (
+                        <div className="flex flex-col items-center justify-center py-12 text-center">
+                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            <p className="mt-4 text-muted-foreground">Loading documents...</p>
+                        </div>
+                    ) : filteredDocuments.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {filteredDocuments.map((doc) => (
                                 <DocumentCard key={doc.id} document={doc} />
@@ -197,7 +220,7 @@ export default function DocumentManagementPage() {
 
                     {/* Results Count */}
                     <div className="mt-8 text-sm text-muted-foreground text-center">
-                        Showing {filteredDocuments.length} of {mockDocuments.length} documents
+                        Showing {filteredDocuments.length} of {documents.length} documents
                     </div>
                 </div>
             </main>
