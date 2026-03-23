@@ -27,9 +27,9 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
     return (
         <div className="prose prose-slate max-w-none 
       prose-headings:text-zinc-950 prose-headings:font-bold prose-headings:tracking-tight
-      prose-h1:text-4xl prose-h1:mb-8
-      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
-      prose-p:text-zinc-600 prose-p:text-[15px] prose-p:leading-[1.8] prose-p:mb-5
+      prose-h1:text-4xl prose-h1:mb-6
+      prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+      prose-p:text-zinc-600 prose-p:text-[15px] prose-p:leading-[1.7] prose-p:mb-4
       prose-a:text-brand-blue prose-a:underline-offset-4 hover:prose-a:text-brand-blue-hover transition-colors
       prose-strong:text-zinc-950 prose-strong:font-bold
       prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6 prose-ul:space-y-2
@@ -90,9 +90,9 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                         );
                     },
                     h1: ({ node, ...props }) => <h1 className="text-4xl font-bold tracking-tight text-zinc-950 mb-4" {...props} />,
-                    h2: ({ node, ...props }) => <h2 className="text-2xl font-bold tracking-tight text-zinc-950 mt-12 mb-4 scroll-m-20 border-b border-zinc-100 pb-2" {...props} />,
-                    p: ({ node, ...props }) => <p className="leading-7 [&:not(:first-child)]:mt-6 text-zinc-600 font-normal" {...props} />,
-                    ul: ({ node, ...props }) => <ul className="my-6 ml-6 list-disc [&>li]:mt-3 text-zinc-600" {...props} />,
+                    h2: ({ node, ...props }) => <h2 className="text-2xl font-bold tracking-tight text-zinc-950 border-b border-zinc-100 pb-2 mt-8 mb-4" {...props} />,
+                    p: ({ node, ...props }) => <p className="leading-7 [&:not(:first-child)]:mt-4 text-zinc-600 font-normal mb-4" {...props} />,
+                    ul: ({ node, ...props }) => <ul className="my-4 ml-6 list-disc [&>li]:mt-2 text-zinc-600" {...props} />,
                     ol: ({ node, ...props }) => (
                         <ol
                             className="my-10 space-y-6 relative ml-4"
@@ -106,7 +106,7 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                     ),
                     li: ({ node, ...props }) => (
                         <li
-                            className="relative pl-8 mb-6 last:mb-0 group flex flex-col"
+                            className="relative pl-8 mb-4 last:mb-0 group flex flex-col"
                             style={{ counterIncrement: 'step-counter' }}
                         >
                             <span

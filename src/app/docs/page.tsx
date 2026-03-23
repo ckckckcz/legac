@@ -15,7 +15,7 @@ export default function DocsOverviewPage() {
             onSearchOpen={() => setSearchOpen(true)}
         >
             <div className="min-h-full">
-                <main className="px-6 lg:px-10 py-12 max-w-5xl mx-auto">
+                <main className="px-6 lg:px-10 py-12 max-w-5xl mx-auto mt-12">
                     {/* Hero Section */}
                     <div className="space-y-4 mb-6">
                         <h1 className="text-4xl font-bold tracking-tight text-zinc-950">

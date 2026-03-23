@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@supabase/supabase-js": "^2.99.3",
     "@tailwindcss/typography": "^0.5.19",
     "@types/jszip": "^3.4.1",
     "@types/react-syntax-highlighter": "^15.5.13",

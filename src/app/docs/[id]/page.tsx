@@ -5,6 +5,7 @@ import { DocsShell } from '@/components/docs/DocsLayout';
 import { DocsSearch } from '@/components/docs/DocsSearch';
 import { DocMarkdownRenderer } from '@/components/docs/DocMarkdownRenderer';
 import { extractHeadings } from '@/lib/doc-utils';
+import { mockDocuments } from '@/lib/mock-data';
 import type { Document } from '@/lib/mock-data';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
@@ -36,19 +37,27 @@ export default function DocumentViewerPage() {
 
   // Fetch document from API
   useEffect(() => {
-    if (status !== 'authenticated' || !params.id) return;
+    if (!params.id) return;
     setLoading(true);
     fetch(`/api/docs/${params.id}`)
       .then(res => res.json())
       .then(data => {
-        setDocument(data.doc || null);
+        if (data.doc) {
+          setDocument(data.doc);
+        } else {
+          // Fallback to mock data if API doesn't return a doc
+          const mockDoc = mockDocuments.find(d => String(d.id) === params.id);
+          setDocument(mockDoc || null);
+        }
       })
       .catch(err => {
         console.error('Failed to fetch document:', err);
-        setDocument(null);
+        // Fallback to mock data on error
+        const mockDoc = mockDocuments.find(d => String(d.id) === params.id);
+        setDocument(mockDoc || null);
       })
       .finally(() => setLoading(false));
-  }, [status, params.id]);
+  }, [params.id]);
 
   // Handle sub-pages
   const activePageId = searchParams.get('page') || 'index';
@@ -131,7 +140,7 @@ export default function DocumentViewerPage() {
           <main className="flex-1 px-6 lg:px-10 py-10 max-w-5xl mx-auto">
             {/* Content Card (Optional: can be plain or on a card) */}
             <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
-              <div className="p-8 lg:p-12">
+              <div className="p-6 lg:p-10">
                 <DocMarkdownRenderer content={content} />
               </div>
             </div>

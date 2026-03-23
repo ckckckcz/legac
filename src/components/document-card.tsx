@@ -22,6 +22,7 @@ export interface Document {
     size: string
     status: 'draft' | 'published' | 'archived' | string
     thumbnail?: string
+    description?: string
     content?: string
     pages?: DocumentSubPage[]
 }
@@ -136,6 +137,12 @@ export function DocumentCard({
                             <span>{size}</span>
                         </div>
                     </div>
+
+                    {document.description && (
+                        <p className="line-clamp-2 text-muted-foreground mt-2 leading-relaxed">
+                            {document.description}
+                        </p>
+                    )}
                 </div>
 
                 {/* Action Buttons */}

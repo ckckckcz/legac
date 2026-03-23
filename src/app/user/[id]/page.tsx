@@ -15,6 +15,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Search, Filter, Plus, X } from 'lucide-react'
+import { mockDocuments } from '@/lib/mock-data'
 import type { Document } from '@/lib/mock-data'
 
 const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', 'Analytics', 'Engineering', 'Strategy', 'Management', 'Generated AI']
@@ -28,7 +29,7 @@ export default function DocumentManagementPage() {
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedType, setSelectedType] = useState('All')
-    const [documents, setDocuments] = useState<Document[]>([])
+    const [documents, setDocuments] = useState<Document[]>(mockDocuments)
     const [loading, setLoading] = useState(true)
 
     // Redirect to login if not authenticated
@@ -40,16 +41,20 @@ export default function DocumentManagementPage() {
 
     // Fetch documents from API
     useEffect(() => {
-        if (status !== 'authenticated') return
+        if (status !== 'authenticated') {
+            setLoading(false)
+            return
+        }
         setLoading(true)
         fetch('/api/docs')
             .then(res => res.json())
             .then(data => {
-                setDocuments(data.docs || [])
+                if (data.docs && data.docs.length > 0) {
+                    setDocuments(data.docs)
+                }
             })
             .catch(err => {
                 console.error('Failed to fetch documents:', err)
-                setDocuments([])
             })
             .finally(() => setLoading(false))
     }, [status])

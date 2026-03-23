@@ -1,149 +1,115 @@
 export interface DocumentSubPage {
-    id: string;
-    name: string;
-    content: string;
+  id: string;
+  name: string;
+  content: string;
 }
 
 export interface Document {
-    id: number | string;
-    name: string;
-    type: string;
-    category?: string;
-    size: string;
-    uploadDate: string;
-    status: 'published' | 'draft' | 'archived';
-    thumbnail: string;
-    content?: string;
-    pages?: DocumentSubPage[];
+  id: number | string;
+  name: string;
+  type: string;
+  category?: string;
+  size: string;
+  uploadDate: string;
+  status: 'published' | 'draft' | 'archived';
+  thumbnail: string;
+  description?: string;
+  content?: string;
+  pages?: DocumentSubPage[];
 }
 
 export const mockDocuments: Document[] = [
-    {
-        id: 'legacyver-docs',
-        name: 'Legacyver: src Analysis',
-        type: 'Documentation',
-        category: 'Generated AI',
-        size: '3.3 KB',
-        uploadDate: '2026-02-21',
-        status: 'published',
-        thumbnail: '📚',
-        pages: [
-            {
-                id: 'index',
-                name: 'Overview',
-                content: `# src — Documentation
-
-**Primary language:** typescript  
-**Total files:** 1  
-**Analyzed at:** 2026-02-21T17:51:44.572Z
-
-## Files
-
-- [components.tsx](components)
-
-## Dependency Graph
-
-\`\`\`mermaid
-graph TD
-\`\`\``
-            },
-            {
-                id: 'components',
-                name: 'components.md',
-                content: `## Overview
-
-This file contains a collection of React components and a utility function for formatting currency. The components include a button and a user card, while the utility function formats a given amount with a specified currency.
-
-## Functions
-
-### Button
-
-The Button component is a reusable React component that renders a button with a given label, variant, and optional disabled state.
-
-#### Parameters
-
-| Parameter | Type       | Description                                            |
-| --------- | ---------- | ------------------------------------------------------ |
-| label     | string     | The text to be displayed on the button                 |
-| onClick   | () => void | The function to be called when the button is clicked   |
-| disabled  | boolean    | Optional disabled state of the button (default: false) |
-| variant   | 'primary' | 'secondary' | 'danger' | The variant of the button (default: 'primary') |
-
-#### Return Value
-
-The Button component returns a React element.
-
-### UserCard
-
-The UserCard component is a reusable React component that fetches and displays user data based on a given user ID.
-
-#### Parameters
-
-| Parameter | Type       | Description                                                |
-| --------- | ---------- | ---------------------------------------------------------- |
-| userId    | number     | The ID of the user to fetch and display                    |
-| onClose   | () => void | The function to be called when the close button is clicked |
-
-#### Return Value
-
-The UserCard component returns a React element.
-
-### formatCurrency
-
-The formatCurrency function formats a given amount with a specified currency.
-
-#### Parameters
-
-| Parameter | Type   | Description                                         |
-| --------- | ------ | --------------------------------------------------- |
-| amount    | number | The amount to be formatted                          |
-| currency  | string | The currency to use for formatting (default: 'USD') |
-
-#### Return Value
-
-The formatCurrency function returns a string representing the formatted amount.
-
-## Dependencies
-
-- React
-- useState
-- useEffect
-- fetch
-- Intl.NumberFormat
-
-## Usage Example
-
-\`\`\`tsx
-import React from "react";
-import { Button, UserCard, formatCurrency } from "./components";
-
-const App = () => {
-  const handleButtonClick = () => {
-    console.log("Button clicked!");
-  };
-
-  const handleCloseClick = () => {
-    console.log("Close button clicked!");
-  };
-
-  return (
-    <div>
-      <Button label="Click me!" onClick={handleButtonClick} />
-      <UserCard userId={1} onClose={handleCloseClick} />
-      <p>Formatted amount: {formatCurrency(1000)}</p>
-    </div>
-  );
-};
-\`\`\``
-            },
-            {
-                id: 'summary',
-                name: 'Summary',
-                content: `# Summary
-
-- [components.tsx](components)
-`
-            }
-        ]
-    }
+  {
+    id: 'legacyver-docs',
+    name: 'Legacyver: Core Analysis',
+    type: 'Documentation',
+    category: 'Generated AI',
+    size: '12.4 KB',
+    uploadDate: '2026-02-22',
+    status: 'published',
+    thumbnail: '📚',
+    description: 'Deep dive analysis of the Legac codebase, covering architecture, auth, and UI components.',
+    pages: [
+      {
+        id: 'index',
+        name: 'Overview',
+        content: `# Legac — Codebase Documentation\n\n**Primary language:** typescript  \n**Total files:** 106  \n**Analyzed at:** 2026-02-22T03:46:32.751Z  \n\n## Core Architecture\nThis documentation covers the main entry points and critical logic of the Legac platform.\n\n## Key Modules\n- [Landing Page](landing-about)\n- [Authentication System](auth)\n- [UI Components](components-overview)\n- [Document Management](document-card)`
+      },
+      {
+        id: 'landing-about',
+        name: 'Landing: About Section',
+        content: `## Overview\nThis is a React component for the homepage of a web application that provides a hero section with animated text, a codebase legacy tool description, and installation instructions.\n\n## Key Features\n- Animated text using SplitText\n- Hero section with decorative gradients\n- Installation command with clipboard functionality\n\n## Dependencies\n- lucide-react (Copy, Check)\n- @/components/ui/install-command\n- @/components/ui/split-text`
+      },
+      {
+        id: 'auth',
+        name: 'Authentication System',
+        content: `## Overview\nThis file configures NextAuth for GitHub OAuth authentication, handling authentication flows, token management, and session management using GitHub as the provider.\n\n## Core Functions\n\n### jwt\nProcesses JWT token creation and updates. Sets user ID, email, and image from the user object. Sets username and GitHub ID from the profile.\n\n### session\nProcesses session object creation and updates. Adds username and stores access token if present.\n\n## Dependencies\n- next-auth\n- next-auth/providers/github`
+      },
+      {
+        id: 'document-card',
+        name: 'Component: DocumentCard',
+        content: `## Overview\nThis component displays document information and provides functionality to download documents as ZIP files. The DocumentCard component renders a card showing document metadata.\n\n## Functionality\n### handleDownload\nHandles downloading the document as a ZIP file. Creates a ZIP archive containing either all pages of a multi-page document or single document content.\n\n## Dependencies\n- jszip\n- lucide-react`
+      },
+      {
+        id: 'components-overview',
+        name: 'UI Components Analysis',
+        content: `## Overview\nAnalysis of reusable components used across the platform.\n\n### Navbar\nMain navigation header with logo and primary actions.\n\n### Sidebar\nGlobal application navigation with narrow/expanded states.\n\n### Button & Input\nBase UI elements following the brand design system.`
+      }
+    ]
+  },
+  {
+    id: 'fin-q4-2025',
+    name: 'Q4 2025 Financial Report.pdf',
+    type: 'PDF',
+    category: 'Finance',
+    size: '2.4 MB',
+    uploadDate: '2026-02-15',
+    status: 'published',
+    thumbnail: '📊',
+    description: 'Comprehensive financial analysis for the fourth quarter of 2025.'
+  },
+  {
+    id: 'eng-api-specs',
+    name: 'REST API Specification v2.0',
+    type: 'Documentation',
+    category: 'Engineering',
+    size: '456 KB',
+    uploadDate: '2026-02-20',
+    status: 'draft',
+    thumbnail: '🛠️',
+    description: 'Updated API endpoints and data models for version 2.0.'
+  },
+  {
+    id: 'mkt-campaign-2026',
+    name: 'Spring 2026 Marketing Strategy',
+    type: 'Word',
+    category: 'Marketing',
+    size: '1.2 MB',
+    uploadDate: '2026-02-10',
+    status: 'published',
+    thumbnail: '📢',
+    description: 'Outline for the upcoming spring marketing campaign across all channels.'
+  },
+  {
+    id: 'hr-handbook',
+    name: 'Employee Handbook 2026',
+    type: 'Documentation',
+    category: 'HR',
+    size: '890 KB',
+    uploadDate: '2026-01-05',
+    status: 'archived',
+    thumbnail: '👥',
+    description: 'Internal policies and guidelines for all employees.'
+  },
+  {
+    id: 'st-growth-plan',
+    name: 'Growth & Expansion Plan',
+    type: 'Presentation',
+    category: 'Strategy',
+    size: '5.1 MB',
+    uploadDate: '2026-02-18',
+    status: 'published',
+    thumbnail: '📈',
+    description: 'Roadmap for market expansion and revenue growth over the next 3 years.'
+  }
 ];

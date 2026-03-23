@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getPool } from "@/lib/db";
+import { mockDocuments } from "@/lib/mock-data";
 
 /**
  * GET /api/docs/[id]
@@ -13,12 +14,16 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await auth();
     if (!session?.user) {
+      // For development: fallback to mock data if not authenticated
+      const mockDoc = mockDocuments.find(d => String(d.id) === id);
+      if (mockDoc) return NextResponse.json({ doc: mockDoc });
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const { id } = await params;
     const pool = getPool();
 
     // Fetch the documentation record
@@ -38,6 +43,9 @@ export async function GET(
     );
 
     if (docResult.rows.length === 0) {
+      // Fallback to mock data if not found in DB
+      const mockDoc = mockDocuments.find(d => String(d.id) === id);
+      if (mockDoc) return NextResponse.json({ doc: mockDoc });
       return NextResponse.json({ error: "Document not found" }, { status: 404 });
     }
 
@@ -72,8 +80,8 @@ export async function GET(
       totalSize < 1024
         ? `${totalSize} B`
         : totalSize < 1024 * 1024
-        ? `${(totalSize / 1024).toFixed(1)} KB`
-        : `${(totalSize / (1024 * 1024)).toFixed(1)} MB`;
+          ? `${(totalSize / 1024).toFixed(1)} KB`
+          : `${(totalSize / (1024 * 1024)).toFixed(1)} MB`;
 
     const doc = {
       id: row.id,

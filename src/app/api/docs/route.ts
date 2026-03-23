@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getPool } from "@/lib/db";
+import { mockDocuments } from "@/lib/mock-data";
 
 /**
  * GET /api/docs
@@ -62,9 +63,9 @@ export async function GET() {
       }
     }
 
-    // If still no user found, return empty list
+    // If still no user found, return mock data for development
     if (!userId) {
-      return NextResponse.json({ docs: [] });
+      return NextResponse.json({ docs: mockDocuments });
     }
 
     // Fetch all documentations for this user, with repo info and page count
@@ -86,14 +87,14 @@ export async function GET() {
       [userId]
     );
 
-    const docs = result.rows.map((row) => {
+    const docs = result.rows.length > 0 ? result.rows.map((row) => {
       const sizeBytes = parseInt(row.total_size, 10) || 0;
       const sizeStr =
         sizeBytes < 1024
           ? `${sizeBytes} B`
           : sizeBytes < 1024 * 1024
-          ? `${(sizeBytes / 1024).toFixed(1)} KB`
-          : `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
+            ? `${(sizeBytes / 1024).toFixed(1)} KB`
+            : `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
 
       return {
         id: row.id,
@@ -110,7 +111,7 @@ export async function GET() {
         githubUrl: row.github_url,
         pageCount: parseInt(row.page_count, 10) || 0,
       };
-    });
+    }) : mockDocuments;
 
     return NextResponse.json({ docs });
   } catch (error: any) {
