@@ -10,7 +10,7 @@ export class ProfileService {
     try {
       // TODO: Implement database query
       // const result = await db.query(
-      //   'SELECT * FROM app.user_profiles WHERE github_id = $1',
+      //   'SELECT EXISTS(SELECT 1 FROM user_profiles WHERE github_id = $1)',
       //   [githubId]
       // );
       // return result.rows[0] || null;
