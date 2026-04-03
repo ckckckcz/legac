@@ -10,7 +10,6 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { RepoContributors } from './RepoContributors'
@@ -120,7 +119,7 @@ export function RepoDetail({ repo, open, onOpenChange }: RepoDetailProps) {
               </div>
             </SheetHeader>
 
-            <ScrollArea className="flex-1 px-6">
+            <div className="flex-1 px-6 overflow-y-auto">
               <div className="py-5 space-y-6">
                 {error && (
                   <p className="text-sm text-destructive">{error}</p>
@@ -144,7 +143,7 @@ export function RepoDetail({ repo, open, onOpenChange }: RepoDetailProps) {
                   />
                 </section>
               </div>
-            </ScrollArea>
+            </div>
 
             {/* Footer: Generate button */}
             <div className="px-6 py-4 border-t">

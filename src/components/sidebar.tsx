@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { Menu, X, Files, LogOut, User, Github, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -45,7 +46,7 @@ function SidebarNavItem({
     const content = (
         <Button
             variant="ghost"
-            className={`w-full h-9 gap-2.5 transition-all duration-200 ${isNarrow ? 'justify-center px-0' : 'justify-start px-2.5'} ${isDestructive
+            className={`w-full h-9 gap-2.5 transition-all duration-200 cursor-pointer ${isNarrow ? 'justify-center px-0' : 'justify-start px-2.5'} ${isDestructive
                 ? 'text-destructive hover:text-destructive hover:bg-destructive/5'
                 : active
                     ? 'bg-primary/10 text-primary hover:bg-primary/20'
@@ -81,6 +82,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick, isNarrow = false }: 
     const [isLoggingOut, setIsLoggingOut] = useState(false)
     const [logoutError, setLogoutError] = useState<string | null>(null)
     const [githubLink, setGithubLink] = useState('')
+    const pathname = usePathname()
 
     const handleNavClick = () => {
         if (window.innerWidth < 768) {
@@ -144,6 +146,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick, isNarrow = false }: 
                                 icon={<Files size={18} />}
                                 label="Documents"
                                 href={userId ? `/user/${userId}` : undefined}
+                                active={pathname === `/user/${userId}`}
                                 onClick={handleNavClick}
                                 isNarrow={isNarrow}
                             />
@@ -151,6 +154,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick, isNarrow = false }: 
                                 icon={<Github size={18} />}
                                 label="Repositories"
                                 href={userId ? `/user/${userId}/repository` : undefined}
+                                active={pathname.includes('/repository')}
                                 onClick={handleNavClick}
                                 isNarrow={isNarrow}
                             />
@@ -165,6 +169,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick, isNarrow = false }: 
                             label="Profile"
                             isNarrow={isNarrow}
                             href={username ? `/user/profile/${username}` : undefined}
+                            active={pathname.includes('/profile')}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem
@@ -172,6 +177,7 @@ export function Sidebar({ isOpen, setIsOpen, onUploadClick, isNarrow = false }: 
                             label="Donation"
                             isNarrow={isNarrow}
                             href={userId ? `/user/${userId}/donation` : undefined}
+                            active={pathname.includes('/donation')}
                             onClick={handleNavClick}
                         />
                         <SidebarNavItem

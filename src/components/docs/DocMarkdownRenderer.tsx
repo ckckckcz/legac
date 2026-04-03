@@ -13,9 +13,9 @@ interface DocMarkdownRendererProps {
     content?: string;
 }
 
-const Pre = ({ children }: { children?: React.ReactNode }) => {
+const Pre = ({ children, ...props }: { children?: React.ReactNode }) => {
     return (
-        <div className="relative group my-8 rounded-xl overflow-hidden border border-zinc-200 shadow-sm bg-white">
+        <div className="relative group my-8 rounded-xl overflow-hidden border border-zinc-200 shadow-sm bg-zinc-50 p-4 overflow-x-auto" {...props}>
             {children}
         </div>
     );
@@ -41,7 +41,7 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                 rehypePlugins={[rehypeSlug]}
                 components={{
                     pre: Pre,
-                    code({ node, inline, className, children, ...props }: any) {
+                    code({ node, className, children, ...props }: any) {
                         const match = /language-(\w+)/.exec(className || '');
                         const lang = match ? match[1] : '';
                         const [copied, setCopied] = useState(false);
@@ -52,14 +52,13 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                             setTimeout(() => setCopied(false), 2000);
                         };
 
-                        return !inline ? (
+                        // If it has a language class, it's definitely a code block
+                        return match ? (
                             <div className="relative group/code">
                                 <div className="absolute top-3 right-4 z-10 flex items-center gap-2">
-                                    {lang && (
-                                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest bg-zinc-100/50 px-2 py-1 rounded">
-                                            {lang}
-                                        </span>
-                                    )}
+                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest bg-zinc-100/50 px-2 py-1 rounded">
+                                        {lang}
+                                    </span>
                                     <button
                                         onClick={onCopy}
                                         className="p-1.5 rounded-md bg-white border border-zinc-200 text-zinc-400 hover:text-zinc-900 transition-all opacity-0 group-hover/code:opacity-100 shadow-sm"
@@ -76,7 +75,7 @@ export function DocMarkdownRenderer({ content }: DocMarkdownRendererProps) {
                                         padding: '1.5rem',
                                         fontSize: '13px',
                                         lineHeight: '1.6',
-                                        backgroundColor: 'transparent',
+                                        backgroundColor: 'white',
                                     }}
                                     {...props}
                                 >
