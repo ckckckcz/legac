@@ -104,7 +104,7 @@ export default function LegacyverFooter() {
               <div className="flex flex-col w-full sm:w-1/3">
                 <h3 className="text-base sm:text-lg font-semibold text-black mb-4 sm:mb-6 font-bricolage">Our Team</h3>
                 <ul className="space-y-2 sm:space-y-3">
-                  {["Aqwenna", "Riovaldo", "Husein", "Dhanil",].map((item) => (
+                  {["Aqueena", "Riovaldo", "Husein", "Dhanil",].map((item) => (
                     <li key={item} >
                       <a href="#" className="text-gray-400 hover:text-black transition-colors text-xs sm:text-sm font-bricolage">
                         {item}

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getPool } from "@/lib/db";
-import { mockDocuments } from "@/lib/mock-data";
 
 /**
  * GET /api/docs
@@ -19,7 +18,7 @@ export async function GET() {
 
     const pool = getPool();
 
-    // Try multiple strategies to find the user in app.users:
+    // Try multiple strategies to find the user in users:
     // 1. session.user.id might be GitHub numeric ID (if token.githubId was set)
     // 2. Use GitHub access token to fetch real GitHub profile (most reliable)
     let userId: string | null = null;
@@ -28,7 +27,7 @@ export async function GET() {
     const sessionId = (session as any).user?.id;
     if (sessionId && /^\d+$/.test(String(sessionId))) {
       const userRow = await pool.query(
-        "SELECT id FROM app.users WHERE github_id = $1",
+        "SELECT id FROM users WHERE github_id = $1",
         [sessionId]
       );
       if (userRow.rows.length > 0) {
@@ -50,7 +49,7 @@ export async function GET() {
           if (ghRes.ok) {
             const ghProfile = await ghRes.json();
             const userRow = await pool.query(
-              "SELECT id FROM app.users WHERE github_id = $1",
+              "SELECT id FROM users WHERE github_id = $1",
               [ghProfile.id]
             );
             if (userRow.rows.length > 0) {
@@ -63,9 +62,9 @@ export async function GET() {
       }
     }
 
-    // If still no user found, return mock data for development
+    // If still no user found, return empty array for prod ready
     if (!userId) {
-      return NextResponse.json({ docs: mockDocuments });
+      return NextResponse.json({ docs: [] });
     }
 
     // Fetch all documentations for this user, with repo info and page count
@@ -78,10 +77,10 @@ export async function GET() {
          r.name AS repo_name,
          r.full_name AS repo_full_name,
          r.github_url,
-         (SELECT COUNT(*) FROM app.documentation_pages dp WHERE dp.documentation_id = d.id) AS page_count,
-         (SELECT COALESCE(SUM(LENGTH(dp.content)), 0) FROM app.documentation_pages dp WHERE dp.documentation_id = d.id) AS total_size
-       FROM app.documentations d
-       JOIN app.repositories r ON r.id = d.repository_id
+         (SELECT COUNT(*) FROM documentation_pages dp WHERE dp.documentation_id = d.id) AS page_count,
+         (SELECT COALESCE(SUM(LENGTH(dp.content)), 0) FROM documentation_pages dp WHERE dp.documentation_id = d.id) AS total_size
+       FROM documentations d
+       JOIN repositories r ON r.id = d.repository_id
        WHERE r.user_id = $1
        ORDER BY d.created_at DESC`,
       [userId]
@@ -111,7 +110,7 @@ export async function GET() {
         githubUrl: row.github_url,
         pageCount: parseInt(row.page_count, 10) || 0,
       };
-    }) : mockDocuments;
+    }) : [];
 
     return NextResponse.json({ docs });
   } catch (error: any) {

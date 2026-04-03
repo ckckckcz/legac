@@ -1,36 +1,66 @@
 import { auth } from '@/auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { UserSettingsInput } from '@/lib/types/profile';
+import { getPool } from '@/lib/db';
+import { getOrCreateAppUser } from '@/lib/auth-db-user';
 
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
 
-    if (!session?.user?.id) {
+    if (!session?.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // TODO: Implement database query to fetch user settings
-    // const settings = await db.query(
-    //   'SELECT * FROM app.user_settings WHERE user_id = (SELECT id FROM app.users WHERE github_id = $1)',
-    //   [session.user.id]
-    // );
+    const appUser = await getOrCreateAppUser(session as any);
+    if (!appUser) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
 
-    // Mock data with default settings
-    const mockSettings = {
-      user_id: session.user.id,
-      theme: 'auto' as const,
-      notifications_enabled: true,
-      email_notifications: true,
-      profile_visibility: 'public' as const,
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
+    const pool = getPool();
+    let result = await pool.query(
+      `SELECT
+         user_id,
+         theme,
+         notifications_enabled,
+         email_notifications,
+         profile_visibility,
+         created_at,
+         updated_at
+       FROM user_settings
+       WHERE user_id = $1`,
+      [appUser.userId]
+    );
 
-    return NextResponse.json(mockSettings);
+    if (result.rows.length === 0) {
+      result = await pool.query(
+        `INSERT INTO user_settings (
+           user_id,
+           theme,
+           notifications_enabled,
+           email_notifications,
+           profile_visibility
+         )
+         VALUES ($1, 'auto', true, true, 'public')
+         RETURNING
+           user_id,
+           theme,
+           notifications_enabled,
+           email_notifications,
+           profile_visibility,
+           created_at,
+           updated_at`,
+        [appUser.userId]
+      );
+    }
+
+    return NextResponse.json(result.rows[0]);
   } catch (error) {
     console.error('GET /api/settings error:', error);
     return NextResponse.json(
@@ -44,7 +74,7 @@ export async function PUT(request: NextRequest) {
   try {
     const session = await auth();
 
-    if (!session?.user?.id) {
+    if (!session?.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -68,24 +98,69 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // TODO: Implement database update
-    // const result = await db.query(
-    //   'UPDATE app.user_settings SET ... WHERE user_id = (SELECT id FROM app.users WHERE github_id = $1) RETURNING *',
-    //   [...]
-    // );
+    if (body.notifications_enabled !== undefined && typeof body.notifications_enabled !== 'boolean') {
+      return NextResponse.json(
+        { error: 'Invalid notifications_enabled value' },
+        { status: 400 }
+      );
+    }
 
-    // Mock response
-    const updatedSettings = {
-      user_id: session.user.id,
-      theme: body.theme || 'auto',
-      notifications_enabled: body.notifications_enabled ?? true,
-      email_notifications: body.email_notifications ?? true,
-      profile_visibility: body.profile_visibility || 'public',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
+    if (body.email_notifications !== undefined && typeof body.email_notifications !== 'boolean') {
+      return NextResponse.json(
+        { error: 'Invalid email_notifications value' },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json(updatedSettings);
+    const appUser = await getOrCreateAppUser(session as any);
+    if (!appUser) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const pool = getPool();
+    const result = await pool.query(
+      `INSERT INTO user_settings (
+         user_id,
+         theme,
+         notifications_enabled,
+         email_notifications,
+         profile_visibility
+       )
+       VALUES (
+         $1,
+         COALESCE($2, 'auto'),
+         COALESCE($3, true),
+         COALESCE($4, true),
+         COALESCE($5, 'public')
+       )
+       ON CONFLICT (user_id)
+       DO UPDATE SET
+         theme = COALESCE($2, user_settings.theme),
+         notifications_enabled = COALESCE($3, user_settings.notifications_enabled),
+         email_notifications = COALESCE($4, user_settings.email_notifications),
+         profile_visibility = COALESCE($5, user_settings.profile_visibility),
+         updated_at = NOW()
+       RETURNING
+         user_id,
+         theme,
+         notifications_enabled,
+         email_notifications,
+         profile_visibility,
+         created_at,
+         updated_at`,
+      [
+        appUser.userId,
+        body.theme ?? null,
+        body.notifications_enabled ?? null,
+        body.email_notifications ?? null,
+        body.profile_visibility ?? null,
+      ]
+    );
+
+    return NextResponse.json(result.rows[0]);
   } catch (error) {
     console.error('PUT /api/settings error:', error);
     return NextResponse.json(
