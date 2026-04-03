@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getPool } from "@/lib/db";
-import { mockDocuments } from "@/lib/mock-data";
 
 /**
  * GET /api/docs/[id]
@@ -18,15 +17,51 @@ export async function GET(
 
     const session = await auth();
     if (!session?.user) {
-      // For development: fallback to mock data if not authenticated
-      const mockDoc = mockDocuments.find(d => String(d.id) === id);
-      if (mockDoc) return NextResponse.json({ doc: mockDoc });
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+    
+    // Try multiple strategies to find the user in users:
+    let userId: string | null = null;
+    const sessionId = (session as any).user?.id;
+    
+    // Strategy 1: Try session.user.id as github_id
+    if (sessionId && /^\\d+$/.test(String(sessionId))) {
+      const pool = getPool();
+      const userRow = await pool.query(
+        "SELECT id FROM users WHERE github_id = $1",
+        [sessionId]
+      );
+      if (userRow.rows.length > 0) userId = userRow.rows[0].id;
+    }
+
+    // Strategy 2: If not found, use GitHub API with access token
+    if (!userId) {
+      const accessToken = (session as any).accessToken;
+      if (accessToken) {
+        try {
+          const ghRes = await fetch("https://api.github.com/user", {
+            headers: { Authorization: `Bearer ${accessToken}`, Accept: "application/json" },
+          });
+          if (ghRes.ok) {
+            const ghProfile = await ghRes.json();
+            const pool = getPool();
+            const userRow = await pool.query(
+              "SELECT id FROM users WHERE github_id = $1",
+              [ghProfile.id]
+            );
+            if (userRow.rows.length > 0) userId = userRow.rows[0].id;
+          }
+        } catch { } // Ignore errors
+      }
+    }
+
+    if (!userId) {
+      return NextResponse.json({ error: "Access denied: cannot verify user identity." }, { status: 403 });
     }
 
     const pool = getPool();
 
-    // Fetch the documentation record
+    // Fetch the documentation record matching the current user enforcing authorization (IDOR protection)
     const docResult = await pool.query(
       `SELECT
          d.id,
@@ -36,17 +71,14 @@ export async function GET(
          r.name AS repo_name,
          r.full_name AS repo_full_name,
          r.github_url
-       FROM app.documentations d
-       JOIN app.repositories r ON r.id = d.repository_id
-       WHERE d.id = $1`,
-      [id]
+       FROM documentations d
+       JOIN repositories r ON r.id = d.repository_id
+       WHERE d.id = $1 AND r.user_id = $2`,
+      [id, userId]
     );
 
     if (docResult.rows.length === 0) {
-      // Fallback to mock data if not found in DB
-      const mockDoc = mockDocuments.find(d => String(d.id) === id);
-      if (mockDoc) return NextResponse.json({ doc: mockDoc });
-      return NextResponse.json({ error: "Document not found" }, { status: 404 });
+      return NextResponse.json({ error: "Document not found or access denied" }, { status: 404 });
     }
 
     const row = docResult.rows[0];
@@ -54,7 +86,7 @@ export async function GET(
     // Fetch all pages for this documentation
     const pagesResult = await pool.query(
       `SELECT id, slug, title, content, page_order
-       FROM app.documentation_pages
+       FROM documentation_pages
        WHERE documentation_id = $1
        ORDER BY page_order ASC`,
       [id]
@@ -66,7 +98,7 @@ export async function GET(
 
     // Build pages array: index page + real pages
     const pages = [
-      { id: "index", name: "Overview", content: indexContent },
+      { id: "overview", name: "Overview", content: indexContent },
       ...pagesResult.rows.map((p) => ({
         id: p.slug.replace(/\.[^.]+$/, "").replace(/\//g, "-"),
         name: p.title,

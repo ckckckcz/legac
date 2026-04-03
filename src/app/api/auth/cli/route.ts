@@ -64,22 +64,22 @@ export async function POST(req: NextRequest) {
 
     const pool = getPool();
 
-    // Upsert user in app.users (find by github_id, create if not exists)
+    // Upsert user in users (find by github_id, create if not exists)
     let userRow = await pool.query(
-      "SELECT id FROM app.users WHERE github_id = $1",
+      "SELECT id FROM users WHERE github_id = $1",
       [githubId]
     );
 
     if (userRow.rows.length === 0) {
       userRow = await pool.query(
-        `INSERT INTO app.users (github_id, username, email, avatar_url)
+        `INSERT INTO users (github_id, username, email, avatar_url)
          VALUES ($1, $2, $3, $4) RETURNING id`,
         [githubId, username, email, avatarUrl]
       );
     } else {
       // Update username/email/avatar in case they changed
       await pool.query(
-        `UPDATE app.users SET username = $1, email = $2, avatar_url = $3, updated_at = NOW()
+        `UPDATE users SET username = $1, email = $2, avatar_url = $3, updated_at = NOW()
          WHERE github_id = $4`,
         [username, email, avatarUrl, githubId]
       );
@@ -92,16 +92,16 @@ export async function POST(req: NextRequest) {
     const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
     const expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000); // 90 days
 
-    // Store in app.user_sessions
+    // Store in user_sessions
     await pool.query(
-      `INSERT INTO app.user_sessions (user_id, token_hash, expires_at, user_agent)
+      `INSERT INTO user_sessions (user_id, token_hash, expires_at, user_agent)
        VALUES ($1, $2, $3, $4)`,
       [userId, tokenHash, expiresAt, req.headers.get("user-agent") || "legacyver-cli"]
     );
 
     // Log activity
     await pool.query(
-      `INSERT INTO app.activity_logs (user_id, event_type, event_data)
+      `INSERT INTO activity_logs (user_id, event_type, event_data)
        VALUES ($1, 'cli_login', $2)`,
       [userId, JSON.stringify({ code, userAgent: "legacyver-cli" })]
     );
