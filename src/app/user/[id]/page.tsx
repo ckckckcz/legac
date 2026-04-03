@@ -15,8 +15,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Search, Filter, Plus, X } from 'lucide-react'
-import { mockDocuments } from '@/lib/mock-data'
-import type { Document } from '@/lib/mock-data'
+import type { Document } from '@/types'
 
 const categories = ['All', 'Finance', 'Projects', 'Marketing', 'HR', 'Design', 'Analytics', 'Engineering', 'Strategy', 'Management', 'Generated AI']
 const fileTypes = ['All', 'PDF', 'Word', 'Image', 'Spreadsheet', 'Presentation', 'Markdown', 'Design', 'Documentation']
@@ -29,7 +28,7 @@ export default function DocumentManagementPage() {
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedType, setSelectedType] = useState('All')
-    const [documents, setDocuments] = useState<Document[]>(mockDocuments)
+    const [documents, setDocuments] = useState<Document[]>([])
     const [loading, setLoading] = useState(true)
 
     // Redirect to login if not authenticated

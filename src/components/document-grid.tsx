@@ -1,7 +1,7 @@
 'use client'
 
 import { DocumentCard } from '@/components/document-card'
-import type { Document } from '@/lib/mock-data'
+import type { Document } from '@/types'
 
 interface DocumentGridProps {
     documents?: Document[]

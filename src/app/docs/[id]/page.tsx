@@ -5,8 +5,7 @@ import { DocsShell } from '@/components/docs/DocsLayout';
 import { DocsSearch } from '@/components/docs/DocsSearch';
 import { DocMarkdownRenderer } from '@/components/docs/DocMarkdownRenderer';
 import { extractHeadings } from '@/lib/doc-utils';
-import { mockDocuments } from '@/lib/mock-data';
-import type { Document } from '@/lib/mock-data';
+import type { Document } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -45,22 +44,19 @@ export default function DocumentViewerPage() {
         if (data.doc) {
           setDocument(data.doc);
         } else {
-          // Fallback to mock data if API doesn't return a doc
-          const mockDoc = mockDocuments.find(d => String(d.id) === params.id);
-          setDocument(mockDoc || null);
+          // No doc found
+          setDocument(null);
         }
       })
       .catch(err => {
         console.error('Failed to fetch document:', err);
-        // Fallback to mock data on error
-        const mockDoc = mockDocuments.find(d => String(d.id) === params.id);
-        setDocument(mockDoc || null);
+        setDocument(null);
       })
       .finally(() => setLoading(false));
   }, [params.id]);
 
   // Handle sub-pages
-  const activePageId = searchParams.get('page') || 'index';
+  const activePageId = searchParams.get('page') || 'overview';
   const activePage = document?.pages?.find(p => p.id === activePageId);
   const content = activePage ? activePage.content : document?.content;
 
@@ -107,7 +103,7 @@ export default function DocumentViewerPage() {
                   {activePage?.name || document.name}
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  {activePageId === 'index' ? 'Documentation overview and file analysis.' : `Browsing ${activePage?.name}`}
+                  {activePageId === 'overview' ? 'Documentation overview and file analysis.' : `Browsing ${activePage?.name}`}
                 </p>
               </div>
 
