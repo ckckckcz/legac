@@ -10,7 +10,7 @@ export class ActivityService {
     try {
       // TODO: Implement database insert
       // const result = await db.query(
-      //   'INSERT INTO app.activity_logs (user_id, event_type, event_data, created_at) VALUES ($1, $2, $3, NOW()) RETURNING *',
+      //   'INSERT INTO activity_logs (user_id, event_type, event_data, created_at) VALUES ($1, $2, $3, NOW()) RETURNING *',
       //   [userId, input.event_type, input.event_data ? JSON.stringify(input.event_data) : null]
       // );
       // return result.rows[0];
@@ -41,7 +41,7 @@ export class ActivityService {
       const offset = filters.offset || 0;
 
       // TODO: Implement database query with filters
-      // let query = 'SELECT * FROM app.activity_logs WHERE user_id = $1';
+      // let query = 'SELECT * FROM activity_logs WHERE user_id = $1';
       // const params: any[] = [userId];
       // let paramCount = 2;
 
@@ -64,7 +64,7 @@ export class ActivityService {
       // params.push(limit, offset);
 
       // const result = await db.query(query, params);
-      // const countResult = await db.query('SELECT COUNT(*) FROM app.activity_logs WHERE user_id = $1', [userId]);
+      // const countResult = await db.query('SELECT COUNT(*) FROM activity_logs WHERE user_id = $1', [userId]);
 
       console.log(`Fetching activity logs for user ${userId}`, filters);
 
@@ -91,7 +91,7 @@ export class ActivityService {
     try {
       // TODO: Implement database query
       // const result = await db.query(
-      //   'SELECT * FROM app.activity_logs WHERE user_id = $1 AND event_type = $2 ORDER BY created_at DESC LIMIT $3',
+      //   'SELECT * FROM activity_logs WHERE user_id = $1 AND event_type = $2 ORDER BY created_at DESC LIMIT $3',
       //   [userId, eventType, limit]
       // );
       // return result.rows;
@@ -111,7 +111,7 @@ export class ActivityService {
     try {
       // TODO: Implement database query
       // const result = await db.query(
-      //   'SELECT * FROM app.activity_logs WHERE user_id = $1 AND created_at >= NOW() - INTERVAL $2 ORDER BY created_at DESC',
+      //   'SELECT * FROM activity_logs WHERE user_id = $1 AND created_at >= NOW() - INTERVAL $2 ORDER BY created_at DESC',
       //   [userId, `${days} days`]
       // );
       // return result.rows;
@@ -131,7 +131,7 @@ export class ActivityService {
     try {
       // TODO: Implement database delete
       // const result = await db.query(
-      //   'DELETE FROM app.activity_logs WHERE user_id = $1 AND created_at < NOW() - INTERVAL $2',
+      //   'DELETE FROM activity_logs WHERE user_id = $1 AND created_at < NOW() - INTERVAL $2',
       //   [userId, `${daysOld} days`]
       // );
       // return result.rowCount;
@@ -151,7 +151,7 @@ export class ActivityService {
     try {
       // TODO: Implement database delete
       // const result = await db.query(
-      //   'DELETE FROM app.activity_logs WHERE user_id = $1',
+      //   'DELETE FROM activity_logs WHERE user_id = $1',
       //   [userId]
       // );
       // return result.rowCount;
@@ -171,7 +171,7 @@ export class ActivityService {
     try {
       // TODO: Implement database query
       // const result = await db.query(
-      //   'SELECT event_type, COUNT(*) as count FROM app.activity_logs WHERE user_id = $1 GROUP BY event_type',
+      //   'SELECT event_type, COUNT(*) as count FROM activity_logs WHERE user_id = $1 GROUP BY event_type',
       //   [userId]
       // );
 
