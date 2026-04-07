@@ -75,7 +75,7 @@ export default function DocsInstallationPage() {
                             Panduan Instalasi
                         </h1>
                         <p className="text-base text-zinc-600 leading-relaxed">
-                            Ikuti langkah-langkah di bawah ini untuk mensetup Legacyver dan mulai mendokumentasikan codebase kamu.
+                            Ikuti langkah-langkah berikut untuk setup Legacyver dan mulai mendokumentasikan codebase kamu.
                         </p>
                     </div>
 
